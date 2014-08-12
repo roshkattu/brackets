@@ -164,6 +164,28 @@ var fs = require('fs'),
         }
     };
 
+    /**
+     * readFile(path, options, callback)
+     */
+    function readfile(path, options, callback){
+        //Check if path is undefined
+        if(undefined === path){
+            //Return false because the path is not set
+            callback(Errors.EmptyPath);
+        } else {
+            //Read the file and get the data
+            fs.readFile(path, function(err, data){
+                if(null === err){
+                    //Return data
+                    callback(data);
+                } else {
+                    //Return error
+                    callback(err);
+                }
+            });
+        }
+    }
+
     /** ----------------------- FS COMMANDS END -------------------- */
 
 
