@@ -36,8 +36,8 @@
 define(function (require, exports, module) {
     "use strict";
 
-    var FileUtils           = require("file/FileUtils"),
-        FileSystemStats     = require("filesystem/FileSystemStats"),
+    var //FileUtils           = require("file/FileUtils"),
+        //FileSystemStats     = require("filesystem/FileSystemStats"),
         FileSystemError     = require("filesystem/FileSystemError");
         //NodeDomain          = require("utils/NodeDomain");
 
@@ -58,7 +58,8 @@ define(function (require, exports, module) {
      * Display an open-files dialog to the user and call back asynchronously with either an error string or an array of path strings, which indicate the file or files chosen by the user.
      */
     function showOpenDialog(allowMultipleSelection, chooseDirectories, title, initialPath, fileTypes, callback){
-
+        //TODO
+        throw new Error();
     }
 
     /**
@@ -70,7 +71,8 @@ define(function (require, exports, module) {
      * Display a save-file dialog to the user and call back asynchronously with either an error or the path to which the user has chosen to save the file.
      */
     function showSaveDialog(title, initialPath, proposedNewFilename, callback){
-
+        //TODO
+        throw new Error();
     }
 
     /**
@@ -80,7 +82,8 @@ define(function (require, exports, module) {
      * Determine whether a file or directory exists at the given path by calling back asynchronously with either an error or a boolean, which is true if the file exists and false otherwise. The error will never be FileSystemError.NOT_FOUND; in that case, there will be no error and the boolean parameter will be false.
      */
     function exists(path, callback){
-
+        //TODO
+        return true;
     }
 
     /**
@@ -90,7 +93,8 @@ define(function (require, exports, module) {
      * Read the contents of the directory at the given path, calling back asynchronously either with an error or an array of FileSystemEntry objects along with another consistent array, each index of which either contains a FileSystemStats object for the corresponding FileSystemEntry object in the second parameter or a FileSystemErrors string describing a stat error.
      */
     function readdir(path, callback){
-
+        //TODO
+        callback();
     }
 
     /**
@@ -101,7 +105,8 @@ define(function (require, exports, module) {
      * Create a directory at the given path, and optionally call back asynchronously with either an error or a stats object for the newly created directory. The octal mode parameter is optional; if unspecified, the mode of the created directory is implementation dependent.
      */
     function mkdir(path, mode, callback){
-
+        //TODO
+        callback();
     }
 
     /**
@@ -112,7 +117,8 @@ define(function (require, exports, module) {
      * Rename the file or directory at oldPath to newPath, and optionally call back asynchronously with a possibly null error.
      */
     function rename(oldPath, newPath, callback){
-
+        //TODO
+        callback();
     }
 
     /**
@@ -122,7 +128,8 @@ define(function (require, exports, module) {
      * Stat the file or directory at the given path, calling back asynchronously with either an error or the entry's associated FileSystemStats object.
      */
     function stat(path, callback){
-
+        //TODO
+        callback();
     }
 
     /**
@@ -133,7 +140,8 @@ define(function (require, exports, module) {
      * Read the contents of the file at the given path, calling back asynchronously with either an error or the data and, optionally, the FileSystemStats object associated with the read file. The optional options parameter can be used to specify an encoding (default "utf8").
      */
     function readFile(path, options, callback){
-
+        //TODO
+        callback();
     }
 
     /**
@@ -145,7 +153,8 @@ define(function (require, exports, module) {
      * Write the given data to the file at the given path, calling back asynchronously with either an error or, optionally, the          * FileSystemStats object associated with the written file. The optional options parameter can be used to specify an encoding (default "utf8") and an octal mode (default unspecified and implementation dependent). If no file exists at the given path, a new file will be created.
      */
     function writeFile(path, data, options, callback){
-
+        //TODO
+        callback();
     }
 
     /**
@@ -155,7 +164,8 @@ define(function (require, exports, module) {
      * Unlink the file or directory at the given path, optionally calling back asynchronously with a possibly null error.
      */
     function unlink(path, callback){
-
+        //TODO
+        callback();
     }
 
     /**
@@ -167,7 +177,7 @@ define(function (require, exports, module) {
      * If file watching becomes unavailable or is unsupported, the implementation must call offlineCallback if it was provided, optionally passing an error code. In addition, the implementation must ensure that all future calls to watchPath() fail with an error (until such time as file watching becomes available again).
      */
     function initWatchers(changeCallback, offlineCallback){
-
+        //TODO
     }
 
     /**
@@ -177,7 +187,8 @@ define(function (require, exports, module) {
      * Start providing change notifications for the file or directory at the given path, optionally calling back asynchronously with a possibly null error when the operation is complete. Notifications are provided using the changeCallback function provided by the initWatchers method. If the path is a directory, the expected behavior depends on the implementation's recursiveWatch flag: if true, notifications are expected for the entire subtree rooted at this directory; if false, notifications are expected only for the directory's immediate children.
      */
     function watchPath(path, callback){
-
+        //TODO
+        callback();
     }
 
     /**
@@ -187,7 +198,8 @@ define(function (require, exports, module) {
      * Stop providing change notifications for the file or directory at the given path and all subfolders, optionally calling back asynchronously with a possibly null error when the operation is complete. Unlike watchPath(), this is always expected to behave recursively.
      */
     function unwatchPath(path, callback){
-
+        //TODO
+        callback();
     }
 
     /**
@@ -196,7 +208,8 @@ define(function (require, exports, module) {
      * Stop providing change notifications for all previously watched files and directories, optionally calling back asynchronously with a possibly null error when the operation is complete.
      */
     function unwatchAll(callback){
-
+        //TODO
+        callback();
     }
 
 
