@@ -69,6 +69,28 @@ var fs = require('fs'),
                 }
             });
         }
+    };
+
+    /**
+     * stat(path,callback)
+     * Return stats of a file
+     */
+    function stat(path, callback){
+        if(undefined === path){
+            //Return false because the path is not set
+            callback(Errors.EmptyPath);
+        } else {
+            //Get file stats
+            fs.stat(path, function(err, stats){
+                if(err === null){
+                    //Return file stats
+                    callback(stats);
+                } else {
+                    //Return error
+                    callback(err);
+                }
+            });
+        }
     }
 
     /**
@@ -106,7 +128,41 @@ var fs = require('fs'),
                 }
             });
         }
-    }
+    };
+
+    /**
+     * mkdir(path, mode, callback)
+     */
+    function mkdir(path, mode, callback){
+        //Check if path is undefined
+        if(undefined === path){
+            //Return false because the path is not set
+            callback(Errors.EmptyPath);
+        } else {
+            //Check typeof mode to see if the mode has been provided or not
+            if (typeof mode === "function") {
+                callback = mode;
+                mode = parseInt("0755", 8);
+            }
+            //Create the directory
+            fs.mkdir(path, mode, function(err){
+               if(null === err){
+                   //Get file stats
+                    fs.stat(path, function(err, stats){
+                        if(err === null){
+                            //Return file stats
+                            callback(stats);
+                        } else {
+                            //Return error
+                            callback(err);
+                        }
+                    });
+               } else {
+                   callback(err);//Return the error
+               }
+            });
+        }
+    };
 
     /** ----------------------- FS COMMANDS END -------------------- */
 
