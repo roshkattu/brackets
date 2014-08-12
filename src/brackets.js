@@ -217,11 +217,16 @@ define(function (require, exports, module) {
 
         // Let the user know Brackets doesn't run in a web browser yet
         if (brackets.inBrowser) {
+            /**
+             * Hack this around to disable this dialog
+             *
+            */
             Dialogs.showModalDialog(
                 DefaultDialogs.DIALOG_ID_ERROR,
-                Strings.ERROR_IN_BROWSER_TITLE,
-                Strings.ERROR_IN_BROWSER
+                "Under development",
+                "This version of brackets in browser is currently under development. The file system impl is being writed and won't work by now"
             );
+
         }
 
         // Use quiet scrollbars if we aren't on Lion. If we're on Lion, only
