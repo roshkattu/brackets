@@ -8,8 +8,7 @@
 var fs = require('fs'),
     app = require('express')(),
     http = require('http').Server(app),
-    io = require('socket.io')(http),
-    Commands = require("./commands.js");
+    io = require('socket.io')(http);
 
     /**
      * Constants
@@ -23,7 +22,6 @@ var fs = require('fs'),
 
     var _connections = []; //Keep track of nodejs connections
     var _socket = null; //Keep a copy of the current socket
-    var _cmd = new Commands(fs); //Create instance of the Commands() class
 
     /**
      * Socket server logic
@@ -39,6 +37,7 @@ var fs = require('fs'),
         //Show message that our socket has been added to the connections pool
         console.log("A new connection has been established with: "+socket.id);
     });
+
 
 
     /**
