@@ -248,6 +248,6 @@ define(function (require, exports, module) {
      *
      * @type {boolean}
      */
-    exports.normalizeUNCPaths = true;
+    exports.normalizeUNCPaths = false;
 
 });
