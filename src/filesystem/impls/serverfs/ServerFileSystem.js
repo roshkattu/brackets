@@ -110,7 +110,10 @@ define(function (require, exports, module) {
      */
     function mkdir(path, mode, callback){
         //TODO
-        //throw new Error();
+        Socket.emit('execCommand', 'mkdir', {path: path, mode: mode}, function(data){
+            //callback(data);
+            console.log(data);
+        });
         return;
     }
 
