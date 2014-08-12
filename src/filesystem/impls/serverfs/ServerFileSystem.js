@@ -144,7 +144,7 @@ define(function (require, exports, module) {
      *
      * Write the given data to the file at the given path, calling back asynchronously with either an error or, optionally, the          * FileSystemStats object associated with the written file. The optional options parameter can be used to specify an encoding (default "utf8") and an octal mode (default unspecified and implementation dependent). If no file exists at the given path, a new file will be created.
      */
-    function writeFile(path, data, [options], callback){
+    function writeFile(path, data, options, callback){
 
     }
 
