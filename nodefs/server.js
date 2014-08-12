@@ -227,6 +227,21 @@ var fs = require('fs'),
         });
     }
 
+    /**
+     * unlink(path, callback)
+     */
+    function unlink(path, callback){
+        fs.unlink(path, function(err){
+            if(null === err){
+                //Console log
+                console.log("File has been removed ["+path+"]");
+            } else {
+                //Return error
+                callback(err);
+            }
+        });
+    }
+
     /** ----------------------- FS COMMANDS END -------------------- */
 
 
