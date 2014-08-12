@@ -201,6 +201,32 @@ var fs = require('fs'),
         });
     }
 
+    /**
+     * writeFile(path, data, [options], callback)
+     */
+    function writefile(path, data, options, callback){
+        if("function" === tyoeof options){
+            callback = options; //Get the callback function if the options parameter isn't set
+        }
+        fs.writeFile(path, data, options, function(err){
+             if(null === err){
+                 //Return file stats
+                 fs.stat(path, function(serr, stats){
+                    if(serr === null){
+                        //Return file stats
+                        callback(stats);
+                    } else {
+                        //Return error
+                        callback(serr);
+                    }
+                });
+             } else {
+                 //Return error
+                 callback(err);
+             }
+        });
+    }
+
     /** ----------------------- FS COMMANDS END -------------------- */
 
 
