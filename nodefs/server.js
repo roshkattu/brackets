@@ -41,6 +41,22 @@ var fs = require('fs'),
 
         //Show message that our socket has been added to the connections pool
         console.log("A new connection has been established with: "+socket.id);
+
+        /**
+         * Wait for a command from the client
+         * @param {String} command - command name to be executed
+         * @param {Object} data - json object having the function data
+         */
+        socket.on('execCommand', function(command, data, callback){
+            //Switch the command, execute it and send back the return
+            switch(command){
+                    case "mkdir":
+                        mkdir(data.path, function(response){
+                            callback(response);
+                        });
+                    break;
+            }
+        });
     });
 
 
@@ -205,7 +221,7 @@ var fs = require('fs'),
      * writeFile(path, data, [options], callback)
      */
     function writefile(path, data, options, callback){
-        if("function" === tyoeof options){
+        if("function" === typeof options){
             callback = options; //Get the callback function if the options parameter isn't set
         }
         fs.writeFile(path, data, options, function(err){
