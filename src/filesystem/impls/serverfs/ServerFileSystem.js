@@ -36,11 +36,13 @@
 define(function (require, exports, module) {
     "use strict";
 
-    var //FileUtils           = require("file/FileUtils"),
-        //FileSystemStats     = require("filesystem/FileSystemStats"),
+    var FileUtils           = require("file/FileUtils"),
+        FileSystemStats     = require("filesystem/FileSystemStats"),
         FileSystemError     = require("filesystem/FileSystemError");
-        //NodeDomain          = require("utils/NodeDomain");
 
+    /**
+     * Connect to the socket server
+     */
 
 
     /** ===========================
