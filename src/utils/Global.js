@@ -108,7 +108,15 @@ define(function (require, exports, module) {
     
     // Create empty app namespace if running in-browser
     if (!global.brackets.app) {
-        global.brackets.app = {};
+        /**
+         * If running in browser we will need to add some of the basic functions of
+         * brackets.app that are required within the application
+         */
+        global.brackets.app = {
+            getApplicationSupportDirectory: function(){
+                return '/var/www/brackets';
+            }
+        };
     }
     
     // Loading extensions requires creating new require.js contexts, which

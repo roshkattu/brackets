@@ -115,7 +115,8 @@ define(function (require, exports, module) {
             }
             
             // Always store the hash
-            this._hash = stat._hash;
+            // hack: disable this because it triggers an error
+            //this._hash = stat._hash;
             
             // Only cache data for watched files
             if (watched) {

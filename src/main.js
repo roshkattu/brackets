@@ -38,6 +38,7 @@ require.config({
         "fileSystemImpl"    : "filesystem/impls/serverfs/ServerFileSystem"
         //"fileSystemImpl"    : "filesystem/impls/appshell/AppshellFileSystem"
         //"fileSystemImpl"    : "filesystem/impls/demofs"
+        //"fileSystemImpl"    : "filesystem/impls/nodejs/NodeFileSystem"
     }
 });
 
