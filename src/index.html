@@ -31,6 +31,11 @@
 
     <!-- NOTE: All scripts must be external for Chrome App support: http://developer.chrome.com/apps/app_csp.html -->
 
+    <!-- Include the Socket.io connection -->
+    <script type="application/javascript" src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script type="application/javascript">
+        window.socket = io.connect('localhost:3000');
+    </script>
     <!-- Warn about failed cross origin requests in Chrome -->
     <script type="application/javascript" src="xorigin.js"></script>
 

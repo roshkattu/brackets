@@ -38,7 +38,9 @@ define(function (require, exports, module) {
 
     var FileUtils           = require("file/FileUtils"),
         FileSystemStats     = require("filesystem/FileSystemStats"),
-        FileSystemError     = require("filesystem/FileSystemError");
+        FileSystemError     = require("filesystem/FileSystemError"),
+        Socket              = window.socket;
+
 
     /**
      * Connect to the socket server
@@ -96,7 +98,7 @@ define(function (require, exports, module) {
      */
     function readdir(path, callback){
         //TODO
-        callback();
+        throw new Error();
     }
 
     /**
@@ -108,7 +110,7 @@ define(function (require, exports, module) {
      */
     function mkdir(path, mode, callback){
         //TODO
-        callback();
+        throw new Error();
     }
 
     /**
@@ -120,7 +122,7 @@ define(function (require, exports, module) {
      */
     function rename(oldPath, newPath, callback){
         //TODO
-        callback();
+        throw new Error();
     }
 
     /**
@@ -131,7 +133,7 @@ define(function (require, exports, module) {
      */
     function stat(path, callback){
         //TODO
-        callback();
+        throw new Error();
     }
 
     /**
@@ -143,7 +145,8 @@ define(function (require, exports, module) {
      */
     function readFile(path, options, callback){
         //TODO
-        callback();
+        console.log(path);
+        throw new Error();
     }
 
     /**
@@ -156,7 +159,7 @@ define(function (require, exports, module) {
      */
     function writeFile(path, data, options, callback){
         //TODO
-        callback();
+        throw new Error();
     }
 
     /**
@@ -167,7 +170,7 @@ define(function (require, exports, module) {
      */
     function unlink(path, callback){
         //TODO
-        callback();
+        throw new Error();
     }
 
     /**
@@ -190,7 +193,7 @@ define(function (require, exports, module) {
      */
     function watchPath(path, callback){
         //TODO
-        callback();
+        throw new Error();
     }
 
     /**
@@ -201,7 +204,7 @@ define(function (require, exports, module) {
      */
     function unwatchPath(path, callback){
         //TODO
-        callback();
+        throw new Error();
     }
 
     /**
@@ -211,7 +214,7 @@ define(function (require, exports, module) {
      */
     function unwatchAll(callback){
         //TODO
-        callback();
+        throw new Error();
     }
 
 
