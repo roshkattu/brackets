@@ -14,7 +14,10 @@ var fs = require('fs'),
      * Constants
      */
 
-    var _SERVER_PORT = 3000;
+    var _SERVER_PORT = 3000,
+        Errors = {
+            EmptyPath: "Empty path provided"
+        };
 
     /**
      * Variables
@@ -22,6 +25,8 @@ var fs = require('fs'),
 
     var _connections = []; //Keep track of nodejs connections
     var _socket = null; //Keep a copy of the current socket
+
+
 
     /**
      * Socket server logic
@@ -40,6 +45,74 @@ var fs = require('fs'),
 
 
 
+
+
+    /** ----------------------- FS COMMANDS  ----------------------- */
+
+    /**
+     * exists(path, callback)
+     */
+    function exists(path, callback){
+        //Check if path is undefined
+        if(undefined === path){
+            //Return false because the path is not set
+            callback(null, false);
+        } else {
+            //Check if the file exists
+            fs.open(path, 'r', function(err, fd){
+                if(null === err){
+                    //File can be oppened -> exists
+                    callback(null, true);
+                } else {
+                    //File cannot be oppened -> doesn't exist
+                    callback(null, false);
+                }
+            });
+        }
+    }
+
+    /**
+     * readdir(path, callback)
+     */
+    function readdir(path,callback){
+        //Check if path is undefined
+        if(undefined === path){
+            //Return false because the path is not set
+            callback(Errors.EmptyPath);
+        } else {
+            //Read the directory and return the files details
+            fs.readdir(path, function(err,files){
+                if(null === err){
+                    //Recurse the file and return file name + file stats
+                    var _files = [];
+                    var _file_stats = [];
+                    var _length = files.length;
+                    //Iterate files
+                    files.forEach(function(file, pos){
+                        /**
+                         * Append the current path to the file. Since we're only using this on linux the DIRECTORY_SEPARATOR
+                         * will always be "/"
+                         */
+                        file = path + '/' + file;
+                        var _stats = fs.statSync(file);
+                        //Push the stats within the return object
+                        _files.push(file);
+                        _file_stats.push(_stats);
+                    });
+                    callback(null, _files, _file_stats);
+                } else {
+                    //Return the error of reading the directory
+                    callback(err); // Is this ok?
+                }
+            });
+        }
+    }
+
+    /** ----------------------- FS COMMANDS END -------------------- */
+
+
+
+
     /**
      * Start the server on our defined _EXPRESS_PORT
      *
@@ -47,5 +120,5 @@ var fs = require('fs'),
      * Server port
      */
     http.listen(_SERVER_PORT, function(){
-       console.log("Your NodeFS Server is running on port "+ _SERVER_PORT);
+        console.log("Your NodeFS Server is running on port "+ _SERVER_PORT);
     });
