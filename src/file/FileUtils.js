@@ -121,6 +121,7 @@ define(function (require, exports, module) {
      * @return {null|LINE_ENDINGS_CRLF|LINE_ENDINGS_LF}
      */
     function sniffLineEndings(text) {
+        return LINE_ENDINGS_LF;
         var subset = text.substr(0, 1000);  // (length is clipped to text.length)
         var hasCRLF = /\r\n/.test(subset);
         var hasLF = /[^\r]\n/.test(subset);
