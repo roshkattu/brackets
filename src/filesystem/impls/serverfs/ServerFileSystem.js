@@ -199,6 +199,24 @@ define(function (require, exports, module) {
 
     }
 
+
+     // Export public API
+    exports.showOpenDialog  = showOpenDialog;
+    exports.showSaveDialog  = showSaveDialog;
+    exports.exists          = exists;
+    exports.readdir         = readdir;
+    exports.mkdir           = mkdir;
+    exports.rename          = rename;
+    exports.stat            = stat;
+    exports.readFile        = readFile;
+    exports.writeFile       = writeFile;
+    exports.unlink          = unlink;
+    //exports.moveToTrash     = moveToTrash;
+    exports.initWatchers    = initWatchers;
+    exports.watchPath       = watchPath;
+    exports.unwatchPath     = unwatchPath;
+    exports.unwatchAll      = unwatchAll;
+
     /**
      * Indicates whether or not recursive watching notifications are supported
      * by the watchPath call. Currently, only Darwin supports recursive watching.
