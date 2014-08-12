@@ -1,3 +1,14 @@
+Brackets in the browser
+-----------------------
+
+This current branch implements a File System impl and the required NodeJS API in order to allow Brackets to run in a browser. The File System impl will allow brackets to read a server's "/var/www" folder and read each folder as a project.
+
+
+
+
+What is Brackets?
+------------------
+
 Welcome to Brackets! [![Build Status](https://travis-ci.org/adobe/brackets.svg?branch=master)](https://travis-ci.org/adobe/brackets)
 -------------------
 
