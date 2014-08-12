@@ -186,6 +186,21 @@ var fs = require('fs'),
         }
     }
 
+    /**
+     * rename(oldPath, newPath, callback)
+     */
+    function rename(oldPath, newPath, callback){
+        fs.rename(oldPath, newPath, function(exc){
+            if(null === exc){
+                //Console log
+                console.log("File moved; ["+oldPath+"] to ["+newPath+"]");
+            } else {
+                //Return exception
+                callback(exc);
+            }
+        });
+    }
+
     /** ----------------------- FS COMMANDS END -------------------- */
 
 
