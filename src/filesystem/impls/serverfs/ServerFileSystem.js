@@ -98,7 +98,7 @@ define(function (require, exports, module) {
      */
     function readdir(path, callback){
         //TODO
-        throw new Error();
+        return;
     }
 
     /**
@@ -110,7 +110,8 @@ define(function (require, exports, module) {
      */
     function mkdir(path, mode, callback){
         //TODO
-        throw new Error();
+        //throw new Error();
+        return;
     }
 
     /**
@@ -145,8 +146,8 @@ define(function (require, exports, module) {
      */
     function readFile(path, options, callback){
         //TODO
-        console.log(path);
-        throw new Error();
+        callback(null, ",");
+        //throw new Error();
     }
 
     /**
@@ -192,8 +193,8 @@ define(function (require, exports, module) {
      * Start providing change notifications for the file or directory at the given path, optionally calling back asynchronously with a possibly null error when the operation is complete. Notifications are provided using the changeCallback function provided by the initWatchers method. If the path is a directory, the expected behavior depends on the implementation's recursiveWatch flag: if true, notifications are expected for the entire subtree rooted at this directory; if false, notifications are expected only for the directory's immediate children.
      */
     function watchPath(path, callback){
-        //TODO
-        throw new Error();
+        //not implemented
+        callback("NOT IMPLEMENTED");
     }
 
     /**
@@ -203,8 +204,8 @@ define(function (require, exports, module) {
      * Stop providing change notifications for the file or directory at the given path and all subfolders, optionally calling back asynchronously with a possibly null error when the operation is complete. Unlike watchPath(), this is always expected to behave recursively.
      */
     function unwatchPath(path, callback){
-        //TODO
-        throw new Error();
+        //not implemented
+        callback("NOT IMPLEMENTED");
     }
 
     /**
@@ -213,8 +214,8 @@ define(function (require, exports, module) {
      * Stop providing change notifications for all previously watched files and directories, optionally calling back asynchronously with a possibly null error when the operation is complete.
      */
     function unwatchAll(callback){
-        //TODO
-        throw new Error();
+        //not implemented
+        callback("NOT IMPLEMENTED");
     }
 
 
