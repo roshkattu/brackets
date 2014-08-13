@@ -120,22 +120,16 @@ var fs = require('fs'),
      * exists(path, callback)
      */
     function exists(path, callback){
-        //Check if path is undefined
-        if(undefined === path){
-            //Return false because the path is not set
-            callback(false);
-        } else {
-            //Check if the file exists
-            fs.open(path, 'r', function(err, fd){
-                if(null === err){
-                    //File can be oppened -> exists
-                    callback(true);
-                } else {
-                    //File cannot be oppened -> doesn't exist
-                    callback(false);
-                }
-            });
-        }
+        //Check if the file exists
+        fs.open(path, 'r', function(err, fd){
+            if(null === err){
+                //File can be oppened -> exists
+                callback(null, true);
+            } else {
+                //File cannot be oppened -> doesn't exist
+                callback(null, false);
+            }
+        });
     };
 
     /**
@@ -149,13 +143,7 @@ var fs = require('fs'),
         } else {
             //Get file stats
             fs.stat(path, function(err, stats){
-                if(err === null){
-                    //Return file stats
-                    callback(stats);
-                } else {
-                    //Return error
-                    callback(err);
-                }
+                callback(err, stats)
             });
         }
     }
@@ -164,108 +152,102 @@ var fs = require('fs'),
      * readdir(path, callback)
      */
     function readdir(path,callback){
-        //Check if path is undefined
-        if(undefined === path){
-            //Return false because the path is not set
-            callback(Errors.EmptyPath);
-        } else {
-            //Read the directory and return the files details
-            fs.readdir(path, function(err,files){
-                if(null === err){
-                    //Recurse the file and return file name + file stats
-                    var _files = [];
-                    var _file_stats = [];
-                    var _length = files.length;
-                    //Iterate files
-                    files.forEach(function(file, pos){
-                        /**
-                         * Append the current path to the file. Since we're only using this on linux the DIRECTORY_SEPARATOR
-                         * will always be "/"
-                         */
-                        file = path + '/' + file;
-                        var _stats = fs.statSync(file);
-                        //Push the stats within the return object
-                        _files[pos] = file;
-                        _file_stats[pos] = _stats;
-                    });
-                    callback(err, _files, _file_stats);
-                } else {
-                    //Return the error of reading the directory
-                    callback(err); // Is this ok?
+        //Read the directory and return the files details
+        fs.readdir(path, function(err,files){
+            if(null === err){
+                //Recurse the file and return file name + file stats
+                var _files = [];
+                var _file_stats = [];
+                var _length = files.length;
+                //Check to see if there are any contents
+                if(!_length.length){
+                    callback(null, [], []);
+                    return;
                 }
-            });
-        }
+                //Iterate files
+                files.forEach(function(file, pos){
+                    /**
+                     * Append the current path to the file. Since we're only using this on linux the DIRECTORY_SEPARATOR
+                     * will always be "/"
+                     */
+                    file = path + '/' + file;
+                    var _stats = fs.statSync(file);
+                    //Push the stats within the return object
+                    _file_stats[pos] = _stats;
+                });
+                callback(err, files, _file_stats);
+            } else {
+                //Return the error of reading the directory
+                callback(err);
+                return;
+            }
+        });
     };
 
     /**
      * mkdir(path, mode, callback)
      */
     function mkdir(path, mode, callback){
-        //Check if path is undefined
-        if(undefined === path){
-            //Return false because the path is not set
-            callback(Errors.EmptyPath);
-        } else {
-            //Check typeof mode to see if the mode has been provided or not
-            if (typeof mode === "function") {
-                callback = mode;
-                mode = parseInt("0755", 8);
-            }
-            //Create the directory
-            fs.mkdir(path, mode, function(err){
-               if(null === err){
-                   //Get file stats
-                    fs.stat(path, function(err, stats){
-                        if(err === null){
-                            //Return file stats
-                            callback(stats);
-                        } else {
-                            //Return error
-                            callback(err);
-                        }
-                    });
-               } else {
-                   callback(err);//Return the error
-               }
-            });
+        //Check typeof mode to see if the mode has been provided or not
+        if (typeof mode === "function") {
+            callback = mode;
+            mode = parseInt("0755", 8);
         }
+        //Create the directory
+        fs.mkdir(path, mode, function(err){
+           if(null === err){
+               //Get file stats
+                fs.stat(path, function(err, stats){
+                    if(err === null){
+                        //Return file stats
+                        callback(err, stats);
+                    } else {
+                        //Return error
+                        callback(err);
+                    }
+                });
+           } else {
+               callback(err);//Return the error
+           }
+        });
     };
 
     /**
      * readFile(path, options, callback)
      */
     function readfile(path, options, callback){
-        //Check if path is undefined
-        if(undefined === path){
-            //Return false because the path is not set
-            callback(Errors.EmptyPath);
-        } else {
-            //Read the file and get the data
-            fs.readFile(path, function(err, data){
-                if(null === err){
-                    //Return data
-                    var _stats = fs.statSync(path);
-                    callback(data, _stats);
-                } else {
-                    //Return error
-                    callback(err, null);
-                }
-            });
-        }
+        //Read the file and get the data
+        fs.readFile(path, function(err, data){
+            if(null === err){
+                //Return data
+                fs.stat(path, function(serr, stats){
+                    if(serr === null){
+                        //Return file stats
+                        callback(data, stats);
+                    } else {
+                        //Return error
+                        callback(data, serr);
+                    }
+                });
+            } else {
+                //Return error
+                callback(err, null);
+            }
+        });
     }
 
     /**
      * rename(oldPath, newPath, callback)
      */
     function rename(oldPath, newPath, callback){
-        fs.rename(oldPath, newPath, function(exc){
+        fs.rename(oldPath, newPath, function(err){
             if(null === exc){
                 //Console log
                 console.log("File moved; ["+oldPath+"] to ["+newPath+"]");
-                callack(null);
+                callback(null);
             } else {
-                //Return exception
-                callback(exc);
+                //Return error if any
+                callback(err);
             }
         });
     }
@@ -283,15 +265,15 @@ var fs = require('fs'),
                  fs.stat(path, function(serr, stats){
                     if(serr === null){
                         //Return file stats
-                        callback(stats);
+                        callback(serr, stats, true);
                     } else {
                         //Return error
-                        callback(serr);
+                        callback(serr, null, false);
                     }
                 });
              } else {
                  //Return error
-                 callback(err);
+                 callback(err, null, false);
              }
         });
     }
@@ -304,6 +286,7 @@ var fs = require('fs'),
             if(null === err){
                 //Console log
                 console.log("File has been removed ["+path+"]");
+                callback(null);
             } else {
                 //Return error
                 callback(err);

@@ -93,8 +93,8 @@ define(function (require, exports, module) {
     function exists(path, callback){
         //Emit exists command to the nodejs server and wait for callback
         Log("Exists called: ["+path+"]");
-        Socket.emit('execCommand', 'exists', {path: path}, function(data){
-            callback(null, data);
+        Socket.emit('execCommand', 'exists', {path: path}, function(err, exist){
+            callback(err, exists);
         });
     }
 
@@ -107,8 +107,8 @@ define(function (require, exports, module) {
     function readdir(path, callback){
         //Emit readdir command to the nodejs server and wait for callback
         Log("Readdir called: ["+path+"]");
-        Socket.emit('execCommand', 'readdir', {path: path}, function(data, _files, _stats){
-            callback(data, _files, _stats);
+        Socket.emit('execCommand', 'readdir', {path: path}, function(err, _files, _stats){
+            callback(err, _files, _stats);
         });
     }
 
@@ -122,8 +122,8 @@ define(function (require, exports, module) {
     function mkdir(path, mode, callback){
         //Emit mkdir command to the nodejs server and wait for callback
         Log("MKDir called: ["+path+"], ["+mode+"]");
-        Socket.emit('execCommand', 'mkdir', {path: path, mode: mode}, function(data){
-            callback(data);
+        Socket.emit('execCommand', 'mkdir', {path: path, mode: mode}, function(err, stat){
+            callback(err, stat);
         });
     }
 
@@ -151,8 +151,21 @@ define(function (require, exports, module) {
     function stat(path, callback){
         //Emit stat command to the nodejs server and wait for callback
         Log("Stat called: ["+path+"]");
-        Socket.emit('execCommand', 'stat', {path: path}, function(data){
-            callback(data);
+        Socket.emit('execCommand', 'stat', {path: path}, function(err, stats){
+            if(err){
+                callback(err);
+            }
+            var options = {
+                isFile: stats.isFile(),
+                mtime: stats.mtime,
+                size: stats.size,
+                realPath: stats.realPath,
+                hash: stats.mtime.getTime()
+            };
+
+            var fsStats = new FileSystemStats(options);
+            console.log(fsStats);
+            callback(null, fsStats);
         });
     }
 
@@ -182,8 +195,8 @@ define(function (require, exports, module) {
     function writeFile(path, data, options, callback){
         //Emit writefile command to the nodejs server and wait for callback
         Log("Writefile called: ["+path+"]");
-        Socket.emit('execCommand', 'writefile', {path: path, data: data, options: options}, function(data){
-            callback(data);
+        Socket.emit('execCommand', 'writefile', {path: path, data: data, options: options}, function(serr, stats, created){
+            callback(serr, stats, created);
         });
     }
 
@@ -221,7 +234,7 @@ define(function (require, exports, module) {
      */
     function watchPath(path, callback){
         //not implemented
-        callback(null);
+        callback(FileSystemError.NOT_SUPPORTED);
     }
 
     /**
@@ -232,7 +245,7 @@ define(function (require, exports, module) {
      */
     function unwatchPath(path, callback){
         //not implemented
-        callback(null);
+        callback(FileSystemError.NOT_SUPPORTED);
     }
 
     /**
