@@ -1058,7 +1058,7 @@ define(function (require, exports, module) {
      */
     function _getWelcomeProjectPath() {
         if (brackets.inBrowser) {
-            return "/Getting Started";
+            return "/var/www/";
         }
 
         var initialPath = FileUtils.getNativeBracketsDirectoryPath(),
