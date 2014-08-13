@@ -29,6 +29,12 @@
 
     <link rel="icon" href="favicon.png">
 
+    <!-- INCLUDE NODEJS FS SOCKET -->
+    <script type="application/javascript" src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script>
+        window.socket = io("http://localhost:3000");
+    </script>
+
     <!-- CSS/LESS -->
 
     <!-- NOTE: All scripts must be external for Chrome App support: http://developer.chrome.com/apps/app_csp.html -->
