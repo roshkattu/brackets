@@ -234,8 +234,8 @@ define(function (require, exports, module) {
 
     
     // User-level preferences
-//    var userPrefFile = brackets.app.getApplicationSupportDirectory() + "/" + SETTINGS_FILENAME;
-    var userPrefFile = "/&&&doesnt_exist&&&/" + SETTINGS_FILENAME;
+    var userPrefFile = brackets.app.getApplicationSupportDirectory() + "/" + SETTINGS_FILENAME;
+    //var userPrefFile = "/&&&doesnt_exist&&&/" + SETTINGS_FILENAME;
 
     /**
      * @private
