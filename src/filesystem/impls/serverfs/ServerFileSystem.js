@@ -47,8 +47,18 @@ define(function (require, exports, module) {
      * Logging function
      */
     var _ENABLE_LOGGING = true; //DEFINE LOGGING
-    function Log(variable){
-        if(_ENABLE_LOGGING) console.log(variable);
+    /**
+     * 1 - message
+     * 2 - errors
+     */
+    var _LOG_LEVEL = 2;
+    function Log(variable, _level){
+        if(_level === undefined) _level = 1;
+        if(variable !== null && _level === 2) {//Log errors only if they are not null
+            console.log(variable);
+        } else {
+            if(_level <= _LOG_LEVEL && _ENABLE_LOGGING) console.log(variable);
+        }
     }
 
 
@@ -68,6 +78,7 @@ define(function (require, exports, module) {
      */
     function showOpenDialog(allowMultipleSelection, chooseDirectories, title, initialPath, fileTypes, callback){
         //TODO
+        Log("not implemented");
         alert('not implemented');
     }
 
@@ -94,6 +105,7 @@ define(function (require, exports, module) {
         //Emit exists command to the nodejs server and wait for callback
         Log("Exists called: ["+path+"]");
         Socket.emit('execCommand', 'exists', {path: path}, function(err, exist){
+            Log(err, 2);
             callback(err, exists);
         });
     }
@@ -123,6 +135,7 @@ define(function (require, exports, module) {
         //Emit mkdir command to the nodejs server and wait for callback
         Log("MKDir called: ["+path+"], ["+mode+"]");
         Socket.emit('execCommand', 'mkdir', {path: path, mode: mode}, function(err, stat){
+            Log(err, 2);
             callback(err, stat);
         });
     }
@@ -152,6 +165,7 @@ define(function (require, exports, module) {
         //Emit stat command to the nodejs server and wait for callback
         Log("Stat called: ["+path+"]");
         Socket.emit('execCommand', 'stat', {path: path}, function(err, stats){
+            Log(err, 2);
             if(err){
                 //Return error
                 callback(err);
@@ -172,6 +186,7 @@ define(function (require, exports, module) {
         //Emit readfile command to the nodejs server and wait for callback
         Log("Readfile called: ["+path+"]");
         Socket.emit('execCommand', 'readfile', {path: path, options: options}, function(err, stats){
+            Log(err, 2);
             callback(err, stats);
         });
     }
@@ -188,6 +203,7 @@ define(function (require, exports, module) {
         //Emit writefile command to the nodejs server and wait for callback
         Log("Writefile called: ["+path+"]");
         Socket.emit('execCommand', 'writefile', {path: path, data: data, options: options}, function(err, stats, created){
+            Log(err, 2);
             callback(err, stats, created);
         });
     }
