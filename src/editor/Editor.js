@@ -91,9 +91,9 @@ define(function (require, exports, module) {
         TAB_SIZE          = "tabSize",
         WORD_WRAP         = "wordWrap",
         USE_TAB_CHAR      = "useTabChar";
-    
+
     var cmOptions         = {};
-    
+
     /**
      * Constants
      * @type {number}
@@ -104,7 +104,7 @@ define(function (require, exports, module) {
         DEFAULT_TAB_SIZE        =  4,
         MAX_SPACE_UNITS         = 10,
         MAX_TAB_SIZE            = 10;
-    
+
     // Mappings from Brackets preferences to CodeMirror options
     cmOptions[CLOSE_BRACKETS]     = "autoCloseBrackets";
     cmOptions[CLOSE_TAGS]         = "autoCloseTags";
@@ -117,7 +117,7 @@ define(function (require, exports, module) {
     cmOptions[TAB_SIZE]           = "tabSize";
     cmOptions[USE_TAB_CHAR]       = "indentWithTabs";
     cmOptions[WORD_WRAP]          = "lineWrapping";
-    
+
     PreferencesManager.definePreference(CLOSE_BRACKETS,    "boolean", false);
     PreferencesManager.definePreference(CLOSE_TAGS,        "Object", { whenOpening: true, whenClosing: true, indentTags: [] });
     PreferencesManager.definePreference(HIGHLIGHT_MATCHES, "boolean", false);
@@ -134,11 +134,11 @@ define(function (require, exports, module) {
     });
     PreferencesManager.definePreference(USE_TAB_CHAR,      "boolean", false);
     PreferencesManager.definePreference(WORD_WRAP,         "boolean", true);
-    
+
     var editorOptions = Object.keys(cmOptions);
 
     /** Editor preferences */
-    
+
     /**
      * Guard flag to prevent focus() reentrancy (via blur handlers), even across Editors
      * @type {boolean}
@@ -155,7 +155,7 @@ define(function (require, exports, module) {
     /**
      * @private
      * Create a copy of the given CodeMirror position
-     * @param {!CodeMirror.Pos} pos 
+     * @param {!CodeMirror.Pos} pos
      * @return {CodeMirror.Pos}
      */
     function _copyPos(pos) {
@@ -179,7 +179,7 @@ define(function (require, exports, module) {
      * @type {Array.<Editor>}
      */
     var _instances = [];
-    
+
     /**
      * Creates a new CodeMirror editor instance bound to the given Document. The Document need not have
      * a "master" Editor realized yet, even if makeMasterEditor is false; in that case, the first time
@@ -226,7 +226,7 @@ define(function (require, exports, module) {
         this._inlineWidgets = [];
         this._inlineWidgetQueues = {};
         this._hideMarks = [];
-        
+
         this._$messagePopover = null;
         
         // Editor supplies some standard keyboard behavior extensions of its own
@@ -262,7 +262,7 @@ define(function (require, exports, module) {
                 return self._getOption(prefName);
             })
         );
-        
+
         // Create the CodeMirror instance
         // (note: CodeMirror doesn't actually require using 'new', but jslint complains without it)
         this._codeMirror = new CodeMirror(container, {
@@ -397,7 +397,7 @@ define(function (require, exports, module) {
             }
         }
     };
-    
+
     /**
      * @private
      * Handle any cursor movement in editor, including selecting and unselecting text.
@@ -406,7 +406,7 @@ define(function (require, exports, module) {
     Editor.prototype._handleCursorActivity = function (event) {
         this._updateStyleActiveLine();
     };
-    
+
     /**
      * @private
      * Handle CodeMirror key events.
@@ -427,7 +427,7 @@ define(function (require, exports, module) {
             usingTabs = instance.getOption("indentWithTabs"),
             indentUnit = instance.getOption("indentUnit"),
             edits = [];
-        
+
         _.each(selections, function (sel) {
             var indentStr = "", i, numSpaces;
             if (usingTabs) {
@@ -440,10 +440,10 @@ define(function (require, exports, module) {
             }
             edits.push({edit: {text: indentStr, start: sel.start}});
         });
-        
+
         this.document.doMultipleEdits(edits);
     };
-    
+
     /**
      * @private
      * Helper function for `_handleTabKey()` (case 3) - see comment in that function.
@@ -458,10 +458,10 @@ define(function (require, exports, module) {
         _.each(selections, function (sel) {
             lineLengths[sel.start.line] = instance.getLine(sel.start.line).length;
         });
-        
+
         // First, try to do a smart indent on all selections.
         CodeMirror.commands.indentAuto(instance);
-        
+
         // If there were no code or selection changes, then indent each selection one more indent.
         var changed = false,
             newSelections = this.getSelections();
@@ -479,12 +479,12 @@ define(function (require, exports, module) {
         } else {
             changed = true;
         }
-        
+
         if (!changed) {
             CodeMirror.commands.indentMore(instance);
         }
     };
-    
+
     /**
      * @private
      * Handle Tab key press.
@@ -492,18 +492,18 @@ define(function (require, exports, module) {
      */
     Editor.prototype._handleTabKey = function () {
         // Tab key handling is done as follows:
-        // 1. If any of the selections are multiline, just add one indent level to the 
+        // 1. If any of the selections are multiline, just add one indent level to the
         //    beginning of all lines that intersect any selection.
-        // 2. Otherwise, if any of the selections is a cursor or single-line range that 
+        // 2. Otherwise, if any of the selections is a cursor or single-line range that
         //    ends at or after the first non-whitespace character in a line:
         //    - if indentation is set to tabs, just insert a hard tab before each selection.
         //    - if indentation is set to spaces, insert the appropriate number of spaces before
         //      each selection to get to its next soft tab stop.
-        // 3. Otherwise (all selections are cursors or single-line, and are in the whitespace 
+        // 3. Otherwise (all selections are cursors or single-line, and are in the whitespace
         //    before their respective lines), try to autoindent each line based on the mode.
         //    If none of the cursors moved and no space was added, then add one indent level
         //    to the beginning of all lines.
-        
+
         // Note that in case 2, we do the "dumb" insertion even if the cursor is immediately
         // before the first non-whitespace character in a line. It might seem more convenient
         // to do autoindent in that case. However, the problem is if that line is already
@@ -527,25 +527,25 @@ define(function (require, exports, module) {
                 selectionType = "indentAtSelection";
             }
         });
-        
+
         switch (selectionType) {
         case "indentAtBeginning":
             // Case 1
             CodeMirror.commands.indentMore(instance);
             break;
-                
+
         case "indentAtSelection":
             // Case 2
             this._addIndentAtEachSelection(selections);
             break;
-                
+
         case "indentAuto":
             // Case 3
             this._autoIndentEachSelection(selections);
             break;
         }
     };
-    
+
     /**
      * @private
      * Handle left arrow, right arrow, backspace and delete keys when soft tabs are used.
@@ -555,10 +555,10 @@ define(function (require, exports, module) {
     Editor.prototype._handleSoftTabNavigation = function (direction, functionName) {
         var instance = this._codeMirror,
             overallJump = null;
-        
+
         if (!instance.getOption("indentWithTabs") && PreferencesManager.get(SOFT_TABS)) {
             var indentUnit = instance.getOption("indentUnit");
-            
+
             _.each(this.getSelections(), function (sel) {
                 if (CodeMirror.cmpPos(sel.start, sel.end) !== 0) {
                     // This is a range - it will just collapse/be deleted regardless of the jump we set, so
@@ -566,7 +566,7 @@ define(function (require, exports, module) {
                     // we want to keep looking at other ranges.)
                     return;
                 }
-                
+
                 var cursor = sel.start,
                     jump   = cursor.ch % indentUnit,
                     line   = instance.getLine(cursor.line);
@@ -597,8 +597,8 @@ define(function (require, exports, module) {
                     }
                 }
 
-                // Did we calculate a jump, and is this jump value either the first one or 
-                // consistent with all the other jumps? If so, we're good. Otherwise, bail 
+                // Did we calculate a jump, and is this jump value either the first one or
+                // consistent with all the other jumps? If so, we're good. Otherwise, bail
                 // out of the foreach, since as soon as we hit an inconsistent jump we don't
                 // have to look any further.
                 if (jump !== null &&
@@ -610,14 +610,14 @@ define(function (require, exports, module) {
                 }
             });
         }
-        
+
         if (overallJump === null) {
             // Just do the default move, which is one char in the given direction.
             overallJump = direction;
         }
         instance[functionName](overallJump, "char");
     };
-    
+
     /**
      * Determine the mode to use from the document's language
      * Uses "text/plain" if the language does not define a mode
@@ -886,7 +886,7 @@ define(function (require, exports, module) {
 
         PerfUtils.addMeasurement(perfTimerName);
     };
-    
+
     /**
      * Gets the current cursor position within the editor.
      * @param {boolean} expandTabs  If true, return the actual visual column number instead of the character offset in
@@ -969,7 +969,7 @@ define(function (require, exports, module) {
         }
         return i;
     };
-    
+
     /**
      * Sets the cursor position within the editor. Removes any selection.
      * @param {number} line  The 0 based line number.
@@ -1091,26 +1091,26 @@ define(function (require, exports, module) {
             return {start: _copyPos(anchorPos), end: _copyPos(headPos), reversed: false};
         }
     }
-    
+
     /**
      * Gets the current selection; if there is more than one selection, returns the primary selection
      * (generally the last one made). Start is inclusive, end is exclusive. If there is no selection,
      * returns the current cursor position as both the start and end of the range (i.e. a selection
      * of length zero). If `reversed` is set, then the head of the selection (the end of the selection
-     * that would be changed if the user extended the selection) is before the anchor. 
+     * that would be changed if the user extended the selection) is before the anchor.
      * @return {!{start:{line:number, ch:number}, end:{line:number, ch:number}}, reversed:boolean}
      */
     Editor.prototype.getSelection = function () {
         return _normalizeRange(this.getCursorPos(false, "anchor"), this.getCursorPos(false, "head"));
     };
-    
+
     /**
-     * Returns an array of current selections, nonoverlapping and sorted in document order. 
+     * Returns an array of current selections, nonoverlapping and sorted in document order.
      * Each selection is a start/end pair, with the start guaranteed to come before the end.
      * Cursors are represented as a range whose start is equal to the end.
      * If `reversed` is set, then the head of the selection
      * (the end of the selection that would be changed if the user extended the selection)
-     * is before the anchor. 
+     * is before the anchor.
      * If `primary` is set, then that selection is the primary selection.
      * @return {Array.<{start:{line:number, ch:number}, end:{line:number, ch:number}, reversed:boolean, primary:boolean}>}
      */
@@ -1127,7 +1127,7 @@ define(function (require, exports, module) {
             return result;
         });
     };
-    
+
     /**
      * Takes the given selections, and expands each selection so it encompasses whole lines. Merges
      * adjacent line selections together. Keeps track of each original selection associated with a given
@@ -1140,7 +1140,7 @@ define(function (require, exports, module) {
      *      expandEndAtStartOfLine: true if a range selection that ends at the beginning of a line should be expanded
      *          to encompass the line. Default false.
      *      mergeAdjacent: true if adjacent line ranges should be merged. Default true.
-     * @return {Array.<{selectionForEdit: {start:{line:number, ch:number}, end:{line:number, ch:number}, reversed:boolean, primary:boolean}, 
+     * @return {Array.<{selectionForEdit: {start:{line:number, ch:number}, end:{line:number, ch:number}, reversed:boolean, primary:boolean},
      *                  selectionsToTrack: Array.<{start:{line:number, ch:number}, end:{line:number, ch:number}, reversed:boolean, primary:boolean}>}>}
      *      The combined line selections. For each selection, `selectionForEdit` is the line selection, and `selectionsToTrack` is
      *      the set of original selections that combined to make up the given line selection. Note that the selectionsToTrack will
@@ -1151,13 +1151,13 @@ define(function (require, exports, module) {
         var self = this;
         options = options || {};
         _.defaults(options, { expandEndAtStartOfLine: false, mergeAdjacent: true });
-        
+
         // Combine adjacent lines with selections so they don't collide with each other, as they would
         // if we did them individually.
         var combinedSelections = [], prevSel;
         _.each(selections, function (sel) {
             var newSel = _.cloneDeep(sel);
-            
+
             // Adjust selection to encompass whole lines.
             newSel.start.ch = 0;
             // The end of the selection becomes the start of the next line, if it isn't already
@@ -1214,7 +1214,7 @@ define(function (require, exports, module) {
     Editor.prototype.setSelection = function (start, end, center, centerOptions, origin) {
         this.setSelections([{start: start, end: end || start}], center, centerOptions, origin);
     };
-    
+
     /**
      * Sets a multiple selection, with the "primary" selection (the one returned by
      * getSelection() and getCursorPos()) defaulting to the last if not specified.
@@ -1612,7 +1612,7 @@ define(function (require, exports, module) {
             }
             _removeListeners();
         }
-        
+
         // PopUpManager.removePopUp() is called either directly by this closure, or by
         // PopUpManager as a result of another popup being invoked.
         function _removeMessagePopover() {
@@ -1633,17 +1633,17 @@ define(function (require, exports, module) {
         if (this._$messagePopover) {
             _removeMessagePopover();
         }
-        
+
         // Make sure cursor is in view
         cursorPos = this.getCursorPos();
         this._codeMirror.scrollIntoView(cursorPos);
-        
+
         // Determine if arrow is above or below
         cursorCoord = this._codeMirror.charCoords(cursorPos);
-        
+
         // Assume popover height is max of 2 lines
         arrowBelow = (cursorCoord.top > 100);
-        
+
         // Text is dynamic, so build popover first so we can measure final width
         this._$messagePopover = $("<div/>").addClass("popover-message").appendTo($("body"));
         if (!arrowBelow) {
@@ -1653,19 +1653,19 @@ define(function (require, exports, module) {
         if (arrowBelow) {
             $("<div/>").addClass("arrowBelow").appendTo(this._$messagePopover);
         }
-        
+
         // Estimate where to position popover.
         top = (arrowBelow) ? cursorCoord.top - this._$messagePopover.height() - POPOVER_MARGIN
                            : cursorCoord.bottom + POPOVER_MARGIN;
         left = cursorCoord.left - (this._$messagePopover.width() / 2);
-        
+
         popoverRect = {
             top:    top,
             left:   left,
             height: this._$messagePopover.height(),
             width:  this._$messagePopover.width()
         };
-        
+
         // See if popover is clipped on any side
         clip = ViewUtils.getElementClipSize($editorHolder, popoverRect);
 
@@ -1675,10 +1675,10 @@ define(function (require, exports, module) {
         } else if (clip.right > 0) {
             left -= clip.right;
         }
-        
+
         // Popover text and arrow are positioned individually
         this._$messagePopover.css({"top": top, "left": left});
-        
+
         // Position popover arrow centered over/under cursor...
         arrowCenter = cursorCoord.left - left;
 
@@ -1713,7 +1713,7 @@ define(function (require, exports, module) {
             }
         });
     };
-    
+
     /**
      * Returns the offset of the top of the virtual scroll area relative to the browser window (not the editor
      * itself). Mainly useful for calculations related to scrollIntoView(), where you're starting with the
@@ -1911,7 +1911,7 @@ define(function (require, exports, module) {
             return startMode;
         }
     };
-    
+
     /**
      * Gets the syntax-highlighting mode for the current selection or cursor position. (The mode may
      * vary within one file due to embedded languages, e.g. JS embedded in an HTML script block). See
@@ -1949,7 +1949,7 @@ define(function (require, exports, module) {
                     // We already checked this before, so we know it's not mixed.
                     return false;
                 }
-                
+
                 var rangeMode = self.getModeForRange(sel.start, sel.end, true);
                 return (!rangeMode || rangeMode.name !== startMode.name);
             });
@@ -2024,30 +2024,30 @@ define(function (require, exports, module) {
      * A list of objects corresponding to the markers that are hiding lines in the current editor.
      */
     Editor.prototype._hideMarks = null;
-    
+
     /**
      * @private
-     * 
+     *
      * Retrieve the value of the named preference for this document.
-     * 
+     *
      * @param {string} prefName Name of preference to retrieve.
      * @return {*} current value of that pref
      */
     Editor.prototype._getOption = function (prefName) {
         return PreferencesManager.get(prefName, this.document.file.fullPath);
     };
-    
+
     /**
      * @private
-     * 
+     *
      * Updates the editor to the current value of prefName for the file being edited.
-     * 
+     *
      * @param {string} prefName Name of the preference to visibly update
      */
     Editor.prototype._updateOption = function (prefName) {
         var oldValue = this._currentOptions[prefName],
             newValue = this._getOption(prefName);
-        
+
         if (oldValue !== newValue) {
             this._currentOptions[prefName] = newValue;
             
@@ -2076,7 +2076,7 @@ define(function (require, exports, module) {
     
     /**
      * @private
-     * 
+     *
      * Used to ensure that "style active line" is turned off when there is a selection.
      */
     Editor.prototype._updateStyleActiveLine = function () {
@@ -2236,7 +2236,7 @@ define(function (require, exports, module) {
     Editor.getWordWrap = function (fullPath) {
         return PreferencesManager.get(WORD_WRAP, fullPath);
     };
-    
+
     /**
      * @private
      * Toggles the left padding of all code editors.  Used to provide more

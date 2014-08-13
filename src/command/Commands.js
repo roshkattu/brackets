@@ -29,7 +29,7 @@ define(function (require, exports, module) {
     "use strict";
     
     var DeprecationWarning = require("utils/DeprecationWarning");
-    
+
     /**
      * @private
      * Create a deprecation warning and action for updated Command constants
@@ -39,7 +39,7 @@ define(function (require, exports, module) {
     function _deprecateCommand(oldConstant, newConstant) {
         var warning     = "Use Commands." + newConstant + " instead of Commands." + oldConstant,
             newValue    = exports[newConstant];
-        
+
         Object.defineProperty(exports, oldConstant, {
             get: function () {
                 DeprecationWarning.deprecationWarning(warning, true);
@@ -47,11 +47,11 @@ define(function (require, exports, module) {
             }
         });
     }
-    
+
     /**
      * List of constants for global command IDs.
      */
-    
+
     // FILE
     exports.FILE_NEW_UNTITLED           = "file.newDoc";                // DocumentCommandHandlers.js   handleFileNew()
     exports.FILE_NEW                    = "file.newFile";               // DocumentCommandHandlers.js   handleFileNewInProject()
@@ -105,7 +105,7 @@ define(function (require, exports, module) {
     exports.EDIT_OPEN_LINE_BELOW        = "edit.openLineBelow";         // EditorCommandHandlers.js     openLineBelow()
     exports.TOGGLE_CLOSE_BRACKETS       = "edit.autoCloseBrackets";     // EditorOptionHandlers.js      _getToggler()
     exports.SHOW_CODE_HINTS             = "edit.showCodeHints";         // CodeHintManager.js           _startNewSession()
-    
+
     // FIND
     exports.CMD_FIND                    = "cmd.find";                   // FindReplace.js               _launchFind()
     exports.CMD_FIND_IN_FILES           = "cmd.findInFiles";            // FindInFilesUI.js             _showFindBar()
@@ -120,7 +120,7 @@ define(function (require, exports, module) {
     exports.CMD_REPLACE_IN_FILES        = "cmd.replaceInFiles";         // FindInFilesUI.js             _showReplaceBar()
     exports.CMD_REPLACE_IN_SELECTED     = "cmd.replaceInSelected";      // FindInFilesUI.js             _showReplaceBarForSubtree()
     exports.CMD_REPLACE_IN_SUBTREE      = "cmd.replaceInSubtree";       // FindInFilesUI.js             _showReplaceBarForSubtree()
-    
+
     // VIEW
     exports.CMD_THEMES_OPEN_SETTINGS    = "view.themesOpenSetting";     // MenuCommands.js              Settings.open()
     exports.VIEW_HIDE_SIDEBAR           = "view.hideSidebar";           // SidebarView.js               toggle()
@@ -153,7 +153,7 @@ define(function (require, exports, module) {
     exports.QUICK_EDIT_NEXT_MATCH       = "navigate.nextMatch";         // MultiRangeInlineEditor.js    _nextRange()
     exports.QUICK_EDIT_PREV_MATCH       = "navigate.previousMatch";     // MultiRangeInlineEditor.js    _previousRange()
     exports.CSS_QUICK_EDIT_NEW_RULE     = "navigate.newRule";           // CSSInlineEditor.js           _handleNewRule()
-    
+
     // HELP
     exports.HELP_CHECK_FOR_UPDATE       = "help.checkForUpdate";        // HelpCommandHandlers.js       _handleCheckForUpdates()
     exports.HELP_HOW_TO_USE_BRACKETS    = "help.howToUseBrackets";      // HelpCommandHandlers.js       _handleLinkMenuItem()
@@ -167,7 +167,7 @@ define(function (require, exports, module) {
     
     // File shell callbacks - string must MATCH string in native code (appshell/command_callbacks.h)
     exports.HELP_ABOUT                  = "help.about";                 // HelpCommandHandlers.js       _handleAboutDialog()
-    
+
     // APP
     exports.APP_RELOAD                  = "app.reload";                 // DocumentCommandHandlers.js   handleReload()
     exports.APP_RELOAD_WITHOUT_EXTS     = "app.reload_without_exts";    // DocumentCommandHandlers.js   handleReloadWithoutExts()
@@ -175,7 +175,7 @@ define(function (require, exports, module) {
     // File shell callbacks - string must MATCH string in native code (appshell/command_callbacks.h)
     exports.APP_ABORT_QUIT              = "app.abort_quit";             // DocumentCommandHandlers.js   handleAbortQuit()
     exports.APP_BEFORE_MENUPOPUP        = "app.before_menupopup";       // DocumentCommandHandlers.js   handleBeforeMenuPopup()
-    
+
     // DEPRECATED: Edit commands that were moved from the Edit Menu to the Find Menu
     _deprecateCommand("EDIT_FIND",                  "CMD_FIND");
     _deprecateCommand("EDIT_FIND_IN_SELECTED",      "CMD_FIND_IN_SELECTED");

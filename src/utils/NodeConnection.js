@@ -472,7 +472,7 @@ define(function (require, exports, module) {
             if (m.message.domain === "base" && m.message.event === "newDomains") {
                 this._refreshInterface();
             }
-            
+
             // Event type for backwards compatibility for original design: "domain.event"
             $this.triggerHandler(m.message.domain + "." + m.message.event,
                                    m.message.parameters);

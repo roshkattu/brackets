@@ -105,7 +105,7 @@ define(function LiveDevelopment(require, exports, module) {
 
     // Agents
     var CSSAgent = require("LiveDevelopment/Agents/CSSAgent");
-    
+
     var agents = {
         "console"   : require("LiveDevelopment/Agents/ConsoleAgent"),
         "remote"    : require("LiveDevelopment/Agents/RemoteAgent"),
@@ -157,19 +157,19 @@ define(function LiveDevelopment(require, exports, module) {
      * @type {HTMLDocument}
      */
     var _liveDocument;
-    
+
     /**
      * Related Live Documents
      * @type {Object.<string: (HTMLDocument|CSSDocument)>}
      */
     var _relatedDocuments = {};
-    
+
     /**
      * Promise returned for each call to open()
      * @type {jQuery.Deferred}
      */
     var _openDeferred;
-    
+
     /**
      * Promise returned for each call to close()
      * @type {jQuery.Deferred}
@@ -269,14 +269,14 @@ define(function LiveDevelopment(require, exports, module) {
     function _closeDocument(liveDocument) {
         _doClearErrors(liveDocument);
         liveDocument.close();
-        
+
         if (liveDocument.editor) {
             $(liveDocument.editor).off(".livedev");
         }
-        
+
         $(liveDocument).off(".livedev");
     }
-    
+
     /**
      * Removes the given CSS/JSDocument from _relatedDocuments. Signals that the
      * given file is no longer associated with the HTML document that is live (e.g.
@@ -286,14 +286,14 @@ define(function LiveDevelopment(require, exports, module) {
         if (_relatedDocuments[liveDoc.doc.url]) {
             delete _relatedDocuments[liveDoc.doc.url];
         }
-            
+
         if (_server) {
             _server.remove(liveDoc);
         }
-        
+
         _closeDocument(liveDoc);
     }
-    
+
     /**
      * Update the status. Triggers a statusChange event.
      * @param {number} status new status
@@ -406,7 +406,7 @@ define(function LiveDevelopment(require, exports, module) {
         _liveDocument = _createDocument(doc, doc._masterEditor);
         _server.add(_liveDocument);
     }
-    
+
     /** Enable an agent. Takes effect next time a connection is made. Does not affect
      *  current live development sessions.
      *
@@ -467,7 +467,7 @@ define(function LiveDevelopment(require, exports, module) {
         // Show the message, but include the error object for further information (e.g. error code)
         console.error(message, error, msgData);
     }
-    
+
     function _styleSheetAdded(event, url) {
         var path = _server && _server.urlToPath(url),
             exists = !!_relatedDocuments[url];
@@ -568,12 +568,12 @@ define(function LiveDevelopment(require, exports, module) {
         if (_loadAgentsPromise) {
             return _loadAgentsPromise;
         }
-        
+
         var result = new $.Deferred(),
             promises = [],
             enableAgentsPromise,
             allAgentsPromise;
-        
+
         _loadAgentsPromise = result.promise();
 
         _setStatus(STATUS_LOADING_AGENTS);
@@ -601,7 +601,7 @@ define(function LiveDevelopment(require, exports, module) {
                 if (_docIsOutOfSync(doc)) {
                     status = STATUS_OUT_OF_SYNC;
                 }
-                
+
                 _setStatus(status);
                 result.resolve();
             } else {
@@ -843,7 +843,7 @@ define(function LiveDevelopment(require, exports, module) {
                 _closeDeferred.resolve();
             });
         }
-        
+
         if (_isPromisePending(_openDeferred)) {
             // Reject calls to open if requests are still pending
             _openDeferred.reject();
@@ -923,7 +923,7 @@ define(function LiveDevelopment(require, exports, module) {
         }
 
         unloadAgents();
-        
+
         // Clear any existing related documents before we reload the agents.
         // We need to recreate them for the reloaded document due to some
         // desirable side-effects (see #7606). Eventually, we should simplify
@@ -1420,19 +1420,19 @@ define(function LiveDevelopment(require, exports, module) {
     /** Initialize the LiveDevelopment Session */
     function init(theConfig) {
         exports.config = theConfig;
-        
+
         $(Inspector).on("error", _onError);
         $(Inspector.Inspector).on("detached", _onDetached);
 
         // Only listen for styleSheetAdded
         // We may get interim added/removed events when pushing incremental updates
         $(CSSAgent).on("styleSheetAdded.livedev", _styleSheetAdded);
-        
+
         $(DocumentManager).on("currentDocumentChange", _onDocumentChange)
             .on("documentSaved", _onDocumentSaved)
             .on("dirtyFlagChange", _onDirtyFlagChange);
         $(ProjectManager).on("beforeProjectClose beforeAppClose", close);
-        
+
         // Register user defined server provider
         LiveDevServerManager.registerServer({ create: _createUserServer }, 99);
         LiveDevServerManager.registerServer({ create: _createFileServer }, 0);

@@ -40,7 +40,7 @@ define(function (require, exports, module) {
      * @type {?function(string, FileSystemStats=)}
      */
     var _changeCallback;
-    
+
     /**
      * Callback to notify FileSystem if watchers stop working entirely
      * @type {?function()}
@@ -49,7 +49,7 @@ define(function (require, exports, module) {
     
     /** Timeout used to batch up file watcher changes (setTimeout() return value) */
     var _changeTimeout;
-    
+
     /**
      * Pending file watcher changes - map from fullPath to flag indicating whether we need to pass stats
      * to _changeCallback() for this path.
@@ -64,8 +64,8 @@ define(function (require, exports, module) {
         _nodeDomain     = new NodeDomain("fileWatcher", _domainPath);
     
     var _isRunningOnWindowsXP = navigator.userAgent.indexOf("Windows NT 5.") >= 0;
-    
-    
+
+
     // If the connection closes, notify the FileSystem that watchers have gone offline.
     $(_nodeDomain.connection).on("close", function (event, promise) {
         if (_offlineCallback) {
@@ -450,7 +450,7 @@ define(function (require, exports, module) {
                             callback(FileSystemError.CONTENTS_MODIFIED);
                             return;
                         }
-                    
+
                         _finishWrite(false);
                     });
                     return;
@@ -511,7 +511,7 @@ define(function (require, exports, module) {
     function initWatchers(changeCallback, offlineCallback) {
         _changeCallback = changeCallback;
         _offlineCallback = offlineCallback;
-        
+
         if (_isRunningOnWindowsXP && _offlineCallback) {
             _offlineCallback();
         }

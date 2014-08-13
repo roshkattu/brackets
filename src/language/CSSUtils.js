@@ -84,19 +84,19 @@ define(function (require, exports, module) {
      * @return {boolean} true if the context is in property value
      */
     function _isInPropValue(ctx) {
-        
+
         function isInsideParens(context) {
             if (context.type !== "parens" || !context.prev) {
                 return false;
             }
-                                                             
+
             if (context.prev.type === "prop") {
                 return true;
             }
-            
+
             return isInsideParens(context.prev);
         }
-        
+
         var state;
         if (!ctx || !ctx.token || !ctx.token.state || ctx.token.type === "comment") {
             return false;
@@ -173,8 +173,8 @@ define(function (require, exports, module) {
     /**
      * @private
      * Scan backwards to check for any prefix if the current context is property name.
-     * If the current context is in a prefix (either 'meta' or '-'), then scan forwards 
-     * to collect the entire property name. Return the name of the property in the CSS 
+     * If the current context is in a prefix (either 'meta' or '-'), then scan forwards
+     * to collect the entire property name. Return the name of the property in the CSS
      * context info object if there is one that seems to be valid. Return an empty context
      * info when we find an invalid one.
      *
@@ -193,7 +193,7 @@ define(function (require, exports, module) {
             offset = TokenUtils.offsetInToken(ctx),
             tokenString = ctx.token.string,
             excludedCharacters = [";", "{", "}"];
-        
+
         if (ctx.token.type === "property" || ctx.token.type === "property error" ||
                 ctx.token.type === "tag") {
             propName = tokenString;
@@ -223,7 +223,7 @@ define(function (require, exports, module) {
             }
         }
 
-        // If we're in the property name context but not in an existing property name, 
+        // If we're in the property name context but not in an existing property name,
         // then reset offset to zero.
         if (propName === "") {
             offset = 0;
@@ -231,7 +231,7 @@ define(function (require, exports, module) {
 
         return createInfo(PROP_NAME, offset, propName);
     }
-    
+
     /**
      * @private
      * Scans backwards from the current context and returns the name of the property if there is 
@@ -370,29 +370,29 @@ define(function (require, exports, module) {
     function _getRangeForPropValue(startCtx, endCtx) {
         var range = { "start": {},
                       "end": {} };
-        
+
         // Skip the ":" and any leading whitespace
         while (TokenUtils.moveNextToken(startCtx)) {
             if (/\S/.test(startCtx.token.string)) {
                 break;
             }
         }
-        
+
         // Skip the trailing whitespace and property separators.
         while (endCtx.token.string === ";" || endCtx.token.string === "}" ||
                 !/\S/.test(endCtx.token.string)) {
             TokenUtils.movePrevToken(endCtx);
         }
-        
+
         range.start = _.clone(startCtx.pos);
         range.start.ch = startCtx.token.start;
-        
+
         range.end = _.clone(endCtx.pos);
         range.end.ch = endCtx.token.end;
-        
+
         return range;
     }
-    
+
     /**
      * @private
      * Returns a context info object for the current CSS style rule
@@ -481,7 +481,7 @@ define(function (require, exports, module) {
             range = { "start": _.clone(ctx.pos),
                       "end": _.clone(ctx.pos) };
         }
-        
+
         // If current index is more than the propValues size, then the cursor is 
         // at the end of the existing property values and is ready for adding another one.
         if (index === propValues.length) {

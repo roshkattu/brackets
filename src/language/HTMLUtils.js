@@ -39,7 +39,7 @@ define(function (require, exports, module) {
     
     // Regular expression for token types with "tag" prefixed
     var tagPrefixedRegExp = /^tag/;
-    
+
    /**
      * @private
      * Sometimes as attr values are getting typed, if the quotes aren't balanced yet
@@ -120,7 +120,7 @@ define(function (require, exports, module) {
         if (ctx.token.type === "tag bracket") {
             return innerModeData.state.tagName;
         }
-        
+
         // If the ctx is inside the tag name of an end tag, innerModeData.state.tagName is
         // undefined. So return token string as the tag name.
         return innerModeData.state.tagName || ctx.token.string;
@@ -429,7 +429,7 @@ define(function (require, exports, module) {
             if (ctx.token.string === ">" || ctx.token.string === "/>") {
                 return createTagInfo();
             }
-            
+
             // Make sure the cursor is not after an equal sign or a quote before we report the context as a tag.
             if (ctx.token.string !== "=" && ctx.token.string.match(/^["']/) === null) {
                 if (!tokenType) {
@@ -442,7 +442,7 @@ define(function (require, exports, module) {
                         } else {
                             offset = 0;
                         }
-                        // If the cursor is right after the "<" or "</", then 
+                        // If the cursor is right after the "<" or "</", then
                         // move context to next one so that _extractTagName
                         // call below can get the tag name if there is one.
                         if (offset === 0) {

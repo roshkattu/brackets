@@ -144,7 +144,7 @@ define(function HTMLDocumentModule(require, exports, module) {
     HTMLDocument.prototype.attachToEditor = function (editor) {
         var self = this;
         this.editor = editor;
-        
+
         // Performance optimization to use closures instead of Function.bind()
         // to improve responsiveness during cursor movement and keyboard events
         $(this.editor).on("cursorActivity.HTMLDocument", function (event, editor) {
@@ -168,7 +168,7 @@ define(function HTMLDocumentModule(require, exports, module) {
             HTMLInstrumentation._markText(this.editor);
         }
     };
-    
+
     /**
      * Detach current editor
      */
@@ -355,7 +355,7 @@ define(function HTMLDocumentModule(require, exports, module) {
      */
     HTMLDocument.prototype._onActiveEditorChange = function (event, newActive, oldActive) {
         this.detachFromEditor();
-        
+
         if (newActive && newActive.document === this.doc) {
             this.attachToEditor(newActive);
         }

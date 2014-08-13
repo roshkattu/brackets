@@ -132,17 +132,17 @@ define(function (require, exports, module) {
             var projectWithoutSettings = SpecRunnerUtils.getTestPath("/spec/WorkingSetView-test-files"),
                 FileViewController = testWindow.brackets.test.FileViewController;
             waitsForDone(SpecRunnerUtils.openProjectFiles(".brackets.json"));
-            
+
             runs(function () {
                 expect(PreferencesManager.get("spaceUnits")).toBe(9);
                 waitsForDone(FileViewController.openAndSelectDocument(nonProjectFile,
                              FileViewController.WORKING_SET_VIEW));
-            
+
             });
-            
+
             runs(function () {
                 expect(PreferencesManager.get("spaceUnits")).not.toBe(9);
-                
+
                 // Changing projects will force a change in the project scope.
                 SpecRunnerUtils.loadProjectInTestWindow(projectWithoutSettings);
             });

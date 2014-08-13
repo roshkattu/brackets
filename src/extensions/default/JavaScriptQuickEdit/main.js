@@ -86,7 +86,7 @@ define(function (require, exports, module) {
         function _nonBinaryFileFilter(file) {
             return !LanguageManager.getLanguageForPath(file.fullPath).isBinary();
         }
-        
+
         ProjectManager.getAllFiles(_nonBinaryFileFilter)
             .done(function (files) {
                 JSUtils.findMatchingFunctions(functionName, files)

@@ -48,7 +48,7 @@ define(function (require, exports, module) {
      * - Esc         - dismiss list
      * - Up/Down     - change selection
      * - PageUp/Down - change selection
-     * 
+     *
      * Items whose <a> has the .disabled class do not respond to selection.
      *
      * @constructor
@@ -102,12 +102,12 @@ define(function (require, exports, module) {
                 } else if (keyCode === KeyEvent.DOM_VK_PAGE_DOWN) {
                     // Move down roughly one 'page', stopping at edges (not wrapping) (if nothing selected, selects the item one page down from the top)
                     self._tryToSelect((self._selectedIndex || 0) + self._itemsPerPage(), +1, true);
-                    
+
                 } else if (keyCode === KeyEvent.DOM_VK_HOME) {
                     self._tryToSelect(0, +1);
                 } else if (keyCode === KeyEvent.DOM_VK_END) {
                     self._tryToSelect(self.$items.length - 1, -1);
-                    
+
                 } else if (self._selectedIndex !== -1 &&
                         (keyCode === KeyEvent.DOM_VK_RETURN)) {
     
@@ -192,7 +192,7 @@ define(function (require, exports, module) {
                 index += len;
             }
         }
-        
+
         var $item = this.$items.eq(index);
         if ($item.hasClass("divider") || $item.find("a.disabled").length) {
             // Desired item is ineligible for selection: try next one
@@ -201,7 +201,7 @@ define(function (require, exports, module) {
             this._setSelectedIndex(index, true);
         }
     };
-    
+
     /**
      * @return {number} The number of items per scroll page.
      */
@@ -299,7 +299,7 @@ define(function (require, exports, module) {
                     self.scrolling = false;
                     return;
                 }
-                
+
                 var $link = $(e.currentTarget),
                     $item = $link.closest("li"),
                     viewOffset = self.$list.offset(),
@@ -314,7 +314,7 @@ define(function (require, exports, module) {
                 }
             });
     };
-    
+
     /**
      * Re-register mouse event handlers
      * @param {!jQueryObject} $list  newly updated list object
@@ -322,10 +322,10 @@ define(function (require, exports, module) {
     DropdownEventHandler.prototype.reRegisterMouseHandlers = function ($list) {
         if (this.$list) {
             this.$list.off(".dropdownEventHandler");
-            
+
             this.$list = $list;
             this.$items = $list.find("li");
-            
+
             this._registerMouseEvents();
         }
     };

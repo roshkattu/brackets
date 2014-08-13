@@ -164,7 +164,7 @@ define({
     "FIND_REPLACE_TITLE_WITH"           : "на",
     "FIND_TITLE_LABEL"                  : "Найдено",
     "FIND_TITLE_SUMMARY"                : "&mdash; {0} {1} {2} в {3}",
-	
+
     // Find in Files
     "FIND_IN_FILES_TITLE_PART1"         : "\"",
     "FIND_IN_FILES_TITLE_PART2"         : "\" найдено",
@@ -185,7 +185,7 @@ define({
     "REPLACE_IN_FILES_ERRORS"           : "Данные файлы не были изменены, т.к. они изменились после поиска или не могут быть записаны.",
     "ERROR_FETCHING_UPDATE_INFO_TITLE"  : "Ошибка при получении информации об обновлениях",
     "ERROR_FETCHING_UPDATE_INFO_MSG"    : "Ошибка при получении информации о последних обновлениях с сервера. Пожалуйста, убедитесь, что вы подключены к интернету и попробуйте снова. ",
-    
+
     // File exclusion filters
     "NEW_FILE_FILTER"                   : "Новый фильтр\u2026",
     "CLEAR_FILE_FILTER"                 : "Не исключать файлы",
@@ -336,7 +336,7 @@ define({
     "CMD_REPLACE_IN_FILES"                : "Заменить в файлах",
     "CMD_REPLACE_IN_SELECTED"             : "Заменить в выделенном файле/директории",
     "CMD_REPLACE_IN_SUBTREE"              : "Заменить в\u2026",
-	
+
     // View menu commands
     "VIEW_MENU"                           : "Вид",
     "CMD_HIDE_SIDEBAR"                    : "Скрыть боковую панель",
@@ -533,7 +533,7 @@ define({
     "LANGUAGE_SUBMIT"                           : "Перезагрузить {APP_NAME}",
     "LANGUAGE_CANCEL"                           : "Отмена",
     "LANGUAGE_SYSTEM_DEFAULT"                   : "По умолчанию",
-    
+
     // extensions/default/InlineTimingFunctionEditor
     "INLINE_TIMING_EDITOR_TIME"                 : "Время",
     "INLINE_TIMING_EDITOR_PROGRESSION"          : "Прогресс",

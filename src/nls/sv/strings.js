@@ -47,7 +47,7 @@ define({
     "FILENAMES_LEDE"                    : "Filnamn",
     "FILENAME"                          : "filnamn",
     "DIRECTORY_NAME"                    : "mappnamn",
-    
+
 
     // Project error strings
     "ERROR_LOADING_PROJECT"             : "Projektet kunde inte öppnas",
@@ -184,10 +184,10 @@ define({
     "FIND_IN_FILES_EXPAND_COLLAPSE"     : "Ctrl/Cmd-klicka för att expandera/minimera alla",
     "REPLACE_IN_FILES_ERRORS_TITLE"     : "Ersättningsfel",
     "REPLACE_IN_FILES_ERRORS"           : "Följande filer ändrades inte eftersom de förändrats efter sökningen eller inte kunde skrivas till.",
-    
+
     "ERROR_FETCHING_UPDATE_INFO_TITLE"  : "Fel vid hämtning av versioninformation",
     "ERROR_FETCHING_UPDATE_INFO_MSG"    : "Det gick inte att hämta versionsinformation från servern. Kontrollera din internetuppkoppling och försök igen.",
-    
+
     // File exclusion filters
     "NEW_FILE_FILTER"                   : "Nytt exkluderingsset\u2026",
     "CLEAR_FILE_FILTER"                 : "Exkludera inte filer",
@@ -337,7 +337,7 @@ define({
     "CMD_REPLACE_IN_FILES"                : "Ersätt i filer",
     "CMD_REPLACE_IN_SELECTED"             : "Ersätt i markerad fil/mapp",
     "CMD_REPLACE_IN_SUBTREE"              : "Ersätt i\u2026",
-    
+
     // View menu commands
     "VIEW_MENU"                           : "Visa",
     "CMD_HIDE_SIDEBAR"                    : "Dölj sidomeny",
@@ -551,7 +551,7 @@ define({
     "LANGUAGE_SUBMIT"                           : "Uppdatera {APP_NAME}",
     "LANGUAGE_CANCEL"                           : "Avbryt",
     "LANGUAGE_SYSTEM_DEFAULT"                   : "Systemstandard",
-    
+
     // extensions/default/InlineTimingFunctionEditor
     "INLINE_TIMING_EDITOR_TIME"                 : "Tid",
     "INLINE_TIMING_EDITOR_PROGRESSION"          : "Progression",

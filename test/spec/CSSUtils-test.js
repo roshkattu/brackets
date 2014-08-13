@@ -2230,11 +2230,11 @@ define(function (require, exports, module) {
     // These are tests related to Shapes editor requirements for determining the start/end range of a css property
     describe("CSS Context Info Ranges", function () {
 
-        // NOTE: check ranges for simple cases without whitespace is 
+        // NOTE: check ranges for simple cases without whitespace is
         describe("ranging for getInfoAtPos results with whitespace", function () {
             var testEditor,
                 result;
-            
+
             beforeEach(function () {
                 var mock = SpecRunnerUtils.createMockEditor(rangesTestCss, "css");
                 testEditor = mock.editor;
@@ -2256,7 +2256,7 @@ define(function (require, exports, module) {
                     line: 6
                 });
             });
-            
+
             it("should return the correct range of a prop when cursor is between characters in function args", function () {
                 result = CSSUtils.getInfoAtPos(testEditor, {ch: 26, line: 9});
                 expect(result.range.start).toEqual({
@@ -2301,7 +2301,7 @@ define(function (require, exports, module) {
                     line: 50
                 });
             });
-            
+
             it("should return the correct range of a prop when cursor is at the start of whitespace of a vendor prop value w/whitespace", function () {
                 result = CSSUtils.getInfoAtPos(testEditor, {ch: 13, line: 49});
                 expect(result.range.start).toEqual({
@@ -2315,7 +2315,7 @@ define(function (require, exports, module) {
             });
         });
     });
-    
+
     describe("CSS Regions", function () {
         beforeEach(function () {
             init(this, cssRegionsFileEntry);

@@ -122,7 +122,7 @@ div.CodeMirror-cursors {
     /* This is necessary for issue #2780. The logic for closing dropdowns depends on "click" events. Now
      * that each line has a separate div element, there is a good chance that mouseDown and mouseUp events
      * occur on different elements, which means a click event will not be sent. By disabling pointer events here,
-     * we are guaranteed that the mouse event will be captured by our parent div, and click events will 
+     * we are guaranteed that the mouse event will be captured by our parent div, and click events will
      * be dispatched.
      */
     pointer-events: none;
@@ -242,16 +242,16 @@ div.CodeMirror-cursors {
     .CodeMirror .CodeMirror-activeline-background {
         background: transparent;
     }
-    
+
     .show-line-padding & .CodeMirror .CodeMirror-activeline-background {
         box-shadow: none;
     }
-    
+
     .CodeMirror .CodeMirror-activeline .CodeMirror-gutter-elt {
         background: transparent;
         color: @accent-comment;
     }
-    
+
     .CodeMirror-focused .CodeMirror-activeline-background {
         background: @activeline-bgcolor;
     }
@@ -259,7 +259,7 @@ div.CodeMirror-cursors {
     .show-line-padding & .CodeMirror-focused .CodeMirror-activeline-background {
         box-shadow: inset @code-padding 0 0 0 @tc-gray-panel-top-bar;
     }
-    
+
     .CodeMirror-focused .CodeMirror-activeline {
         .CodeMirror-gutter-elt {
             background: @tc-gray-panel-top-bar;

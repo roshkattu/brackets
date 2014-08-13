@@ -430,7 +430,7 @@ define({
     "LANGUAGE_SUBMIT"                           : "Поново учитај \"{APP_NAME}\"",
     "LANGUAGE_CANCEL"                           : "Откажи",
     "LANGUAGE_SYSTEM_DEFAULT"                   : "језик система",
-    
+
     // extensions/default/InlineColorEditor
     "COLOR_EDITOR_CURRENT_COLOR_SWATCH_TIP"     : "Тренутна боја",
     "COLOR_EDITOR_ORIGINAL_COLOR_SWATCH_TIP"    : "Оригинална боја",

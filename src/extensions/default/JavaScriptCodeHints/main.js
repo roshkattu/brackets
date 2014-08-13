@@ -58,16 +58,16 @@ define(function (require, exports, module) {
         noHintsOnDot   = false, // preference setting to prevent hints on dot
         ignoreChange;           // can ignore next "change" event if true;
 
-    
+
     // Define the detectedExclusions which are files that have been detected to cause Tern to run out of control.
     PreferencesManager.definePreference("jscodehints.detectedExclusions", "array", []);
-    
+
     // This preference controls when Tern will time out when trying to understand files
     PreferencesManager.definePreference("jscodehints.inferenceTimeout", "number", 10000);
-    
+
     // This preference controls whether to prevent hints from being displayed when dot is typed
     PreferencesManager.definePreference("jscodehints.noHintsOnDot", "boolean", false);
-    
+
     // This preference controls whether to create a session and process all JS files or not.
     PreferencesManager.definePreference("codehint.JSHints", "boolean", true);
 
@@ -83,15 +83,15 @@ define(function (require, exports, module) {
     PreferencesManager.on("change", "codehint.JSHints", function () {
         jsHintsEnabled = _areHintsEnabled();
     });
-    
+
     PreferencesManager.on("change", "showCodeHints", function () {
         jsHintsEnabled = _areHintsEnabled();
     });
-    
+
     PreferencesManager.on("change", "jscodehints.noHintsOnDot", function () {
         noHintsOnDot = !!PreferencesManager.get("jscodehints.noHintsOnDot");
     });
-    
+
     /**
      * Sets the configuration, generally for testing/debugging use.
      * Configuration keys are merged into the current configuration.
@@ -618,7 +618,7 @@ define(function (require, exports, module) {
             if (!jsHintsEnabled) {
                 return;
             }
-            
+
             if (editor && HintUtils.isSupportedLanguage(LanguageManager.getLanguageForPath(editor.document.file.fullPath).getId())) {
                 initializeSession(editor, previousEditor);
                 $(editor)
@@ -672,7 +672,7 @@ define(function (require, exports, module) {
                         installEditorListeners(current);
                     });
             }
-            
+
             uninstallEditorListeners(previous);
             installEditorListeners(current, previous);
         }

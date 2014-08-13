@@ -72,7 +72,7 @@ var config = {};
             function _log(msg) {
                 self.postMessage({log: msg });
             }
-            
+
             /**
              * Report exception
              * @private
@@ -89,7 +89,7 @@ var config = {};
                     _log("Error thrown in tern_worker:" + e.message + "\n" + e.stack);
                 }
             }
-            
+
             /**
              * Handle a response from the main thread providing the contents of a file
              * @param {string} file - the name of the file
@@ -206,7 +206,7 @@ var config = {};
             function getJumptoDef(fileInfo, offset) {
                 var request = buildRequest(fileInfo, "definition", offset);
                 // request.query.typeOnly = true;       // FIXME: tern doesn't work exactly right yet.
-                
+
                 try {
                     ternServer.request(request, function (error, data) {
                         if (error) {
@@ -239,7 +239,7 @@ var config = {};
                     _reportError(e, fileInfo.name);
                 }
             }
-            
+
             /**
              * Get all the known properties for guessing.
              *
@@ -597,7 +597,7 @@ var config = {};
             function handlePrimePump(path) {
                 var fileInfo = createEmptyUpdate(path),
                     request = buildRequest(fileInfo, "completions", {line: 0, ch: 0});
-                
+
                 try {
                     ternServer.request(request, function (error, data) {
                         // Post a message back to the main thread
@@ -633,7 +633,7 @@ var config = {};
                     var env     = request.env,
                         files   = request.files;
                     inferenceTimeout = request.timeout;
-                    
+
                     initTernServer(env, files);
                 } else if (type === MessageIds.TERN_COMPLETIONS_MSG) {
                     offset  = request.offset;

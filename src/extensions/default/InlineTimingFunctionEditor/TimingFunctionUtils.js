@@ -33,7 +33,7 @@ define(function (require, exports, module) {
     var Strings         = brackets.getModule("strings"),
         StringUtils     = brackets.getModule("utils/StringUtils"),
         AnimationUtils  = brackets.getModule("utils/AnimationUtils");
-    
+
     /**
      * Regular expressions for matching timing functions
      * @const @type {RegExp}
@@ -94,7 +94,7 @@ define(function (require, exports, module) {
         if (match) {
             match = match[1].split(",");
         }
-        
+
         if (match) {
             for (i = 0; i <= 3; i++) {
                 if (match[i]) {
@@ -244,10 +244,10 @@ define(function (require, exports, module) {
 
         return true;
     }
-    
+
     /**
      * Show, hide or update the hint text
-     * 
+     *
      * @param {object} hint Editor.hint object of the current InlineTimingFunctionEditor
      * @param {boolean} show Whether the hint should be shown or hidden
      * @param {string=} documentCode The invalid code from the document (can be omitted when hiding)
@@ -257,7 +257,7 @@ define(function (require, exports, module) {
         if (!hint || !hint.elem) {
             return;
         }
-        
+
         if (show) {
             hint.shown = true;
             hint.animationInProgress = false;

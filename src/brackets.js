@@ -45,7 +45,7 @@ define(function (require, exports, module) {
     require("thirdparty/path-utils/path-utils.min");
     require("thirdparty/smart-auto-complete-local/jquery.smart_autocomplete");
 
-    // Load CodeMirror add-ons--these attach themselves to the CodeMirror module    
+    // Load CodeMirror add-ons--these attach themselves to the CodeMirror module
     require("thirdparty/CodeMirror2/addon/fold/xml-fold");
     require("thirdparty/CodeMirror2/addon/edit/matchtags");
     require("thirdparty/CodeMirror2/addon/edit/matchbrackets");
@@ -106,7 +106,7 @@ define(function (require, exports, module) {
         ViewCommandHandlers     = require("view/ViewCommandHandlers"),
         ThemeManager            = require("view/ThemeManager"),
         _                       = require("thirdparty/lodash");
-    
+
     // DEPRECATED: In future we want to remove the global CodeMirror, but for now we
     // expose our required CodeMirror globally so as to avoid breaking extensions in the
     // interim.
@@ -118,7 +118,7 @@ define(function (require, exports, module) {
             return CodeMirror;
         }
     });
-    
+
     // Load modules that self-register and just need to get included in the main project
     require("command/DefaultMenus");
     require("document/ChangedDocumentTracker");
@@ -207,27 +207,22 @@ define(function (require, exports, module) {
         });
     }
 
-    /**
-     * Setup Brackets
-     */
+
+    brackets.unsupportedInBrowser = function () {
+        if (brackets.inBrowser) {
+            Dialogs.showModalDialog(
+                DefaultDialogs.DIALOG_ID_ERROR,
+                Strings.ERROR_IN_BROWSER_TITLE,
+                Strings.ERROR_IN_BROWSER
+            );
+        }
+        return brackets.inBrowser;
+    };
+
     function _onReady() {
         PerfUtils.addMeasurement("window.document Ready");
 
         EditorManager.setEditorHolder($("#editor-holder"));
-
-        // Let the user know Brackets doesn't run in a web browser yet
-        if (brackets.inBrowser) {
-            /**
-             * Hack this around to disable this dialog
-             *
-            */
-            Dialogs.showModalDialog(
-                DefaultDialogs.DIALOG_ID_ERROR,
-                "Under development",
-                "This version of brackets in browser is currently under development. The file system impl is being writed and won't work by now"
-            );
-
-        }
 
         // Use quiet scrollbars if we aren't on Lion. If we're on Lion, only
         // use native scroll bars when the mouse is not plugged in or when
@@ -253,10 +248,15 @@ define(function (require, exports, module) {
             
             // Load the initial project after extensions have loaded
             extensionLoaderPromise.always(function () {
-                // Finish UI initialization
-                ViewCommandHandlers.restoreFontSize();
-                var initialProjectPath = ProjectManager.getInitialProjectPath();
-                ProjectManager.openProject(initialProjectPath).always(function () {
+
+                var initialProjectPath, initialProjectFs;
+                if (brackets.inBrowser && params.get("project")) {
+                    initialProjectPath = params.get("project");
+                    initialProjectFs = "test-server-fs";  // TODO: should this be passed in too?
+                } else {
+                    initialProjectPath = ProjectManager.getInitialProjectPath();
+                }
+                ProjectManager.openProject(initialProjectPath, initialProjectFs).always(function () {
                     _initTest();
                     
                     // If this is the first launch, and we have an index.html file in the project folder (which should be
@@ -288,7 +288,7 @@ define(function (require, exports, module) {
                         AppInit._dispatchReady(AppInit.APP_READY);
                         
                         PerfUtils.addMeasurement("Application Startup");
-                        
+
                         if (PreferencesManager._isUserScopeCorrupt()) {
                             Dialogs.showModalDialog(
                                 DefaultDialogs.DIALOG_ID_ERROR,
@@ -299,11 +299,16 @@ define(function (require, exports, module) {
                                     CommandManager.execute(Commands.FILE_OPEN_PREFERENCES);
                                 });
                         }
-                        
+
                     });
                     
                     // See if any startup files were passed to the application
-                    if (brackets.app.getPendingFilesToOpen) {
+                    if (brackets.inBrowser) {
+                        // Note: if "file" specified, "project" must have been specified too
+                        if (params.get("file")) {
+                            CommandManager.execute(Commands.FILE_OPEN, { fullPath: ProjectManager.getProjectRoot().fullPath + "/" + params.get("file") });
+                        }
+                    } else if (brackets.app.getPendingFilesToOpen) {
                         brackets.app.getPendingFilesToOpen(function (err, files) {
                             DragAndDrop.openDroppedFiles(files);
                         });
@@ -439,7 +444,7 @@ define(function (require, exports, module) {
                 node = node.parentElement;
             }
         }, true);
-        
+
         // Prevent extensions from using window.open() to insecurely load untrusted web content
         var real_windowOpen = window.open;
         window.open = function (url) {
@@ -450,7 +455,7 @@ define(function (require, exports, module) {
             return real_windowOpen.apply(window, arguments);
         };
     }
-    
+
     // Wait for view state to load.
     var viewStateTimer = PerfUtils.markStart("User viewstate loading");
     PreferencesManager._smUserScopeLoading.always(function () {

@@ -212,7 +212,7 @@
         }
     ],
     "view.hideSidebar":  [
-        {   
+        {
             "key" : "Ctrl-Alt-H"
         },
         {

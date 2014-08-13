@@ -178,7 +178,7 @@ define({
     "ERROR_TIMINGQUICKEDIT_INVALIDSYNTAX"   : "Funzione CSS Timing Quick Edit:  sintassi invalida",
     "FILE_FILTER_CLIPPED_SUFFIX"        : "e {0} in più ",
     "FILE_FILTER_INSTRUCTIONS"          : "Esclude i file e cartelle che sono uguali a qualsiasi delle seguente stringhe / sottostringhe o <a href='{0}' title='{0}'>caratteri jolly</a>.  Digita ciascun stringa su una nuova riga.",
- 
+
     // File exclusion filters
     "NEW_FILE_FILTER"                   : "Nuova regola di esclusione\u2026",
     "CLEAR_FILE_FILTER"                 : "Non escludere file",
@@ -189,8 +189,8 @@ define({
     "FILTER_COUNTING_FILES"             : "Contando i file\u2026",
     "FILTER_FILE_COUNT"                 : "Consentire {0} di {1} file {2}",
     "FILTER_FILE_COUNT_ALL"             : "Consentire tutti {0} file {1}",
-     
-      
+
+
     /**
      * ProjectManager
      */
@@ -277,7 +277,7 @@ define({
     "CMD_PASTE"                         : "Incolla",
     "CMD_SELECT_ALL"                    : "Seleziona tutto",
     "CMD_SELECT_LINE"                   : "Seleziona riga",
-    
+
     "CMD_FIND_FIELD_PLACEHOLDER"        : "Trova\u2026",
     "CMD_INDENT"                        : "Aumenta indentazione",
     "CMD_UNINDENT"                      : "Riduci indentazione",
@@ -307,7 +307,7 @@ define({
     "CMD_REPLACE_IN_FILES"                : "Sostituisci nei file",
     "CMD_REPLACE_IN_SELECTED"             : "Sostituisci nei selezionati file/cartelle",
     "CMD_REPLACE_IN_SUBTREE"              : "Sostituisci in\u2026",
-    
+
     // View menu commands
     "VIEW_MENU"                         : "Vista",
     "CMD_HIDE_SIDEBAR"                  : "Nascondi barra laterale",
@@ -389,13 +389,13 @@ define({
     "BASEURL_ERROR_HASH_DISALLOWED"     : "L’URL di base non può contenere hash come \"{0}\".",
     "BASEURL_ERROR_INVALID_CHAR"        : "I caratteri speciali come '{0}' devono essere %-encodate.",
     "BASEURL_ERROR_UNKNOWN_ERROR"       : "Trovato un carattere sconosciuto durante l'analisi del URL di base",
-    
+
     // Strings for themes-settings.html and themes-general.html
     "CURRENT_THEME"                        : "Tema attuale",
     "USE_THEME_SCROLLBARS"                 : "Utilizzare le barre di scorrimento a tema",
     "FONT_SIZE"                            : "Dimensioni carattere",
     "FONT_FAMILY"                          : "Tipo di carattere",
- 
+
     
     // CSS Quick Edit
     "BUTTON_NEW_RULE"                      : "Nuova regola",
@@ -493,7 +493,7 @@ define({
     
     // Custom Viewers
     "IMAGE_VIEWER_LARGEST_ICON"            : "il più grande",
-    
+
     /**
      * Unit names
      */
@@ -521,7 +521,7 @@ define({
     "LANGUAGE_SUBMIT"                           : "Riavvia {APP_NAME}",
     "LANGUAGE_CANCEL"                           : "Annulla",
     "LANGUAGE_SYSTEM_DEFAULT"                   : "Default di sistema",
-    
+
     // extensions/default/InlineTimingFunctionEditor
     "INLINE_TIMING_EDITOR_TIME"                 : "Tempo",
     "INLINE_TIMING_EDITOR_PROGRESSION"          : "Progresso",

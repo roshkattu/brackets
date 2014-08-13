@@ -121,7 +121,6 @@ define(function (require, exports, module) {
      * @return {null|LINE_ENDINGS_CRLF|LINE_ENDINGS_LF}
      */
     function sniffLineEndings(text) {
-        return LINE_ENDINGS_LF;
         var subset = text.substr(0, 1000);  // (length is clipped to text.length)
         var hasCRLF = /\r\n/.test(subset);
         var hasLF = /[^\r]\n/.test(subset);
@@ -329,7 +328,7 @@ define(function (require, exports, module) {
 
         return baseName.substr(idx + 1);
     }
-    
+
     /**
      * Get the file extension (excluding ".") given a path OR a bare filename.
      * Returns "" for names with no extension.
@@ -368,10 +367,10 @@ define(function (require, exports, module) {
      * Computes filename as relative to the basePath. For example:
      * basePath: /foo/bar/, filename: /foo/bar/baz.txt
      * returns: baz.txt
-     * 
+     *
      * The net effect is that the common prefix is stripped away. If basePath is not
      * a prefix of filename, then undefined is returned.
-     * 
+     *
      * @param {string} basePath Path against which we're computing the relative path
      * @param {string} filename Full path to the file for which we are computing a relative path
      * @return {string} relative path
@@ -380,7 +379,7 @@ define(function (require, exports, module) {
         if (!filename || filename.substr(0, basePath.length) !== basePath) {
             return;
         }
-        
+
         return filename.substr(basePath.length);
     }
 
@@ -459,7 +458,7 @@ define(function (require, exports, module) {
         
         return extFirst ? (cmpExt || cmpNames) : (cmpNames || cmpExt);
     }
-    
+
     /**
      * Compares two paths segment-by-segment, used for sorting. Sorts folders before files,
      * and sorts files based on `compareFilenames()`.

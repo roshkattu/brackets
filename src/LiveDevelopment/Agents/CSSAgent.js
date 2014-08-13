@@ -137,7 +137,7 @@ define(function CSSAgent(require, exports, module) {
     function clearCSSForDocument(doc) {
         return reloadCSSForDocument(doc, "");
     }
-    
+
     /**
      * @private
      * @param {jQuery.Event} event
@@ -148,7 +148,7 @@ define(function CSSAgent(require, exports, module) {
             existing        = styleForURL(res.header.sourceURL),
             styleSheetId    = res.header.styleSheetId,
             duplicate;
-        
+
         // detect duplicates
         duplicate = _.some(existing, function (styleSheet) {
             return styleSheet && styleSheet.styleSheetId === styleSheetId;
@@ -156,13 +156,13 @@ define(function CSSAgent(require, exports, module) {
         if (duplicate) {
             return;
         }
-        
+
         _styleSheetDetails[styleSheetId] = res.header;
         _styleSheetDetails[styleSheetId].canonicalizedURL = url; // canonicalized URL
-        
+
         $(exports).triggerHandler("styleSheetAdded", [url, res.header]);
     }
-    
+
     /**
      * @private
      * @param {jQuery.Event} event
@@ -170,12 +170,12 @@ define(function CSSAgent(require, exports, module) {
      */
     function _styleSheetRemoved(event, res) {
         var header = _styleSheetDetails[res.styleSheetId];
-        
+
         delete _styleSheetDetails[res.styleSheetId];
-        
+
         $(exports).triggerHandler("styleSheetRemoved", [header.canonicalizedURL, header]);
     }
-    
+
     /**
      * @private
      * Attempt to use deleted API CSS.getAllStyleSheets

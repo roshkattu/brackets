@@ -152,7 +152,7 @@ define(function (require, exports, module) {
             var popoverText = $(".text", $popover).html();
             expect(popoverText).toEqual(text);
         }
-        
+
         function getBounds(object, useOffset) {
             var left = (useOffset ? object.offset().left : parseInt(object.css("left"), 10)),
                 top = (useOffset ? object.offset().top : parseInt(object.css("top"), 10));
@@ -299,19 +299,19 @@ define(function (require, exports, module) {
 
             it("should open a type selector and show correct range including the embedded php", function () {
                 initInlineTest("test1.php", 1);
-                
+
                 runs(function () {
                     var inlineWidget = EditorManager.getCurrentFullEditor().getInlineWidgets()[0];
                     var inlinePos = inlineWidget.editor.getCursorPos();
-                    
+
                     // verify cursor position and displayed range in inline editor
                     expect(inlinePos).toEqual(infos["test1.php"].offsets[0]);
                     expect(inlineWidget.editor).toHaveInlineEditorRange(toRange(4, 8));
-                    
+
                     inlineWidget = null;
                 });
             });
-            
+
             it("should open a type selector on opening tag", function () {
                 initInlineTest("test1.html", 0);
                 
@@ -440,8 +440,8 @@ define(function (require, exports, module) {
                     inlineWidget = null;
                 });
             });
-            
-            
+
+
             it("should close, then remove the inline widget and restore focus", function () {
                 initInlineTest("test1.html", 0);
                 
@@ -519,7 +519,7 @@ define(function (require, exports, module) {
             // The call to `waits(4000)` in this test seems to dismiss the popover
             xit("should not open an inline editor when positioned on title attribute", function () {
                 initInlineTest("test1.html", 12, false);
-                
+
                 runs(function () {
                     // verify no inline editor open
                     expect(EditorManager.getCurrentFullEditor().getInlineWidgets().length).toBe(0);
@@ -536,7 +536,7 @@ define(function (require, exports, module) {
                     var $popover = testWindow.$(".popover-message");
                     expect($popover.length).toEqual(1);
                 });
-                
+
                 runs(function () {
                     // verify popover message is automatically dismissed after 2 more seconds
                     // total delay is 5 sec + 0.5 sec fade-out transition
@@ -561,7 +561,7 @@ define(function (require, exports, module) {
             
             it("should open an inline editor when positioned on the non standard html tag <to>, but no content from @keyframes", function () {
                 initInlineTest("test1.html", 18);
-                
+
                 runs(function () {
                     // verify inline editor is open for adding a new rule
                     expect(EditorManager.getCurrentFullEditor().getInlineWidgets().length).toBe(1);
@@ -607,8 +607,8 @@ define(function (require, exports, module) {
                     expect($popover.length).toEqual(1);
                 });
             });
-            
-                        
+
+
             it("should close popover message on selection change", function () {
                 var editor,
                     openFile = "test1.html";
@@ -639,7 +639,7 @@ define(function (require, exports, module) {
                     expect($popover.length).toEqual(0);
                 });
             });
-            
+
             it("should position message popover inside left edge of window", function () {
                 var $popover;
                 initInlineTest("test1.html", 11, false);
@@ -710,7 +710,7 @@ define(function (require, exports, module) {
                     toggleOption(Commands.TOGGLE_WORD_WRAP, "Toggle word-wrap");
                 });
             });
-            
+
             it("should increase size based on content", function () {
                 initInlineTest("test1.html", 1);
                 

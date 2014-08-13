@@ -703,8 +703,8 @@ define(function (require, exports, module) {
      * @param {Document} doc
      * @param {boolean=} suppressError If true, then a failure to read the file will be ignored and the
      *      resulting promise will be resolved rather than rejected.
-     * @return {$.Promise} a Promise that's resolved when done, or (if suppressError is false) 
-     *      rejected with a FileSystemError if the file cannot be read (after showing an error 
+     * @return {$.Promise} a Promise that's resolved when done, or (if suppressError is false)
+     *      rejected with a FileSystemError if the file cannot be read (after showing an error
      *      dialog to the user).
      */
     function doRevert(doc, suppressError) {
@@ -793,7 +793,7 @@ define(function (require, exports, module) {
             }
             
             doc.isSaving = true;    // mark that we're saving the document
-            
+
             // First, write document's current text to new file
             newFile = FileSystem.getFileForPath(path);
             
@@ -1141,21 +1141,28 @@ define(function (require, exports, module) {
     }
 
     /**
-     * @param {!Array.<FileEntry>} list
-     * @param {boolean} promptOnly
-     * @param {boolean} clearCurrentDoc
-     * @param {boolean} _forceClose Whether to force all the documents to close even if they have unsaved changes. For unit testing only.
+     * @return {!Array.<Document>} All Documents with unsaved changes whose files are in the given list. Empty array if no
+     * unsaved changes anywhere
      */
-    function _closeList(list, promptOnly, clearCurrentDoc, _forceClose) {
-        var result      = new $.Deferred(),
-            unsavedDocs = [];
-        
-        list.forEach(function (file) {
+    function _getUnsavedDocs(fileList) {
+        var unsavedDocs = [];
+        fileList.forEach(function (file) {
             var doc = DocumentManager.getOpenDocumentForPath(file.fullPath);
             if (doc && doc.isDirty) {
                 unsavedDocs.push(doc);
             }
         });
+        return unsavedDocs;
+    }
+
+    /**
+     * @param {!Array.<FileEntry>} list
+     * @param {boolean} promptOnly
+     * @param {boolean} clearCurrentDoc
+     */
+    function _closeList(list, promptOnly, clearCurrentDoc) {
+        var result      = new $.Deferred(),
+            unsavedDocs = _getUnsavedDocs(list);
         
         if (unsavedDocs.length === 0 || _forceClose) {
             // No unsaved changes or we want to ignore them, so we can proceed without a prompt
@@ -1236,7 +1243,7 @@ define(function (require, exports, module) {
      *          If promptOnly is true, only displays the relevant confirmation UI and does NOT
      *          actually close any documents. This is useful when chaining close-all together with
      *          other user prompts that may be cancelable.
-     *          If _forceClose is true, forces the files to close with no confirmation even if dirty. 
+     *          If _forceClose is true, forces the files to close with no confirmation even if dirty.
      *          Should only be used for unit test cleanup.
      * @return {$.Promise} a promise that is resolved when all files are closed
      */
@@ -1327,6 +1334,23 @@ define(function (require, exports, module) {
         );
     }
 
+    /** In-browser equivalent to handleFileCloseWindow(), much more constrained */
+    function handleBeforeUnload() {
+        var unsavedDocs = _getUnsavedDocs(DocumentManager.getWorkingSet());
+        if (unsavedDocs.length) {
+            var message = Strings.UNLOAD_WITH_UNSAVED + "\n";
+            unsavedDocs.forEach(function (doc) {
+                message += "\n    " + _shortTitleForDocument(doc);
+            });
+            return message;
+        }
+
+        // TODO: Do we want a message even when not unsaved? Easy to hit Ctrl+W via muscle memory right now...
+//        } else {
+//            return Strings.UNLOAD_NO_UNSAVED;
+//        }
+    }
+
     /** Show a textfield to rename whatever is currently selected in the sidebar (or current doc if nothing else selected) */
     function handleFileRename() {
         // Prefer selected sidebar item (which could be a folder)
@@ -1343,6 +1367,10 @@ define(function (require, exports, module) {
 
     /** Closes the window, then quits the app */
     function handleFileQuit(commandData) {
+        if (brackets.unsupportedInBrowser()) {
+            return;
+        }
+
         return _handleWindowGoingAway(
             commandData,
             function () {
@@ -1402,6 +1430,10 @@ define(function (require, exports, module) {
     }
 
     function handleFileDelete() {
+        if (brackets.unsupportedInBrowser()) {
+            return;
+        }
+
         var entry = ProjectManager.getSelectedItem();
         if (entry.isDirectory) {
             Dialogs.showModalDialog(
@@ -1436,6 +1468,10 @@ define(function (require, exports, module) {
 
     /** Show the selected sidebar (tree or working set) item in Finder/Explorer */
     function handleShowInOS() {
+        if (brackets.unsupportedInBrowser()) {
+            return;
+        }
+
         var entry = ProjectManager.getSelectedItem();
         if (entry) {
             brackets.app.showOSFolder(entry.fullPath, function (err) {
@@ -1515,7 +1551,7 @@ define(function (require, exports, module) {
                 if (fragment !== -1) {
                     href = href.substr(0, fragment);
                 }
-                
+
                 window.location.href = href;
             });
         }).fail(function () {
@@ -1622,7 +1658,17 @@ define(function (require, exports, module) {
     CommandManager.register(Strings.CMD_FILE_CLOSE,         Commands.FILE_CLOSE, handleFileClose);
     CommandManager.register(Strings.CMD_FILE_CLOSE_ALL,     Commands.FILE_CLOSE_ALL, handleFileCloseAll);
     CommandManager.register(Strings.CMD_FILE_CLOSE_LIST,    Commands.FILE_CLOSE_LIST, handleFileCloseList);
-    CommandManager.register(quitString,                     Commands.FILE_QUIT, handleFileQuit);
+
+    if (brackets.platform === "win") {
+        CommandManager.register(Strings.CMD_EXIT,           Commands.FILE_QUIT, handleFileQuit);
+    } else {
+        CommandManager.register(Strings.CMD_QUIT,           Commands.FILE_QUIT, handleFileQuit);
+    }
+
+    // In-browser, we can't veto closing the way we do in-shell. Best we can do is ugly confirmation dialog via beforeunload
+    if (brackets.inBrowser) {
+        $(window).on("beforeunload", handleBeforeUnload);
+    }
 
     CommandManager.register(Strings.CMD_NEXT_DOC,           Commands.NAVIGATE_NEXT_DOC, handleGoNextDoc);
     CommandManager.register(Strings.CMD_PREV_DOC,           Commands.NAVIGATE_PREV_DOC, handleGoPrevDoc);

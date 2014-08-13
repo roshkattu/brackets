@@ -125,7 +125,11 @@ define(function main(require, exports, module) {
      * Do nothing when in a connecting state (CONNECTING, LOADING_AGENTS).
      */
     function _handleGoLiveCommand() {
-        if (LiveDevelopment.status >= LiveDevelopment.STATUS_ACTIVE) {
+        if (brackets.unsupportedInBrowser()) {
+            return;
+        }
+
+        if (LiveDevelopment.status >= LiveDevelopment.STATUS_CONNECTING) {
             LiveDevelopment.close();
         } else if (LiveDevelopment.status <= LiveDevelopment.STATUS_INACTIVE) {
             if (!params.get("skipLiveDevelopmentInfo") && !PreferencesManager.getViewState("livedev.afterFirstLaunch")) {
@@ -271,7 +275,7 @@ define(function main(require, exports, module) {
             config.highlight = PreferencesManager.getViewState("livedev.highlight");
             _updateHighlightCheckmark();
         });
-    
+
     PreferencesManager.convertPreferences(module, {
         "highlight": "user livedev.highlight",
         "afterFirstLaunch": "user livedev.afterFirstLaunch"

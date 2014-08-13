@@ -35,10 +35,7 @@ require.config({
         
         // The file system implementation. Change this value to use different 
         // implementations (e.g. cloud-based storage).
-        "fileSystemImpl"    : "filesystem/impls/serverfs/ServerFileSystem"
-        //"fileSystemImpl"    : "filesystem/impls/appshell/AppshellFileSystem"
-        //"fileSystemImpl"    : "filesystem/impls/demofs"
-        //"fileSystemImpl"    : "filesystem/impls/nodejs/NodeFileSystem"
+        "fileSystemImpl"    : "filesystem/impls/demo/DemoFileSystem"
     }
 });
 

@@ -192,7 +192,7 @@ define(function (require, exports, module) {
      * @param {Editor} editor The editor to scan. 
      * @param {{line: number, ch: number}} pos The position to find the DOM marker for.
      * @param {Object=} markCache An optional cache to look up positions of existing
-     *     markers. (This avoids calling the find() operation on marks multiple times, 
+     *     markers. (This avoids calling the find() operation on marks multiple times,
      *     which is expensive.)
      * @return {number} tagID at the specified position, or -1 if there is no tag
      */

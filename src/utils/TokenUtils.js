@@ -34,7 +34,7 @@ define(function (require, exports, module) {
     "use strict";
     
     var CodeMirror = require("thirdparty/CodeMirror2/lib/codemirror");
-    
+
    /**
      * Creates a context object for the given editor and position, suitable for passing to the
      * move functions.

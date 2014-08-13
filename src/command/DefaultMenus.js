@@ -64,21 +64,21 @@ define(function (require, exports, module) {
             menu.addMenuDivider();
             menu.addMenuItem(Commands.FILE_QUIT);
         }
-        
+
         /*
          * Edit  menu
          */
         menu = Menus.addMenu(Strings.EDIT_MENU, Menus.AppMenuBar.EDIT_MENU);
         menu.addMenuItem(Commands.EDIT_UNDO);
         menu.addMenuItem(Commands.EDIT_REDO);
-        menu.addMenuDivider();
-        if (brackets.nativeMenus) {
-            // Native-only - can't programmatically trigger clipboard actions from JS menus
+        if (!brackets.inBrowser) {
+            menu.addMenuDivider();
             menu.addMenuItem(Commands.EDIT_CUT);
             menu.addMenuItem(Commands.EDIT_COPY);
             menu.addMenuItem(Commands.EDIT_PASTE);
-            menu.addMenuDivider();
         }
+        menu.addMenuDivider();
+
         menu.addMenuItem(Commands.EDIT_SELECT_ALL);
         menu.addMenuItem(Commands.EDIT_SELECT_LINE);
         menu.addMenuItem(Commands.EDIT_SPLIT_SEL_INTO_LINES);
@@ -98,7 +98,7 @@ define(function (require, exports, module) {
         menu.addMenuItem(Commands.SHOW_CODE_HINTS);
         menu.addMenuDivider();
         menu.addMenuItem(Commands.TOGGLE_CLOSE_BRACKETS);
-        
+
         /*
          * Find menu
          */
@@ -116,7 +116,7 @@ define(function (require, exports, module) {
         menu.addMenuItem(Commands.CMD_REPLACE);
         menu.addMenuItem(Commands.CMD_REPLACE_IN_FILES);
         menu.addMenuItem(Commands.CMD_REPLACE_IN_SELECTED);
-        
+
         /*
          * View menu
          */
@@ -158,14 +158,15 @@ define(function (require, exports, module) {
         menu.addMenuItem(Commands.CSS_QUICK_EDIT_NEW_RULE);
         menu.addMenuDivider();
         menu.addMenuItem(Commands.TOGGLE_QUICK_DOCS);
-        
+
         /*
          * Help menu
          */
         menu = Menus.addMenu(Strings.HELP_MENU, Menus.AppMenuBar.HELP_MENU);
-        menu.addMenuItem(Commands.HELP_CHECK_FOR_UPDATE);
-
-        menu.addMenuDivider();
+        if (!brackets.inBrowser) {  // updates in browser version don't need user intervention
+            menu.addMenuItem(Commands.HELP_CHECK_FOR_UPDATE);
+            menu.addMenuDivider();
+        }
         if (brackets.config.how_to_use_url) {
             menu.addMenuItem(Commands.HELP_HOW_TO_USE_BRACKETS);
         }
@@ -196,7 +197,7 @@ define(function (require, exports, module) {
         if (brackets.config.homepage_url) {
             menu.addMenuItem(Commands.HELP_HOMEPAGE);
         }
-        
+
         if (brackets.config.twitter_url) {
             menu.addMenuItem(Commands.HELP_TWITTER);
         }
@@ -231,8 +232,8 @@ define(function (require, exports, module) {
         working_set_cmenu.addMenuItem(Commands.CMD_REPLACE_IN_SUBTREE);
         working_set_cmenu.addMenuDivider();
         working_set_cmenu.addMenuItem(Commands.FILE_CLOSE);
-        
-        
+
+
         var working_set_settings_cmenu = Menus.registerContextMenu(Menus.ContextMenuIds.WORKING_SET_SETTINGS_MENU);
         working_set_settings_cmenu.addMenuItem(Commands.SORT_WORKINGSET_BY_ADDED);
         working_set_settings_cmenu.addMenuItem(Commands.SORT_WORKINGSET_BY_NAME);

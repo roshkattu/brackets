@@ -47,7 +47,7 @@ define({
     "FILENAMES_LEDE"                    : "nombres de archivos",
     "FILENAME"                          : "nombre de archivo",
     "DIRECTORY_NAME"                    : "nombre de directorio",
-    
+
     
     // Project error strings
     "ERROR_LOADING_PROJECT"             : "Error abriendo el proyecto",
@@ -76,7 +76,7 @@ define({
     // Application preferences corrupt error strings
     "ERROR_PREFS_CORRUPT_TITLE"         : "Error leyendo las preferencias",
     "ERROR_PREFS_CORRUPT"               : "El archivo de preferencias no tiene el formato JSON válido. El archivo se abrirá para que pueda corregir el formato. Luego deberá reiniciar {APP_NAME} para que los cambios surtan efecto.",
-    
+
     // Application error strings
     "ERROR_IN_BROWSER_TITLE"            : "Vaya... parece que {APP_NAME} todavía no funciona en navegadores.",
     "ERROR_IN_BROWSER"                  : "{APP_NAME} está desarrollado en HTML, pero por ahora funciona como una aplicación de escritorio para que puedas editar archivos en local. Por favor, utiliza la aplicación del repositorio <b>github.com/adobe/brackets-shell</b> para ejecutar {APP_NAME}.",
@@ -100,14 +100,14 @@ define({
     "LIVE_DEVELOPMENT_INFO_TITLE"       : "¡Bienvenido a la Vista Previa en Vivo!",
     "LIVE_DEVELOPMENT_INFO_MESSAGE"     : "Vista Previa en Vivo conecta {APP_NAME} con tu navegador. Lanza una vista previa de tu archivo HTML en el navegador y la actualiza a medida que modificas tu código.<br /><br />En esta versión preliminar de {APP_NAME}, Desarrollo en Vivo sólo funciona para cambios de <strong>archivos CSS o HTML</strong> y únicamente con <strong>Google Chrome</strong>. Los cambios en los archivos Javascript son recargados automáticamente cuando se guardan.<br /><br />(No volverás a ver este mensaje.)",
     "LIVE_DEVELOPMENT_TROUBLESHOOTING"  : "Para más información, consulta <a href='{0}' title='{0}'>Resolución de Problemas de conexión en Vista Previa en Vivo</a>.",
-    
+
     "LIVE_DEV_STATUS_TIP_NOT_CONNECTED" : "Vista Previa en Vivo",
     "LIVE_DEV_STATUS_TIP_PROGRESS1"     : "Vista Previa en Vivo: Conectando\u2026",
     "LIVE_DEV_STATUS_TIP_PROGRESS2"     : "Vista Previa en Vivo: Inicializando\u2026",
     "LIVE_DEV_STATUS_TIP_CONNECTED"     : "Terminar Vista Previa en Vivo",
     "LIVE_DEV_STATUS_TIP_OUT_OF_SYNC"   : "Vista Previa en Vivo (guarda el archivo para actualizar)",
     "LIVE_DEV_STATUS_TIP_SYNC_ERROR"    : "Vista Previa en Vivo (no se está actualizando debido a un error de sintaxis)",
-    
+
     "LIVE_DEV_DETACHED_REPLACED_WITH_DEVTOOLS" : "Vista Previa en Vivo se ha detenido porque se han abierto las herramientas de desarrollo",
     "LIVE_DEV_DETACHED_TARGET_CLOSED"          : "Vista Previa en Vivo se ha detenido porque se ha cerrado la página en el navegador",
     "LIVE_DEV_NAVIGATED_AWAY"                  : "Vista Previa en Vivo se ha detenido porque se ha accedido a una página que no es parte del proyecto actual",
@@ -163,7 +163,7 @@ define({
     "NO_UPDATE_TITLE"                   : "¡Estás actualizado!",
     "NO_UPDATE_MESSAGE"                 : "Estás utilizando la última versión de {APP_NAME}.",
     
-    // Find and Replace 
+    // Find and Replace
     "FIND_REPLACE_TITLE_LABEL"          : "Reemplazar",
     "FIND_REPLACE_TITLE_WITH"           : "con",
     "FIND_TITLE_LABEL"                  : "Se encontró",
@@ -184,10 +184,10 @@ define({
     "FIND_IN_FILES_EXPAND_COLLAPSE"     : "Ctrl/Cmd click para expandir/colapsar todo",
     "REPLACE_IN_FILES_ERRORS_TITLE"     : "Errores al reemplazar",
     "REPLACE_IN_FILES_ERRORS"           : "Los siguientes archivos no fueron modificados porque cambiaron después de realizar la búsqueda o no pueden ser escritos.",
-    
+
     "ERROR_FETCHING_UPDATE_INFO_TITLE"  : "Error obteniendo información sobre actualizaciones",
     "ERROR_FETCHING_UPDATE_INFO_MSG"    : "Ocurrió un problema al obtener la información sobre las últimas actualizaciones desde el servidor. Por favor, asegúrate de estar conectado a internet y vuelve a intentarlo.",
-    
+
     // File exclusion filters
     "NEW_FILE_FILTER"                   : "Nuevo conjunto de filtros\u2026",
     "CLEAR_FILE_FILTER"                 : "No excluir archivos",
@@ -201,7 +201,7 @@ define({
     "FILTER_COUNTING_FILES"             : "Contando archivos\u2026",
     "FILTER_FILE_COUNT"                 : "Permite {0} de {1} archivos {2}",
     "FILTER_FILE_COUNT_ALL"             : "Permite todos los {0} archivos {1}",
-    
+
     // Quick Edit
     "ERROR_QUICK_EDIT_PROVIDER_NOT_FOUND"   : "La Edición Rápida no esta disponible para la posición actual del cursor",
     "ERROR_CSSQUICKEDIT_BETWEENCLASSES"     : "Edición Rápida para CSS: ubique el cursor sobre el nombre de una clase",
@@ -210,10 +210,10 @@ define({
     "ERROR_CSSQUICKEDIT_UNSUPPORTEDATTR"    : "Edición Rápida para CSS: ubique el cursor sobre una etiqueta, clase o id",
     "ERROR_TIMINGQUICKEDIT_INVALIDSYNTAX"   : "Edición Rápida para Funciones de Temporización de CSS: sintaxis inválida",
     "ERROR_JSQUICKEDIT_FUNCTIONNOTFOUND"    : "Edición Rápida para JS: ubique el cursor sobre el nombre de una función",
-    
+
     // Quick Docs
     "ERROR_QUICK_DOCS_PROVIDER_NOT_FOUND"   : "La Documentación Rápida no esta disponible para la posición actual del cursor",
-    
+
     /**
      * ProjectManager
      */
@@ -337,7 +337,7 @@ define({
     "CMD_REPLACE_IN_FILES"                : "Reemplazar en archivos",
     "CMD_REPLACE_IN_SELECTED"             : "Reemplazar en el archivo/directorio seleccionado",
     "CMD_REPLACE_IN_SUBTREE"              : "Reemplazar en\u2026",
-    
+
     // View menu commands
     "VIEW_MENU"                           : "Ver",
     "CMD_HIDE_SIDEBAR"                    : "Ocultar menú lateral",
@@ -419,7 +419,7 @@ define({
     "BASEURL_ERROR_INVALID_CHAR"           : "Los caracteres especiales como '{0}' deben codificarse en formato %.",
     "BASEURL_ERROR_UNKNOWN_ERROR"          : "Error desconocido analizando la URL base",
     
-    // Strings for themes-settings.html and themes-general.html 
+    // Strings for themes-settings.html and themes-general.html
     "CURRENT_THEME"                        : "Tema actual",
     "USE_THEME_SCROLLBARS"                 : "Usar scrollbars del tema",
     "FONT_SIZE"                            : "Tamaño de letra",
@@ -524,7 +524,7 @@ define({
     
     // Custom Viewers
     "IMAGE_VIEWER_LARGEST_ICON"            : "más grande",
-    
+
     /**
      * Unit names
      */
@@ -551,7 +551,7 @@ define({
     "LANGUAGE_SUBMIT"                           : "Reiniciar {APP_NAME}",
     "LANGUAGE_CANCEL"                           : "Cancelar",
     "LANGUAGE_SYSTEM_DEFAULT"                   : "Idioma predeterminado",
-    
+
     // extensions/default/InlineTimingFunctionEditor
     "INLINE_TIMING_EDITOR_TIME"                 : "Tiempo",
     "INLINE_TIMING_EDITOR_PROGRESSION"          : "Progresión",

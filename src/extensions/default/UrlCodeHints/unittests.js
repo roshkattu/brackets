@@ -55,7 +55,7 @@ define(function (require, exports, module) {
             subfolderDirHints       = [ "chevron.png", "test.css", "test.js"],
             UrlCodeHintsDirHintsMac = [ "../data.json", "../main.js", "../testfiles/", "../unittests.js"],
             UrlCodeHintsDirHints    = [ "../testfiles/", "../data.json", "../main.js", "../unittests.js"];
-        
+
         /**
          * Returns an Editor suitable for use in isolation, given a Document.
          *
@@ -446,20 +446,20 @@ define(function (require, exports, module) {
                     hintsObj = null;
                     expectAsyncHints(UrlCodeHints.hintProvider);
                 });
-                
+
                 runs(function () {
                     expect(hintsObj).toBeTruthy();
                     expect(hintsObj.hints).toBeTruthy();
                     expect(hintsObj.hints.length).toBe(2);
                     expect(hintsObj.hints[0]).toBe("subfolder/");
-                    
+
                     // True indicates hints were remain open after insertion of folder
                     // (i.e. showing contents of inserted folder)
                     expect(UrlCodeHints.hintProvider.insertHint(hintsObj.hints[0])).toBe(true);
-                    
+
                     // Hint was added with closing double-quote and closing paren
                     expect(testDocument.getRange(pos1, pos2)).toEqual("subfolder/");
-                    
+
                     // Cursor remains inside quote
                     expect(testEditor.getCursorPos()).toEqual(pos2);
 
@@ -467,7 +467,7 @@ define(function (require, exports, module) {
                     hintsObj = null;
                     expectAsyncHints(UrlCodeHints.hintProvider);
                 });
-                
+
                 runs(function () {
                     expect(hintsObj).toBeTruthy();
                     expect(hintsObj.hints).toBeTruthy();
@@ -475,13 +475,13 @@ define(function (require, exports, module) {
 
                     // Complete path is displayed
                     expect(hintsObj.hints[0]).toBe("subfolder/chevron.png");
-                    
+
                     // False indicates hints were closed after insertion
                     expect(UrlCodeHints.hintProvider.insertHint(hintsObj.hints[0])).toBe(false);
-                    
+
                     // Hint was added
                     expect(testDocument.getRange(pos1, pos3)).toEqual("subfolder/chevron.png");
-                    
+
                     // Cursor was moved past closing double-quote and closing paren
                     expect(testEditor.getCursorPos()).toEqual(pos4);
                 });
@@ -553,20 +553,20 @@ define(function (require, exports, module) {
                     hintsObj = null;
                     expectAsyncHints(UrlCodeHints.hintProvider);
                 });
-                
+
                 runs(function () {
                     expect(hintsObj).toBeTruthy();
                     expect(hintsObj.hints).toBeTruthy();
                     expect(hintsObj.hints.length).toBe(2);
                     expect(hintsObj.hints[0]).toBe("subfolder/");
-                    
+
                     // True indicates hints were remain open after insertion of folder
                     // (i.e. showing contents of inserted folder)
                     expect(UrlCodeHints.hintProvider.insertHint(hintsObj.hints[0])).toBe(true);
-                    
+
                     // Folder was inserted (i.e. filename was not removed)
                     expect(testDocument.getRange(pos1, pos3)).toEqual("subfolder/test2.html");
-                    
+
                     // Cursor is at end of inserted folder
                     expect(testEditor.getCursorPos()).toEqual(pos2);
 
@@ -574,18 +574,18 @@ define(function (require, exports, module) {
                     hintsObj = null;
                     expectAsyncHints(UrlCodeHints.hintProvider);
                 });
-                
+
                 runs(function () {
                     expect(hintsObj).toBeTruthy();
                     expect(hintsObj.hints).toBeTruthy();
                     expect(hintsObj.hints.length).toBe(3);
-                    
+
                     // Complete path is displayed
                     expect(hintsObj.hints[0]).toBe("subfolder/chevron.png");
-                    
+
                     // False indicates hints were closed after insertion
                     expect(UrlCodeHints.hintProvider.insertHint(hintsObj.hints[0])).toBe(false);
-                    
+
                     // Filename was replaced
                     expect(testDocument.getRange(pos1, pos4)).toEqual("subfolder/chevron.png");
                 });
@@ -650,20 +650,20 @@ define(function (require, exports, module) {
                     hintsObj = null;
                     expectAsyncHints(UrlCodeHints.hintProvider);
                 });
-                
+
                 runs(function () {
                     expect(hintsObj).toBeTruthy();
                     expect(hintsObj.hints).toBeTruthy();
                     expect(hintsObj.hints.length).toBe(2);
                     expect(hintsObj.hints[0]).toBe("subfolder/");
-                    
+
                     // True indicates hints were remain open after insertion of folder
                     // (i.e. showing contents of inserted folder)
                     expect(UrlCodeHints.hintProvider.insertHint(hintsObj.hints[0])).toBe(true);
-                    
+
                     // Folder was inserted (i.e. filename was not removed)
                     expect(testDocument.getRange(pos1, pos3)).toEqual("subfolder/dummy.jpg");
-                    
+
                     // Cursor is at end of inserted folder
                     expect(testEditor.getCursorPos()).toEqual(pos2);
 
@@ -671,18 +671,18 @@ define(function (require, exports, module) {
                     hintsObj = null;
                     expectAsyncHints(UrlCodeHints.hintProvider);
                 });
-                
+
                 runs(function () {
                     expect(hintsObj).toBeTruthy();
                     expect(hintsObj.hints).toBeTruthy();
                     expect(hintsObj.hints.length).toBe(3);
-                    
+
                     // Complete path is displayed
                     expect(hintsObj.hints[0]).toBe("subfolder/chevron.png");
-                    
+
                     // False indicates hints were closed after insertion
                     expect(UrlCodeHints.hintProvider.insertHint(hintsObj.hints[0])).toBe(false);
-                    
+
                     // Filename was replaced
                     expect(testDocument.getRange(pos1, pos4)).toEqual("subfolder/chevron.png");
                 });

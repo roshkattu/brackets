@@ -197,7 +197,7 @@ define({
     "CMD_LINE_DOWN"                       : "Satırı Aşağıya Taşı",
     "CMD_TOGGLE_CLOSE_BRACKETS"           : "Parantezleri Otomatik Tamamla",
     "CMD_SHOW_CODE_HINTS"                 : "Kod İpuçlarını Göster",
-    
+
     // Search menu commands
     "FIND_MENU"                           : "Bul",
     "CMD_FIND"                            : "Bul",
@@ -307,7 +307,7 @@ define({
     "LANGUAGE_MESSAGE"                     : "Lütfen aşağıdaki dillerden istediğiniz dili seçin:",
     "LANGUAGE_SUBMIT"                      : "{APP_NAME} Yenile",
     "LANGUAGE_CANCEL"                      : "İptal",
-    
+
     // extensions/default/JSLint
     "CMD_JSLINT"                           : "JSLint Aç",
     "JSLINT_ERRORS"                        : "JSLint Hataları",

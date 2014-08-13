@@ -203,6 +203,33 @@ define(function (require, exports, module) {
         return result.promise();
     }
 
+    /**
+     * @private
+     * Loads the package.json file in the given extension folder.
+     * @param {string} folder The extension folder.
+     * @return {$.Promise} A promise object that is resolved with the parsed contents of the package.json file,
+     *     or rejected if there is no package.json or the contents are not valid JSON.
+     */
+    function _loadPackageJson(folder) {
+        if (brackets.inBrowser) {
+            return new $.Deferred().reject().promise();
+        }
+        var file = FileSystem.getFileForPath(folder + "/package.json"),
+            result = new $.Deferred();
+        FileUtils.readAsText(file)
+            .done(function (text) {
+                try {
+                    var json = JSON.parse(text);
+                    result.resolve(json);
+                } catch (e) {
+                    result.reject();
+                }
+            })
+            .fail(function () {
+                result.reject();
+            });
+        return result.promise();
+    }
 
     /**
      * @private
@@ -450,7 +477,7 @@ define(function (require, exports, module) {
         if (installationResult.keepFile === undefined) {
             installationResult.keepFile = false;
         }
-        
+
         var installationStatus = installationResult.installationStatus;
         if (installationStatus === Package.InstallationStatuses.ALREADY_INSTALLED ||
                 installationStatus === Package.InstallationStatuses.NEEDS_UPDATE ||
@@ -643,6 +670,6 @@ define(function (require, exports, module) {
     exports.LOCATION_UNKNOWN  = LOCATION_UNKNOWN;
 
     // For unit testing only
-    exports._reset          = _reset;
-    exports._setExtensions  = _setExtensions;
+    exports._reset = _reset;
+    exports._setExtensions = _setExtensions;
 });

@@ -121,7 +121,7 @@ define(function CSSDocumentModule(require, exports, module) {
         var deferred = new $.Deferred(),
             styleSheetHeader = this._getStyleSheetHeader(),
             styleSheet = getOnlyValue(styleSheetHeader);
-        
+
         if (styleSheet) {
             Inspector.CSS.getStyleSheetText(styleSheet.styleSheetId).then(function (res) {
                 deferred.resolve(res.text);
@@ -129,7 +129,7 @@ define(function CSSDocumentModule(require, exports, module) {
         } else {
             deferred.reject();
         }
-        
+
         return deferred.promise();
     };
  

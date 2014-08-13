@@ -121,7 +121,7 @@ define(function RemoteAgent(require, exports, module) {
             call("keepAlive");
         }, 1000);
     }
-    
+
     // WebInspector Event: Page.frameNavigated
     function _onFrameNavigated(event, res) {
         // res = {frame}

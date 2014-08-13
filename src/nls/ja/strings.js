@@ -47,7 +47,7 @@ define({
 	"FILENAMES_LEDE": "ファイル名",
 	"FILENAME": "ファイル名",
 	"DIRECTORY_NAME": "ディレクトリ名",
-    
+
 
     // Project error strings
 	"ERROR_LOADING_PROJECT": "プロジェクトを読み込む際にエラーが発生しました。",
@@ -135,7 +135,7 @@ define({
 	"DELETE": "削除",
 	"BUTTON_YES": "はい",
 	"BUTTON_NO": "いいえ",
-    
+
     // Find, Replace, Find in Files
 	"FIND_MATCH_INDEX": "{0} / {1}",
 	"FIND_NO_RESULTS": "該当なし",
@@ -183,10 +183,10 @@ define({
 	"FIND_IN_FILES_EXPAND_COLLAPSE": "Ctrl / Command キーをクリックしてすべて展開 / 折りたたみ",
 	"REPLACE_IN_FILES_ERRORS_TITLE": "置換エラー",
 	"REPLACE_IN_FILES_ERRORS": "次のファイルは検索の後で変更されているか、書き込むことができないため、変更されていません。",
-    
+
 	"ERROR_FETCHING_UPDATE_INFO_TITLE": "更新情報を取得する際にエラーが発生しました。",
 	"ERROR_FETCHING_UPDATE_INFO_MSG": "サーバーから最新の更新情報を取得する際にエラーが発生しました。インターネット接続を確認してリトライしてください。",
-    
+
     // File exclusion filters
 	"NEW_FILE_FILTER": "新規除外セット\u2026",
 	"CLEAR_FILE_FILTER": "ファイルを除外しない",
@@ -340,7 +340,7 @@ define({
 	"CMD_REPLACE_IN_FILES": "ファイルを横断して置換",
 	"CMD_REPLACE_IN_SELECTED": "選択したファイルまたはフォルダーで置換",
 	"CMD_REPLACE_IN_SUBTREE": "置換対象\u2026",
-    
+
     // View menu commands
 	"VIEW_MENU": "表示",
 	"CMD_HIDE_SIDEBAR": "サイドバーを隠す",
@@ -554,7 +554,7 @@ define({
 	"LANGUAGE_SUBMIT": "{APP_NAME} をリロード",
 	"LANGUAGE_CANCEL": "キャンセル",
 	"LANGUAGE_SYSTEM_DEFAULT": "システムのデフォルト",
-    
+
     // extensions/default/InlineTimingFunctionEditor
 	"INLINE_TIMING_EDITOR_TIME": "時間",
 	"INLINE_TIMING_EDITOR_PROGRESSION": "進行",

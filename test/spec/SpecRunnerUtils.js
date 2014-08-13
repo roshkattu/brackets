@@ -463,7 +463,7 @@ define(function (require, exports, module) {
         // Make sure desired button exists
         var $dismissButton = $dlg.find(".dialog-button[data-button-id='" + buttonId + "']");
         expect($dismissButton.length).toBe(1);
-        
+
         if (enableFirst) {
             // Remove the disabled prop.
             $dismissButton.prop("disabled", false);
@@ -504,7 +504,7 @@ define(function (require, exports, module) {
             
             // signals that main.js should configure RequireJS for tests
             params.put("testEnvironment", true);
-            
+
             // option to launch test window with either native or HTML menus
             if (options && options.hasOwnProperty("hasNativeMenus")) {
                 params.put("hasNativeMenus", (options.hasNativeMenus ? "true" : "false"));
@@ -522,7 +522,7 @@ define(function (require, exports, module) {
                     originalMethod.apply(_testWindow.console, arguments);
                 };
             });
-            
+
             _testWindow.isBracketsTestWindow = true;
             
             _testWindow.executeCommand = function executeCommand(cmd, args) {

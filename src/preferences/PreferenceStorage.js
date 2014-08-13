@@ -27,7 +27,7 @@
 /**
  * PreferenceStorage defines an interface for persisting preference data as
  * name/value pairs for a module or plugin.
- * 
+ *
  * @deprecated Use PreferencesManager APIs instead.
  */
 define(function (require, exports, module) {
@@ -236,14 +236,14 @@ define(function (require, exports, module) {
                 if (parts[0] === "user") {
                     var newKey = parts.length > 1 ? parts[1] : key;
                     var options = null;
-                    
+
                     if (parts.length > 2 && parts[2].indexOf("/") !== -1) {
                         var projectPath = rule.substr(rule.indexOf(parts[2]));
                         options = { location: { scope: "user",
                                                 layer: "project",
                                                 layerID: projectPath } };
                     }
-                    
+
                     manager.set(newKey, prefs[key], options);
                     convertedKeys.push(key);
                 }

@@ -129,7 +129,7 @@ module.exports = function (grunt) {
                     baseUrl: 'src',
                     optimize: 'uglify2',
                     // brackets.js should not be loaded until after polyfills defined in "utils/Compatibility"
-                    // so explicitly include it in main.js 
+                    // so explicitly include it in main.js
                     include: ["utils/Compatibility", "brackets"],
                     // TODO: Figure out how to make sourcemaps work with grunt-usemin
                     // https://github.com/yeoman/grunt-usemin/issues/30

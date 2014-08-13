@@ -152,7 +152,7 @@ define(function (require, exports, module) {
         html += "</span>";
         return html;
     }
-    
+
     /**
      * This function is registered with EditManager as an inline editor provider. It creates a CSSInlineEditor
      * when cursor is on an HTML tag name, class attribute, or id attribute, find associated
@@ -183,7 +183,7 @@ define(function (require, exports, module) {
         if (selectorResult.selectorName === "") {
             return selectorResult.reason || null;
         }
-        
+
         var selectorName = selectorResult.selectorName;
 
         var result = new $.Deferred(),
@@ -304,7 +304,7 @@ define(function (require, exports, module) {
         function _onHostEditorScroll() {
             newRuleButton.closeDropdown();
         }
-        
+
         CSSUtils.findMatchingRules(selectorName, hostEditor.document)
             .done(function (rules) {
                 var inlineEditorDeferred = new $.Deferred();
@@ -330,9 +330,9 @@ define(function (require, exports, module) {
                 _newRuleHandlers.push({inlineEditor: cssInlineEditor, handler: _handleNewRuleClick});
                 
                 $(hostEditor).on("scroll", _onHostEditorScroll);
-                
+
                 result.resolve(cssInlineEditor);
-                
+
 
                 // Now that dialog has been built, collect list of stylesheets
                 var stylesheetsPromise = _getCSSFilesInProject();
@@ -354,7 +354,7 @@ define(function (require, exports, module) {
                                 // Force focus to the button so the user can create a new rule from the keyboard.
                                 newRuleButton.$button.focus();
                             }
-                            
+
                             if (cssFileInfos.length === 1) {
                                 // Make it look & feel like a plain button in this case
                                 newRuleButton.$button.removeClass("btn-dropdown");

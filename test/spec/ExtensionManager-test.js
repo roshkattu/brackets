@@ -703,7 +703,7 @@ define(function (require, exports, module) {
                 });
             });
         });
-                
+
         describe("Local File Install", function () {
             var didReload;
 
@@ -732,7 +732,7 @@ define(function (require, exports, module) {
 
                 runs(function () {
                     spyOn(file, "unlink");
-                    
+
                     // Mock install
                     var d = $.Deferred().resolve({});
                     spyOn(Package, "installFromPath").andReturn(d.promise());
@@ -782,7 +782,7 @@ define(function (require, exports, module) {
                 });
 
                 spyOn(file, "unlink");
-                
+
                 // Mock installs to avoid calling into node ExtensionManagerDomain
                 spyOn(Package, "installFromPath").andCallFake(function () {
                     return new $.Deferred().resolve(installResult).promise();
@@ -796,10 +796,10 @@ define(function (require, exports, module) {
                     InstallExtensionDialog.updateUsingDialog(file)
                         .done(function (_result) {
                             result = _result;
-                            
+
                             // Mark for update
                             ExtensionManager.updateFromDownload(result);
-                            
+
                             dialogDeferred.resolve();
                         })
                         .fail(dialogDeferred.reject);
@@ -811,12 +811,12 @@ define(function (require, exports, module) {
                 runs(function () {
                     // InstallExtensionDialog should set keepFile=true
                     expect(result.keepFile).toBe(true);
-                    
+
                     // Run update, creates dialog DIALOG_ID_CHANGE_EXTENSIONS
                     ExtensionManagerDialog._performChanges();
                     $mockDlg.triggerHandler("buttonClick", Dialogs.DIALOG_BTN_OK);
                 });
-                
+
                 waitsFor(function () {
                     return didClose;
                 }, "DIALOG_ID_CHANGE_EXTENSIONS closed");
@@ -929,7 +929,7 @@ define(function (require, exports, module) {
                         });
                     });
                 });
-                
+
                 it("should display shortened description", function () {
                     setupViewWithMockData(ExtensionManagerViewModel.RegistryViewModel);
                     runs(function () {
@@ -943,7 +943,7 @@ define(function (require, exports, module) {
                         });
                     });
                 });
-                
+
                 it("should display owner even for installed items", function () {
                     ExtensionManager._setExtensions(JSON.parse(mockExtensionList));
                     setupViewWithMockData(ExtensionManagerViewModel.InstalledViewModel);

@@ -81,7 +81,7 @@ define(function (require, exports, module) {
                 return $node.text();
             });
         }
-        
+
         // Ask provider for hints at current cursor position; expect it to return some
         function expectHints(provider, implicitChar) {
             expect(provider.hasHints(testEditor, implicitChar)).toBe(true);
@@ -108,8 +108,8 @@ define(function (require, exports, module) {
                 expect(hintList[i]).toBe(values[i]);
             }
         }
-        
-        
+
+
         function selectHint(provider, expectedHint, implicitChar) {
             var hintList = expectHints(provider, implicitChar);
             expect(hintList.indexOf(expectedHint)).not.toBe(-1);
@@ -671,11 +671,11 @@ define(function (require, exports, module) {
             beforeEach(function () {
                 setupTest(testContentHTML, "html");
             });
-            
+
             afterEach(function () {
                 tearDownTest();
             });
-            
+
             it("should not trigger CSS property name hints with space key", function () {
                 testEditor.setCursorPos({ line: 25, ch: 11 });    // after {
                 expectNoHints(CSSCodeHints.cssPropHintProvider, " ");

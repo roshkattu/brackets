@@ -237,7 +237,7 @@ define(function (require, exports, module) {
                     editor = null;
                 });
             });
-            
+
             it("should not show code hints if there is a multiple selection", function () {
                 // minimal markup with an open '<' before IP
                 // Note: line for pos is 0-based and editor lines numbers are 1-based
@@ -264,7 +264,7 @@ define(function (require, exports, module) {
                     invokeCodeHints();
                     expectSomeHints();
                 });
-                
+
                 runs(function () {
                     editor.setSelections([
                         {start: {line: 3, ch: 1}, end: {line: 3, ch: 1}, primary: true},

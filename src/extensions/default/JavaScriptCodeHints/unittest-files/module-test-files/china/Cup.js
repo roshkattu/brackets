@@ -2,7 +2,7 @@
 /*global define, $ */
 define(function (require, exports, module) {
     "use strict";
-    
+
     function Cup() {
         this.empty = true;
     }

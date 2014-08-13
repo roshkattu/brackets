@@ -324,39 +324,39 @@ define(function (require, exports, module) {
      * Unlike $.when(), it does not call .fail() or .always() handlers on first
      * reject. The caller should take all the precaution to make sure all the
      * promises passed to this function are completed to avoid blocking.
-     * 
+     *
      * If failOnReject is set to true, promise returned by the function will be
      * rejected if at least one of the promises was rejected. The default value
      * is false, which will cause the call to this function to be always
      * successfully resolved.
-     * 
+     *
      * If timeout is specified, the promise will be rejected on timeout as per
      * Async.withTimeout.
-     * 
+     *
      * @param {!Array.<$.Promise>} promises Array of promises to wait for
      * @param {boolean=} failOnReject       Whether to reject or not if one of the promises has been rejected.
      * @param {number=} timeout             Number of milliseconds to wait until rejecting the promise
-     * 
-     * @return {$.Promise} Promise which will be completed once al the 
-     * 
+     *
+     * @return {$.Promise} Promise which will be completed once al the
+     *
      */
     function waitForAll(promises, failOnReject, timeout) {
         var masterDeferred = new $.Deferred(),
             count = 0,
             sawRejects = false;
-        
+
         if (!promises || promises.length === 0) {
             masterDeferred.resolve();
             return masterDeferred.promise();
         }
-        
+
         // set defaults if needed
         failOnReject = (failOnReject === undefined) ? false : true;
-        
+
         if (timeout !== undefined) {
             withTimeout(masterDeferred, timeout);
         }
-        
+
         promises.forEach(function (promise) {
             promise
                 .fail(function (err) {
@@ -373,10 +373,10 @@ define(function (require, exports, module) {
                     }
                 });
         });
-        
+
         return masterDeferred.promise();
     }
-    
+
     /**
      * Chains a series of synchronous and asynchronous (jQuery promise-returning) functions 
      * together, using the result of each successive function as the argument(s) to the next. 
@@ -420,7 +420,7 @@ define(function (require, exports, module) {
         
         return deferred.promise();
     }
-    
+
     /**
      * Utility for converting a method that takes (error, callback) to one that returns a promise;
      * useful for using FileSystem methods (or other Node-style API methods) in a promise-oriented

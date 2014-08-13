@@ -385,7 +385,7 @@ function _cmdDownloadFile(downloadId, url, proxy, callback) {
         callback = proxy;
         proxy = undefined;
     }
-    
+
     if (pendingDownloads[downloadId]) {
         callback(Errors.DOWNLOAD_ID_IN_USE, null);
         return;

@@ -160,7 +160,7 @@ define(function (require, exports, module) {
             bottom    = imagePos.top + $("#img-preview").height(),
             x         = targetPos.left + e.offsetX,
             y         = targetPos.top + e.offsetY;
-        
+
         // Hide image tip and guides only if the cursor is outside of the image.
         if (x < imagePos.left || x >= right ||
                 y < imagePos.top || y >= bottom) {
@@ -201,9 +201,9 @@ define(function (require, exports, module) {
             tipMinusOffsetX1    = -82,    // for less than 4-digit image width
             tipMinusOffsetX2    = -90;    // for 4-digit image width 
         
-        // Check whether we're getting mousemove events beyond the image boundaries due to a browser bug 
+        // Check whether we're getting mousemove events beyond the image boundaries due to a browser bug
         // or the rounding calculation above for a scaled image. For example, if an image is 120 px wide,
-        // we should get mousemove events in the range of 0 <= x < 120, but not 120 or more. If we get 
+        // we should get mousemove events in the range of 0 <= x < 120, but not 120 or more. If we get
         // a value beyond the range, then simply handle the event as if it were a mouseleave.
         if (x < 0 || x >= _naturalWidth || y < 0 || y >= _naturalHeight) {
             _hideImageTip(e);
@@ -212,15 +212,15 @@ define(function (require, exports, module) {
         }
         
         $("#img-preview").css("cursor", "none");
-        
+
         _handleMouseEnterOrExitScaleSticker(left, top);
-        
+
         // Check whether to show the image tip on the left.
         if ((e.pageX + infoWidth1) > windowWidth ||
                 (fourDigitImageWidth && (e.pageX + infoWidth2) > windowWidth)) {
             tipOffsetX = fourDigitImageWidth ? tipMinusOffsetX2 : tipMinusOffsetX1;
         }
-        
+
         $("#x-value").text(x + "px");
         $("#y-value").text(y + "px");
 

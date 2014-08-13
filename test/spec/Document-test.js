@@ -42,7 +42,7 @@ define(function (require, exports, module) {
             // Even though these are Document unit tests, we need to create an editor in order to
             // be able to test actual edit ops.
             var myEditor, myDocument, initialContentLines;
-            
+
             function makeDummyLines(num) {
                 var content = [], i;
                 for (i = 0; i < num; i++) {
@@ -50,7 +50,7 @@ define(function (require, exports, module) {
                 }
                 return content;
             }
-            
+
             beforeEach(function () {
                 // Each line from 0-9 is 14 chars long, each line from 10-19 is 15 chars long
                 initialContentLines = makeDummyLines(20);
@@ -58,7 +58,7 @@ define(function (require, exports, module) {
                 myDocument = mocks.doc;
                 myEditor = mocks.editor;
             });
-            
+
             afterEach(function () {
                 if (myEditor) {
                     SpecRunnerUtils.destroyMockEditor(myDocument);
@@ -66,7 +66,7 @@ define(function (require, exports, module) {
                     myDocument = null;
                 }
             });
-            
+
             it("should do a single edit, tracking a beforeEdit selection and preserving reversed flag", function () {
                 var result = myDocument.doMultipleEdits([{edit: {text: "new content", start: {line: 2, ch: 0}, end: {line: 2, ch: 14}},
                                                         selection: {start: {line: 2, ch: 4}, end: {line: 2, ch: 4}, reversed: true, isBeforeEdit: true}}]);
@@ -77,7 +77,7 @@ define(function (require, exports, module) {
                 expect(result[0].end).toEqual({line: 2, ch: 11});
                 expect(result[0].reversed).toBe(true);
             });
-            
+
             it("should do a single edit, leaving a non-beforeEdit selection untouched and preserving reversed flag", function () {
                 var result = myDocument.doMultipleEdits([{edit: {text: "new content", start: {line: 2, ch: 0}, end: {line: 2, ch: 14}},
                                                         selection: {start: {line: 2, ch: 4}, end: {line: 2, ch: 4}, reversed: true}}]);
@@ -88,7 +88,7 @@ define(function (require, exports, module) {
                 expect(result[0].end).toEqual({line: 2, ch: 4});
                 expect(result[0].reversed).toBe(true);
             });
-            
+
             it("should do multiple edits, fixing up isBeforeEdit selections with respect to both edits and preserving other selection attributes", function () {
                 var result = myDocument.doMultipleEdits([
                     {edit: {text: "modified line 2\n", start: {line: 2, ch: 0}, end: {line: 2, ch: 14}},
@@ -109,7 +109,7 @@ define(function (require, exports, module) {
                 expect(result[1].end).toEqual({line: 6, ch: 0});
                 expect(result[1].reversed).toBe(true);
             });
-            
+
             it("should do multiple edits, fixing up non-isBeforeEdit selections only with respect to other edits", function () {
                 var result = myDocument.doMultipleEdits([
                     {edit: {text: "modified line 2\n", start: {line: 2, ch: 0}, end: {line: 2, ch: 14}},
@@ -130,7 +130,7 @@ define(function (require, exports, module) {
                 expect(result[1].end).toEqual({line: 5, ch: 4});
                 expect(result[1].reversed).toBe(true);
             });
-            
+
             it("should perform multiple changes/track multiple selections within a single edit, selections specified as isBeforeEdit", function () {
                 var result = myDocument.doMultipleEdits([
                     {edit: [{text: "modified line 1", start: {line: 1, ch: 0}, end: {line: 1, ch: 14}},
@@ -157,7 +157,7 @@ define(function (require, exports, module) {
                 expect(result[2].end).toEqual({line: 6, ch: 0});
                 expect(result[2].reversed).toBe(true);
             });
-            
+
             it("should perform multiple changes/track multiple selections within a single edit, selections not specified as isBeforeEdit", function () {
                 var result = myDocument.doMultipleEdits([
                     {edit: [{text: "modified line 1", start: {line: 1, ch: 0}, end: {line: 1, ch: 14}},
@@ -192,10 +192,10 @@ define(function (require, exports, module) {
                         {edit: {text: "modified line 3 again", start: {line: 3, ch: 3}, end: {line: 3, ch: 8}}}
                     ]);
                 }
-                
+
                 expect(shouldDie).toThrow();
             });
-            
+
             it("should throw an error if multiple edits in one group surround an edit in another group, even if they don't directly overlap", function () {
                 function shouldDie() {
                     myDocument.doMultipleEdits([
@@ -204,13 +204,13 @@ define(function (require, exports, module) {
                         {edit: {text: "modified line 3", start: {line: 3, ch: 0}, end: {line: 3, ch: 0}}}
                     ]);
                 }
-                
+
                 expect(shouldDie).toThrow();
             });
 
         });
     });
-    
+
     describe("Document Integration", function () {
         this.category = "integration";
         
@@ -401,68 +401,68 @@ define(function (require, exports, module) {
         
         describe("Refresh and change events", function () {
             var promise, changeListener, docChangeListener, doc;
-            
+
             beforeEach(function () {
                 changeListener = jasmine.createSpy();
                 docChangeListener = jasmine.createSpy();
             });
-                
+
             afterEach(function () {
                 promise = null;
                 changeListener = null;
                 docChangeListener = null;
                 doc = null;
             });
-            
+
             it("should fire both change and documentChange when text is refreshed if doc does not have masterEditor", function () {
                 runs(function () {
                     promise = DocumentManager.getDocumentForPath(JS_FILE)
                         .done(function (result) { doc = result; });
                     waitsForDone(promise, "Create Document");
                 });
-                
+
                 runs(function () {
                     $(DocumentModule).on("documentChange.docTest", docChangeListener);
                     $(doc).on("change", changeListener);
-                    
+
                     expect(doc._masterEditor).toBeFalsy();
 
                     doc.refreshText("New content", Date.now());
-                    
+
                     expect(doc._masterEditor).toBeFalsy();
                     expect(docChangeListener.callCount).toBe(1);
                     expect(changeListener.callCount).toBe(1);
                 });
             });
-            
+
             it("should fire both change and documentChange when text is refreshed if doc has masterEditor", function () {
                 runs(function () {
                     promise = DocumentManager.getDocumentForPath(JS_FILE)
                         .done(function (result) { doc = result; });
                     waitsForDone(promise, "Create Document");
                 });
-                
+
                 runs(function () {
                     expect(doc._masterEditor).toBeFalsy();
                     doc.setText("first edit");
                     expect(doc._masterEditor).toBeTruthy();
-                    
+
                     $(DocumentModule).on("documentChange.docTest", docChangeListener);
                     $(doc).on("change", changeListener);
 
                     doc.refreshText("New content", Date.now());
-                    
+
                     expect(docChangeListener.callCount).toBe(1);
                     expect(changeListener.callCount).toBe(1);
                 });
             });
-            
+
             it("should *not* fire documentChange when a document is first created", function () {
                 runs(function () {
                     $(DocumentModule).on("documentChange.docTest", docChangeListener);
                     waitsForDone(DocumentManager.getDocumentForPath(JS_FILE));
                 });
-                
+
                 runs(function () {
                     expect(docChangeListener.callCount).toBe(0);
                 });

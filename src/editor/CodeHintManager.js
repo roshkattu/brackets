@@ -353,7 +353,7 @@ define(function (require, exports, module) {
      */
     function _getProvidersForLanguageId(languageId) {
         var providers = hintProviders[languageId] || hintProviders.all;
-        
+
         // Exclude providers that are explicitly disabled in the preferences.
         // All code hint providers that do not have their constructor
         // names listed in the preferences are enabled by default.
@@ -472,7 +472,7 @@ define(function (require, exports, module) {
         if (editor.getSelections().length > 1) {
             return;
         }
-        
+
         // Find a suitable provider, if any
         var language = editor.getLanguageForSelection(),
             enabledProviders = _getProvidersForLanguageId(language.getId());

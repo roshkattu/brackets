@@ -43,12 +43,12 @@ define(function (require, exports, module) {
     // Global vars and preferences
     var prefs                   = PreferencesManager.getExtensionPrefs("closeOthers"),
         menuEntriesShown        = {};
-    
+
     prefs.definePreference("below",  "boolean", true);
     prefs.definePreference("others", "boolean", true);
     prefs.definePreference("above",  "boolean", true);
-    
-    
+
+
     /**
      * Handle the different Close Other commands
      * @param {string} mode
@@ -72,29 +72,29 @@ define(function (require, exports, module) {
         
         CommandManager.execute(Commands.FILE_CLOSE_LIST, {fileList: files});
     }
-    
+
     /**
      * Enable/Disable the menu items depending on which document is selected in the working set
      */
     function contextMenuOpenHandler() {
         var doc = DocumentManager.getCurrentDocument();
-        
+
         if (doc) {
             var docIndex   = DocumentManager.findInWorkingSet(doc.file.fullPath),
                 workingSet = DocumentManager.getWorkingSet().slice(0);
-            
+
             if (docIndex === workingSet.length - 1) { // hide "Close Others Below" if the last file in Working Files is selected
                 CommandManager.get(closeBelow).setEnabled(false);
             } else {
                 CommandManager.get(closeBelow).setEnabled(true);
             }
-            
+
             if (workingSet.length === 1) { // hide "Close Others" if there is only one file in Working Files
                 CommandManager.get(closeOthers).setEnabled(false);
             } else {
                 CommandManager.get(closeOthers).setEnabled(true);
             }
-            
+
             if (docIndex === 0) { // hide "Close Others Above" if the first file in Working Files is selected
                 CommandManager.get(closeAbove).setEnabled(false);
             } else {
@@ -102,8 +102,8 @@ define(function (require, exports, module) {
             }
         }
     }
-    
-    
+
+
     /**
      * Returns the preferences used to add/remove the menu items
      * @return {{closeBelow: boolean, closeOthers: boolean, closeAbove: boolean}}
@@ -117,13 +117,13 @@ define(function (require, exports, module) {
             closeAbove  : prefs.get("above",  PreferencesManager.CURRENT_PROJECT)
         };
     }
-    
+
     /**
      * When the preferences changed, add/remove the required menu items
      */
     function prefChangeHandler() {
         var prefs = getPreferences();
-        
+
         if (prefs.closeBelow !== menuEntriesShown.closeBelow) {
             if (prefs.closeBelow) {
                 workingSetCmenu.addMenuItem(closeBelow, "", Menus.AFTER, Commands.FILE_CLOSE);
@@ -131,7 +131,7 @@ define(function (require, exports, module) {
                 workingSetCmenu.removeMenuItem(closeBelow);
             }
         }
-        
+
         if (prefs.closeOthers !== menuEntriesShown.closeOthers) {
             if (prefs.closeOthers) {
                 workingSetCmenu.addMenuItem(closeOthers, "", Menus.AFTER, Commands.FILE_CLOSE);
@@ -139,7 +139,7 @@ define(function (require, exports, module) {
                 workingSetCmenu.removeMenuItem(closeOthers);
             }
         }
-        
+
         if (prefs.closeAbove !== menuEntriesShown.closeAbove) {
             if (prefs.closeAbove) {
                 workingSetCmenu.addMenuItem(closeAbove, "", Menus.AFTER, Commands.FILE_CLOSE);
@@ -147,16 +147,16 @@ define(function (require, exports, module) {
                 workingSetCmenu.removeMenuItem(closeAbove);
             }
         }
-        
+
         menuEntriesShown = prefs;
     }
-    
+
     /**
      * Register the Commands and add the Menu Items, if required
      */
     function initializeCommands() {
         var prefs = getPreferences();
-        
+
         CommandManager.register(Strings.CMD_FILE_CLOSE_BELOW, closeBelow, function () {
             handleClose(closeBelow);
         });
@@ -166,7 +166,7 @@ define(function (require, exports, module) {
         CommandManager.register(Strings.CMD_FILE_CLOSE_ABOVE, closeAbove, function () {
             handleClose(closeAbove);
         });
-        
+
         if (prefs.closeBelow) {
             workingSetCmenu.addMenuItem(closeBelow, "", Menus.AFTER, Commands.FILE_CLOSE);
         }
@@ -179,7 +179,7 @@ define(function (require, exports, module) {
         menuEntriesShown = prefs;
     }
 
-    
+
     // Initialize using the prefs
     initializeCommands();
 

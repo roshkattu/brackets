@@ -53,7 +53,7 @@ define(function (require, exports, module) {
         STATE_OVERWRITE_CONFIRMED = 10,
         STATE_NEEDS_UPDATE        = 11;
     
-    /** 
+    /**
      * Creates a new extension installer dialog.
      * @constructor
      * @param {{install: function(url), cancel: function()}} installer The installer backend to use.

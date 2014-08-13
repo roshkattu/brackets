@@ -126,7 +126,7 @@ define(function (require, exports, module) {
      * @type {?function():boolean}
      */
     ModalBar.prototype.isLockedOpen = null;
-    
+
     /**
      * @return {number} Height of the modal bar in pixels, if open.
      */
@@ -159,7 +159,7 @@ define(function (require, exports, module) {
             var top = $("#titlebar").outerHeight();
             this._$root.css("top", top + "px");
         }
-        
+
         // Preserve scroll position of the current full editor across the editor refresh, adjusting for the 
         // height of the modal bar so the code doesn't appear to shift if possible.
         var fullEditor = EditorManager.getCurrentFullEditor(),
@@ -248,9 +248,9 @@ define(function (require, exports, module) {
         if (this.isLockedOpen && this.isLockedOpen()) {
             return;
         }
-        
+
         var effectiveElem = $(e.target).data("attached-to") || e.target;
-        
+
         if (!$.contains(this._$root.get(0), effectiveElem)) {
             this.close();
         }

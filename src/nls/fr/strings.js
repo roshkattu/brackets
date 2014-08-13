@@ -47,7 +47,7 @@ define({
 	"FILENAMES_LEDE": "noms de fichiers",
 	"FILENAME": "Nom de fichier",
 	"DIRECTORY_NAME": "Nom du répertoire",
-    
+
 
     // Project error strings
 	"ERROR_LOADING_PROJECT": "Erreur lors du chargement du projet",
@@ -135,7 +135,7 @@ define({
 	"DELETE": "Supprimer",
 	"BUTTON_YES": "Oui",
 	"BUTTON_NO": "Non",
-    
+
     // Find, Replace, Find in Files
 	"FIND_MATCH_INDEX": "{0} sur {1}",
 	"FIND_NO_RESULTS": "Aucun résultat",
@@ -183,10 +183,10 @@ define({
 	"FIND_IN_FILES_EXPAND_COLLAPSE": "Cliquer tout en appuyant sur Ctrl/Cmd pour tout développer/tout réduire",
 	"REPLACE_IN_FILES_ERRORS_TITLE": "Erreurs de remplacement",
 	"REPLACE_IN_FILES_ERRORS": "Les fichiers suivants n’ont pas été traités car ils ont été modifiés après l’opération de recherche ou ne sont pas accessibles en écriture.",
-    
+
 	"ERROR_FETCHING_UPDATE_INFO_TITLE": "Erreur de récupération des informations de mise à jour",
 	"ERROR_FETCHING_UPDATE_INFO_MSG": "Un problème est survenu lors de la récupération des dernières informations de mise à jour sur le serveur. Vérifiez que vous êtes connecté à Internet et réessayez.",
-    
+
     // File exclusion filters
 	"NEW_FILE_FILTER": "Nouveau jeu d’exclusion\u2026",
 	"CLEAR_FILE_FILTER": "Ne pas exclure les fichiers",
@@ -340,7 +340,7 @@ define({
 	"CMD_REPLACE_IN_FILES": "Remplacer dans les fichiers",
 	"CMD_REPLACE_IN_SELECTED": "Remplacer dans le fichier/dossier sélectionné",
 	"CMD_REPLACE_IN_SUBTREE": "Remplacer dans\u2026",
-    
+
     // View menu commands
 	"VIEW_MENU": "Affichage",
 	"CMD_HIDE_SIDEBAR": "Masquer la barre latérale",
@@ -554,7 +554,7 @@ define({
 	"LANGUAGE_SUBMIT": "Recharger {APP_NAME}",
 	"LANGUAGE_CANCEL": "Annuler",
 	"LANGUAGE_SYSTEM_DEFAULT": "Langue par défaut du système",
-    
+
     // extensions/default/InlineTimingFunctionEditor
 	"INLINE_TIMING_EDITOR_TIME": "Temps",
 	"INLINE_TIMING_EDITOR_PROGRESSION": "Progression",

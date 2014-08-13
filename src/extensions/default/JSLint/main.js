@@ -77,7 +77,7 @@ define(function (require, exports, module) {
         var options = prefs.get("options");
 
         _lastRunOptions = _.clone(options);
-        
+
         if (!options) {
             options = {};
         } else {

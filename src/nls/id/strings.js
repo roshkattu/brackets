@@ -461,7 +461,7 @@ define({
     "LANGUAGE_SYSTEM_DEFAULT"                   : "Default Sistem",
 
     // Locales (used by Debug > Switch Language)
- 
+
 
     // extensions/default/InlineTimingFunctionEditor
     "INLINE_TIMING_EDITOR_TIME"                 : "Waktu",

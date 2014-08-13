@@ -120,9 +120,9 @@
  *         isBinary: true    
  *     }); 
  * 
- * 
+ *
  * LanguageManager dispatches two events:
- * 
+ *
  *  - languageAdded -- When any new Language is added. 2nd arg is the new Language.
  *  - languageModified -- When the attributes of a Language change, or when the Language gains or loses
  *          file extension / filename mappings. 2nd arg is the modified Language.
@@ -137,7 +137,7 @@ define(function (require, exports, module) {
         FileUtils             = require("file/FileUtils"),
         _defaultLanguagesJSON = require("text!language/languages.json"),
         _                     = require("thirdparty/lodash"),
-        
+
         // PreferencesManager is loaded near the end of the file
         PreferencesManager;
     
@@ -153,13 +153,13 @@ define(function (require, exports, module) {
         _ready;
     
     // Constants
-    
+
     var _EXTENSION_MAP_PREF = "language.fileExtensions",
         _NAME_MAP_PREF      = "language.fileNames";
-    
+
     // Tracking for changes to mappings made by preferences
     var _prefState = {};
-    
+
     _prefState[_EXTENSION_MAP_PREF] = {
         last: {},
         overridden: {},
@@ -167,7 +167,7 @@ define(function (require, exports, module) {
         remove: "removeFileExtension",
         get: "getLanguageForExtension"
     };
-    
+
     _prefState[_NAME_MAP_PREF] = {
         last: {},
         overridden: {},
@@ -175,7 +175,7 @@ define(function (require, exports, module) {
         remove: "removeFileName",
         get: "getLanguageForPath"
     };
-    
+
     // Helper functions
     
     /**
@@ -232,7 +232,7 @@ define(function (require, exports, module) {
 
         _modeToLanguageMap[mode] = language;
     }
-    
+
     /**
      * Resolves a language ID to a Language object.
      * File names have a higher priority than file extensions. 
@@ -267,15 +267,15 @@ define(function (require, exports, module) {
             language = _filePathToLanguageMap[path],
             extension,
             parts;
-        
+
         // if there's an override, return it
         if (!ignoreOverride && language) {
             return language;
         }
-        
+
         fileName = FileUtils.getBaseName(path).toLowerCase();
         language = _fileNameToLanguageMap[fileName];
-        
+
         // If no language was found for the file name, use the file extension instead
         if (!language) {
             // Split the file name into parts:
@@ -332,7 +332,7 @@ define(function (require, exports, module) {
     function getLanguages() {
         return $.extend({}, _languages); // copy to prevent modification
     }
-    
+
     /**
      * Resolves a CodeMirror mode to a Language object.
      * @param {!string} mode CodeMirror mode
@@ -384,13 +384,13 @@ define(function (require, exports, module) {
             _filePathToLanguageMap[fullPath] = language;
         }
         var newLang = getLanguageForPath(fullPath);
-        
+
         // Old language changed since this path is no longer mapped to it
         _triggerLanguageModified(oldLang);
         // New language changed since a path is now mapped to it that wasn't before
         _triggerLanguageModified(newLang);
     }
-    
+
     /**
      * Resets all the language overrides for file paths. Used by unit tests only.
      */
@@ -399,7 +399,7 @@ define(function (require, exports, module) {
     }
 
 
-    
+
 
     /**
      * Model for a language.
@@ -653,16 +653,16 @@ define(function (require, exports, module) {
         if (extension.charAt(0) === ".") {
             extension = extension.substr(1);
         }
-        
+
         // Make checks below case-INsensitive
         extension = extension.toLowerCase();
-        
+
         var index = this._fileExtensions.indexOf(extension);
         if (index !== -1) {
             this._fileExtensions.splice(index, 1);
-            
+
             delete _fileExtensionToLanguageMap[extension];
-            
+
             this._wasModified();
         }
     };
@@ -710,13 +710,13 @@ define(function (require, exports, module) {
     Language.prototype._removeFileName = function (name) {
         // Make checks below case-INsensitive
         name = name.toLowerCase();
-        
+
         var index = this._fileNames.indexOf(name);
         if (index !== -1) {
             this._fileNames.splice(index, 1);
-            
+
             delete _fileNameToLanguageMap[name];
-            
+
             this._wasModified();
         }
     };
@@ -971,9 +971,9 @@ define(function (require, exports, module) {
     
     /**
      * @private
-     * 
+     *
      * If a default file extension or name was overridden by a pref, restore it.
-     * 
+     *
      * @param {string} name Extension or filename that should be restored
      * @param {{overridden: string, add: string}} prefState object for the pref that is currently being updated
      */
@@ -984,23 +984,23 @@ define(function (require, exports, module) {
             delete state.overridden[name];
         }
     }
-    
+
     /**
      * @private
-     * 
+     *
      * Updates extension and filename mappings from languages based on the current preferences values.
-     * 
+     *
      * The preferences look like this in a prefs file:
-     * 
+     *
      * Map *.foo to javascript, *.vm to html
-     * 
+     *
      *     "language.fileExtensions": {
      *         "foo": "javascript",
      *         "vm": "html"
      *     }
-     * 
+     *
      * Map "Gemfile" to ruby:
-     * 
+     *
      *     "language.fileNames": {
      *         "Gemfile": "ruby"
      *     }
@@ -1011,7 +1011,7 @@ define(function (require, exports, module) {
             state = _prefState[pref],
             last = state.last,
             overridden = state.overridden;
-        
+
         // Look for added and changed names (extensions or filenames)
         newNames.forEach(function (name) {
             var language;
@@ -1020,17 +1020,17 @@ define(function (require, exports, module) {
                     language = getLanguage(last[name]);
                     if (language) {
                         language[state.remove](name);
-                        
+
                         // If this name that was previously mapped was overriding a default
                         // restore it now.
                         _restoreOverriddenDefault(name, state);
                     }
                 }
-                
+
                 language = exports[state.get](name);
                 if (language) {
                     language[state.remove](name);
-                    
+
                     // We're removing a name that was defined in Brackets or an extension,
                     // so keep track of how it used to be mapped.
                     if (!overridden[name]) {
@@ -1043,7 +1043,7 @@ define(function (require, exports, module) {
                 }
             }
         });
-        
+
         // Look for removed names (extensions or filenames)
         _.difference(Object.keys(last), newNames).forEach(function (name) {
             var language = getLanguage(last[name]);
@@ -1054,7 +1054,7 @@ define(function (require, exports, module) {
         });
         state.last = newMapping;
     }
-    
+
    
     // Prevent modes from being overwritten by extensions
     _patchCodeMirror();
@@ -1093,10 +1093,10 @@ define(function (require, exports, module) {
         // Similar hack to the above for dealing with SCSS/CSS.
         var scss = getLanguage("scss");
         scss._setLanguageForMode("css", scss);
-        
+
         // The fallback language for unknown modes and file extensions
         _fallbackLanguage = getLanguage("unknown");
-        
+
         // There is a circular dependency between FileUtils and LanguageManager which
         // was introduced in 254b01e2f2eebea4416026d0f40d017b8ca6dbc9
         // and may be preventing us from importing PreferencesManager (which also
@@ -1118,7 +1118,7 @@ define(function (require, exports, module) {
     exports._EXTENSION_MAP_PREF         = _EXTENSION_MAP_PREF;
     exports._NAME_MAP_PREF              = _NAME_MAP_PREF;
     exports._resetPathLanguageOverrides = _resetPathLanguageOverrides;
-    
+
     // Public methods
     exports.ready                       = _ready;
     exports.defineLanguage              = defineLanguage;

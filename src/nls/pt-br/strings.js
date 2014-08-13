@@ -45,7 +45,7 @@ define({
     "FILENAMES_LEDE"                    : "Nomes de arquivos",
     "FILENAME"                          : "Nome de arquivo",
     "DIRECTORY_NAME"                    : "Nome de diretório",
-    
+
 
     // Project error strings
     "ERROR_LOADING_PROJECT"             : "Erro ao carregar o projeto",

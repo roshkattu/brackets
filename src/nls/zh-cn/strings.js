@@ -270,7 +270,7 @@ define({
     "CMD_SPLIT_SEL_INTO_LINES"            : "将选中内容拆分至多行",
     "CMD_ADD_CUR_TO_NEXT_LINE"            : "将下一行添加至选中内容",
     "CMD_ADD_CUR_TO_PREV_LINE"            : "将上一行添加至选中内容",
-    
+
     // Search menu commands
     "FIND_MENU"                           : "查找",
     "CMD_FIND"                            : "查找",
@@ -489,7 +489,7 @@ define({
     "LANGUAGE_SUBMIT"                           : "重新加载 {APP_NAME}",
     "LANGUAGE_CANCEL"                           : "取消",
     "LANGUAGE_SYSTEM_DEFAULT"                   : "系统默认语言",
-    
+
     // extensions/default/InlineTimingFunctionEditor
     "INLINE_TIMING_EDITOR_TIME"                 : "时间",
     "INLINE_TIMING_EDITOR_PROGRESSION"          : "进程",

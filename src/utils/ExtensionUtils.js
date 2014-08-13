@@ -242,7 +242,7 @@ define(function (require, exports, module) {
             });
         return result.promise();
     }
-    
+
     exports.addEmbeddedStyleSheet = addEmbeddedStyleSheet;
     exports.addLinkedStyleSheet   = addLinkedStyleSheet;
     exports.parseLessCode         = parseLessCode;

@@ -49,7 +49,7 @@ define(function (require, exports, module) {
         afterEach(function () {
             LanguageManager._resetPathLanguageOverrides();
         });
-        
+
         function defineLanguage(definition) {
             var def = $.extend({}, definition);
             
@@ -189,85 +189,85 @@ define(function (require, exports, module) {
                 expect(LanguageManager.getLanguageForPath("cakefile.doesNotExist")).toBe(unknown);
                 expect(LanguageManager.getLanguageForPath("Something.cakefile")).toBe(unknown);
             });
-            
+
             it("should remove file extensions and add to new languages", function () {
                 var html    = LanguageManager.getLanguage("html"),
                     ruby    = LanguageManager.getLanguage("ruby"),
                     unknown = LanguageManager.getLanguage("unknown");
-                
+
                 expect(LanguageManager.getLanguageForPath("test.html")).toBe(html);
-                
+
                 html.removeFileExtension("html");
                 expect(LanguageManager.getLanguageForPath("test.html")).toBe(unknown);
-                
+
                 ruby.addFileExtension("html");
                 expect(LanguageManager.getLanguageForPath("test.html")).toBe(ruby);
             });
-            
+
             it("should remove file names and add to new languages", function () {
                 var coffee  = LanguageManager.getLanguage("coffeescript"),
                     html    = LanguageManager.getLanguage("html"),
                     unknown = LanguageManager.getLanguage("unknown");
-                
+
                 expect(LanguageManager.getLanguageForPath("Cakefile")).toBe(coffee);
-                
+
                 coffee.removeFileName("Cakefile");
                 expect(LanguageManager.getLanguageForPath("Cakefile")).toBe(unknown);
-                
+
                 html.addFileName("Cakefile");
                 expect(LanguageManager.getLanguageForPath("Cakefile")).toBe(html);
             });
-            
+
             it("should add multiple file extensions to languages", function () {
                 var ruby    = LanguageManager.getLanguage("ruby"),
                     unknown = LanguageManager.getLanguage("unknown");
-                
+
                 expect(LanguageManager.getLanguageForPath("foo.1")).toBe(unknown);
                 expect(LanguageManager.getLanguageForPath("foo.2")).toBe(unknown);
-                
+
                 ruby.addFileExtension(["1", "2"]);
-                
+
                 expect(LanguageManager.getLanguageForPath("foo.1")).toBe(ruby);
                 expect(LanguageManager.getLanguageForPath("foo.2")).toBe(ruby);
             });
-            
+
             it("should remove multiple file extensions from languages", function () {
                 var ruby    = LanguageManager.getLanguage("ruby"),
                     unknown = LanguageManager.getLanguage("unknown");
-                
+
                 // Assumes test above already ran (tests in this suite are not isolated)
                 expect(LanguageManager.getLanguageForPath("foo.1")).toBe(ruby);
                 expect(LanguageManager.getLanguageForPath("foo.2")).toBe(ruby);
-                
+
                 ruby.removeFileExtension(["1", "2"]);
-                
+
                 expect(LanguageManager.getLanguageForPath("foo.1")).toBe(unknown);
                 expect(LanguageManager.getLanguageForPath("foo.2")).toBe(unknown);
             });
-            
+
             it("should add multiple file names to languages", function () {
                 var ruby    = LanguageManager.getLanguage("ruby"),
                     unknown = LanguageManager.getLanguage("unknown");
-                
+
                 expect(LanguageManager.getLanguageForPath("rubyFile1")).toBe(unknown);
                 expect(LanguageManager.getLanguageForPath("rubyFile2")).toBe(unknown);
-                
+
                 ruby.addFileName(["rubyFile1", "rubyFile2"]);
-                
+
                 expect(LanguageManager.getLanguageForPath("rubyFile1")).toBe(ruby);
                 expect(LanguageManager.getLanguageForPath("rubyFile2")).toBe(ruby);
             });
-            
+
             it("should remove multiple file names from languages", function () {
                 var ruby    = LanguageManager.getLanguage("ruby"),
                     unknown = LanguageManager.getLanguage("unknown");
-                
+
                 // Assumes test above already ran (tests in this suite are not isolated)
                 expect(LanguageManager.getLanguageForPath("rubyFile1")).toBe(ruby);
                 expect(LanguageManager.getLanguageForPath("rubyFile2")).toBe(ruby);
-                
+
                 ruby.removeFileName(["rubyFile1", "rubyFile2"]);
-                
+
                 expect(LanguageManager.getLanguageForPath("rubyFile1")).toBe(unknown);
                 expect(LanguageManager.getLanguageForPath("rubyFile2")).toBe(unknown);
             });
@@ -557,7 +557,7 @@ define(function (require, exports, module) {
                     // listen for event
                     _$(doc).on("languageChanged", spy);
                     _$(DocumentManager).on("currentDocumentLanguageChanged", dmspy);
-                    
+
                     // trigger a rename
                     oldFile.rename(newFilename, function (err) {
                         if (err) {
@@ -639,7 +639,7 @@ define(function (require, exports, module) {
                     
                     // make sure LanguageManager keeps track of it
                     expect(LanguageManager.getLanguageForPath(doc.file.fullPath)).toBe(schemeLanguage);
-                    
+
                     // cleanup
                     doc.releaseRef();
                 });
@@ -684,7 +684,7 @@ define(function (require, exports, module) {
                 // cleanup
                 doc.releaseRef();
             });
-            
+
             it("should update the document's language via setLanguageOverride(), then keep it locked", function () {
                 var unknownLang = LanguageManager.getLanguage("unknown"),
                     phpLang = LanguageManager.getLanguage("php"),
@@ -692,41 +692,41 @@ define(function (require, exports, module) {
                     modifiedLanguage,
                     spy,
                     promise;
-                
+
                 doc = SpecRunnerUtils.createMockActiveDocument({ filename: "/test.foo2" });
-                
+
                 // listen for event
                 spy = jasmine.createSpy("languageChanged event handler");
                 $(doc).on("languageChanged", spy);
-                
+
                 // sanity check language
                 expect(doc.getLanguage()).toBe(unknownLang);
-                
+
                 // make active
                 doc.addRef();
-                
+
                 LanguageManager.setLanguageOverrideForPath(doc.file.fullPath, phpLang);
-                
+
                 // language should change
                 expect(doc.getLanguage()).toBe(phpLang);
                 expect(spy.callCount).toEqual(1);
                 expect(spy.mostRecentCall.args[1]).toBe(unknownLang);
                 expect(spy.mostRecentCall.args[2]).toBe(phpLang);
                 expect(LanguageManager.getLanguageForPath(doc.file.fullPath)).toBe(phpLang);
-                
+
                 // add 'foo2' extension to some other language
                 modifiedLanguage = LanguageManager.getLanguage("html");
                 modifiedLanguage.addFileExtension("foo2");
-                
+
                 // language should NOT change
                 expect(doc.getLanguage()).toBe(phpLang);
                 expect(spy.callCount).toEqual(1);
                 expect(LanguageManager.getLanguageForPath(doc.file.fullPath)).toBe(phpLang);
-                
+
                 // cleanup
                 doc.releaseRef();
             });
-            
+
             it("should unlock the document's language for updates after setLanguageOverride(null)", function () {
                 var unknownLang = LanguageManager.getLanguage("unknown"),
                     phpLang = LanguageManager.getLanguage("php"),
@@ -734,72 +734,72 @@ define(function (require, exports, module) {
                     modifiedLanguage,
                     spy,
                     promise;
-                
+
                 doc = SpecRunnerUtils.createMockActiveDocument({ filename: "/test.foo3" });
-                
+
                 // listen for event
                 spy = jasmine.createSpy("languageChanged event handler");
                 $(doc).on("languageChanged", spy);
-                
+
                 // sanity check language
                 expect(doc.getLanguage()).toBe(unknownLang);
-                
+
                 // make active
                 doc.addRef();
-                
+
                 LanguageManager.setLanguageOverrideForPath(doc.file.fullPath, phpLang);
-                
+
                 // language should change
                 expect(doc.getLanguage()).toBe(phpLang);
                 expect(spy.callCount).toEqual(1);
                 expect(spy.mostRecentCall.args[1]).toBe(unknownLang);
                 expect(spy.mostRecentCall.args[2]).toBe(phpLang);
                 expect(LanguageManager.getLanguageForPath(doc.file.fullPath)).toBe(phpLang);
-                
+
                 LanguageManager.setLanguageOverrideForPath(doc.file.fullPath, null);
-                
+
                 // language should revert
                 expect(doc.getLanguage()).toBe(unknownLang);
                 expect(spy.callCount).toEqual(2);
                 expect(spy.mostRecentCall.args[1]).toBe(phpLang);
                 expect(spy.mostRecentCall.args[2]).toBe(unknownLang);
                 expect(LanguageManager.getLanguageForPath(doc.file.fullPath)).toBe(unknownLang);
-                
+
                 // add 'foo3' extension to some other language
                 modifiedLanguage = LanguageManager.getLanguage("html");
                 modifiedLanguage.addFileExtension("foo3");
-                
+
                 // language should change
                 expect(doc.getLanguage()).toBe(modifiedLanguage);
                 expect(spy.callCount).toEqual(3);
                 expect(spy.mostRecentCall.args[1]).toBe(unknownLang);
                 expect(spy.mostRecentCall.args[2]).toBe(modifiedLanguage);
                 expect(LanguageManager.getLanguageForPath(doc.file.fullPath)).toBe(modifiedLanguage);
-                
+
                 // override again
                 LanguageManager.setLanguageOverrideForPath(doc.file.fullPath, phpLang);
-                
+
                 expect(doc.getLanguage()).toBe(phpLang);
                 expect(spy.callCount).toBe(4);
                 expect(spy.mostRecentCall.args[1]).toBe(modifiedLanguage);
                 expect(spy.mostRecentCall.args[2]).toBe(phpLang);
                 expect(LanguageManager.getLanguageForPath(doc.file.fullPath)).toBe(phpLang);
-                
+
                 // remove override, should restore to modifiedLanguage
                 LanguageManager.setLanguageOverrideForPath(doc.file.fullPath, null);
-                
+
                 expect(doc.getLanguage()).toBe(modifiedLanguage);
                 expect(spy.callCount).toBe(5);
                 expect(spy.mostRecentCall.args[1]).toBe(phpLang);
                 expect(spy.mostRecentCall.args[2]).toBe(modifiedLanguage);
                 expect(LanguageManager.getLanguageForPath(doc.file.fullPath)).toBe(modifiedLanguage);
-                
+
                 // cleanup
                 doc.releaseRef();
             });
-            
+
         });
-        
+
         describe("Preferences", function () {
             it("should be able to add extension mappings via a preference", function () {
                 var language = LanguageManager.getLanguageForExtension("foobar");
@@ -813,7 +813,7 @@ define(function (require, exports, module) {
                 language = LanguageManager.getLanguageForExtension("foobar");
                 expect(language).toBeUndefined();
             });
-            
+
             it("should manage overridden default extensions", function () {
                 PreferencesManager.set(LanguageManager._EXTENSION_MAP_PREF, {
                     js: "html"
@@ -829,7 +829,7 @@ define(function (require, exports, module) {
                 language = LanguageManager.getLanguageForExtension("js");
                 expect(language.getId()).toBe("javascript");
             });
-            
+
             it("should be able to manage file name mappings via a preference", function () {
                 var language = LanguageManager.getLanguageForPath("/bar/Foofile");
                 expect(language.getId()).toBe("unknown");
@@ -842,7 +842,7 @@ define(function (require, exports, module) {
                 language = LanguageManager.getLanguageForPath("/bar/Foofile");
                 expect(language.getId()).toBe("unknown");
             });
-            
+
             it("should manage overridden default file names", function () {
                 PreferencesManager.set(LanguageManager._NAME_MAP_PREF, {
                     Gemfile: "python"

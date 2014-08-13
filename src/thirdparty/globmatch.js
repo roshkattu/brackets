@@ -15,12 +15,12 @@ minimatch.Minimatch = Minimatch;
     
 function fnmatch(filepath, glob) {
   var matchOptions = {dot: true, noext: true};
-  
+
   // brackets #7374: don't try to match base if a directory name is passed in
   if (filepath[filepath.length - 1] !== "/") {
     matchOptions.matchBase = true;
   }
-  
+
   glob = glob.replace(/\*\*/g, '{*,**/**/**}');
   return minimatch(filepath, glob, matchOptions);
 };

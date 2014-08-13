@@ -382,7 +382,7 @@ define(function (require, exports, module) {
         
         if (this._ranges.length === 1) {
             this.$relatedContainer.remove();
-            
+
             // Refresh the height of the inline editor since we remove
             // the entire selector list.
             if (this.editor) {

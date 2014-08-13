@@ -102,24 +102,24 @@ define(function (require, exports, module) {
                 // show up.
                 var extensionListingURL = "https://github.com/adobe/brackets/wiki/Brackets-Extensions";
                 testWindow.brackets.config.extension_listing_url = extensionListingURL;
-                
+
                 dialog = new testWindow.brackets.test.InstallExtensionDialog._Dialog();
                 dialog.show()
                     .always(function () {
                         closed = true;
                     });
-                
+
                 fields = {
                     $browseExtensionsButton: dialog.$browseExtensionsButton
                 };
-                
+
                 var NativeApp = testWindow.brackets.getModule("utils/NativeApp");
                 spyOn(NativeApp, "openURLInDefaultBrowser");
                 fields.$browseExtensionsButton.click();
                 expect(NativeApp.openURLInDefaultBrowser).toHaveBeenCalledWith(extensionListingURL);
             });
         });
-        
+
         describe("when user-initiated", function () {
     
             beforeEach(function () {

@@ -197,7 +197,7 @@ define(function (require, exports, module) {
         
         return returnVal;
     }
-    
+
     /**
      * Truncate text to specified length.
      * @param {string} str Text to be truncated.

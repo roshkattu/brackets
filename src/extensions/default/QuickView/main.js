@@ -519,20 +519,20 @@ define(function (require, exports, module) {
     function getHoveredEditor(mousePos) {
         // Figure out which editor we are over
         var fullEditor = EditorManager.getCurrentFullEditor();
-        
+
         if (!fullEditor || !mousePos) {
             return;
         }
-        
+
         // Check for inline Editor instances first
         var inlines = fullEditor.getInlineWidgets(),
             i,
             editor;
-        
+
         for (i = 0; i < inlines.length; i++) {
             var $inlineEditorRoot = inlines[i].editor && $(inlines[i].editor.getRootElement()), // see MultiRangeInlineEditor
                 $otherDiv = inlines[i].$htmlContent;
-            
+
             if ($inlineEditorRoot && divContainsMouse($inlineEditorRoot, mousePos)) {
                 editor = inlines[i].editor;
                 break;
@@ -541,17 +541,17 @@ define(function (require, exports, module) {
                 return;
             }
         }
-        
+
         // Check main editor
         if (!editor) {
             if (divContainsMouse($(fullEditor.getRootElement()), mousePos)) {
                 editor = fullEditor;
             }
         }
-        
+
         return editor;
     }
-    
+
     /**
      * Changes the current hidden popoverState to visible, showing it in the UI and highlighting
      * its matching text in the editor.
@@ -565,6 +565,7 @@ define(function (require, exports, module) {
         }
 
         if (!editor || !editor._codeMirror) {
+            hidePreview();
             return;
         }
 
@@ -608,7 +609,7 @@ define(function (require, exports, module) {
 
     function processMouseMove() {
         animationRequest = null;
-        
+
         if (!lastMousePos) {
             return;         // should never get here, but safety first!
         }
@@ -733,7 +734,7 @@ define(function (require, exports, module) {
     function toggleEnableQuickView() {
         setEnabled(!enabled);
     }
-    
+
     function _forceShow(popover) {
         hidePreview();
         lastMousePos = {
@@ -742,7 +743,7 @@ define(function (require, exports, module) {
         };
         showPreview(popover.editor, popover);
     }
-    
+
     // Create the preview container
     $previewContainer = $(previewContainerHTML).appendTo($("body"));
     $previewContent = $previewContainer.find(".preview-content");

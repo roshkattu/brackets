@@ -154,7 +154,7 @@ define({
     "RELEASE_NOTES"                     : "Versjonsmerknader",
     "NO_UPDATE_TITLE"                   : "Du er oppdatert!",
     "NO_UPDATE_MESSAGE"                 : "Du kjører den nyeste versjonen av {APP_NAME}.",
-    
+
     // Replace All (in single file)
     "FIND_REPLACE_TITLE_PART1"          : "Erstatt \"",
     "FIND_REPLACE_TITLE_PART2"          : "\" med \"",

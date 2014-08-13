@@ -44,7 +44,7 @@ define(function (require, exports, module) {
             docSelectIndex,
             cmdToRun,
             brackets;
-        
+
         function createUntitled(count) {
             function doCreateUntitled(content) {
                 runs(function () {
@@ -145,7 +145,7 @@ define(function (require, exports, module) {
             cmdToRun       = "file.close_others";
 
             runs(runCloseOthers);
-            
+
             runs(function () {
                 expect(DocumentManager.getWorkingSet().length).toEqual(1);
             });

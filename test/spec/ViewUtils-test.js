@@ -102,22 +102,22 @@ define(function (require, exports, module) {
             });
         
         });
-        
+
         describe("getFileEntryDisplay", function () {
             function makeFile(name) {
                 return {
                     name: name
                 };
             }
-            
+
             it("should do nothing if there's no extension", function () {
                 expect(ViewUtils.getFileEntryDisplay(makeFile("README"))).toBe("README");
             });
-            
+
             it("should add markup for the file extension", function () {
                 expect(ViewUtils.getFileEntryDisplay(makeFile("README.md"))).toBe("README<span class='extension'>.md</span>");
             });
-            
+
             // see https://github.com/adobe/brackets/issues/7905
             it("should not mark up dot files as being an extension", function () {
                 expect(ViewUtils.getFileEntryDisplay(makeFile(".gitignore"))).toBe(".gitignore");

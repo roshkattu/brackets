@@ -474,7 +474,7 @@ define(function (require, exports, module) {
         if (_currentDocument === doc) {
             return;
         }
-        
+
         var perfTimerName = PerfUtils.markStart("setCurrentDocument:\t" + doc.file.fullPath);
         
         if (_currentDocument) {
@@ -500,7 +500,7 @@ define(function (require, exports, module) {
         $(_currentDocument).on("languageChanged.DocumentManager", function (data) {
             $(exports).trigger("currentDocumentLanguageChanged", data);
         });
-        
+
         $(exports).triggerHandler("currentDocumentChange", [_currentDocument, previousDocument]);
         // (this event triggers EditorManager to actually switch editors in the UI)
         
@@ -747,7 +747,7 @@ define(function (require, exports, module) {
      * 
      * @param {!File} file The file to get the text for.
      * @param {boolean=} checkLineEndings Whether to return line ending information. Default false (slightly more efficient).
-     * @return {$.Promise} 
+     * @return {$.Promise}
      *     A promise that is resolved with three parameters:
      *          contents - string: the document's text
      *          timestamp - Date: the last time the document was changed on disk (might not be the same as the last time it was changed in memory)
@@ -875,7 +875,7 @@ define(function (require, exports, module) {
             files = [],
             context = { location : { scope: "user",
                                      layer: "project" } };
-        
+
         files = PreferencesManager.getViewState("project.files", context);
         
         console.assert(Object.keys(_openDocuments).length === 0);  // no files leftover from prev proj
@@ -1017,7 +1017,7 @@ define(function (require, exports, module) {
     /**
      * @private
      * Examine each preference key for migration of the working set files.
-     * If the key has a prefix of "files_/", then it is a working set files 
+     * If the key has a prefix of "files_/", then it is a working set files
      * preference from old preference model.
      *
      * @param {string} key The key of the preference to be examined
@@ -1031,10 +1031,10 @@ define(function (require, exports, module) {
             var projectPath = key.substr(pathPrefix.length);
             return "user project.files " + projectPath;
         }
-        
+
         return null;
     }
-    
+
     PreferencesManager.convertPreferences(module, {"files_": "user"}, true, _checkPreferencePrefix);
 
     // Handle file saves that may affect preferences

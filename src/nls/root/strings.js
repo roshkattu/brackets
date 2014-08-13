@@ -47,7 +47,7 @@ define({
     "FILENAMES_LEDE"                    : "Filenames",
     "FILENAME"                          : "Filename",
     "DIRECTORY_NAME"                    : "Directory Name",
-    
+
 
     // Project error strings
     "ERROR_LOADING_PROJECT"             : "Error Loading Project",
@@ -78,8 +78,8 @@ define({
     "ERROR_PREFS_CORRUPT"               : "Your preferences file is not valid JSON. The file will be opened so that you can correct the format. You will need to restart {APP_NAME} for the changes to take effect.",
 
     // Application error strings
-    "ERROR_IN_BROWSER_TITLE"            : "Oops! {APP_NAME} Doesn't Run in Browsers Yet.",
-    "ERROR_IN_BROWSER"                  : "{APP_NAME} is built in HTML, but right now it runs as a desktop app so you can use it to edit local files. Please use the application shell in the <b>github.com/adobe/brackets-shell</b> repo to run {APP_NAME}.",
+    "ERROR_IN_BROWSER_TITLE"            : "Oops! {APP_NAME} doesn't fully run in browsers yet.",
+    "ERROR_IN_BROWSER"                  : "This feature is not yet supported when running {APP_NAME} in a web browser.",
     
     // ProjectManager max files error string
     "ERROR_MAX_FILES_TITLE"             : "Error Indexing Files",
@@ -116,6 +116,8 @@ define({
     "SAVE_CLOSE_TITLE"                  : "Save Changes",
     "SAVE_CLOSE_MESSAGE"                : "Do you want to save the changes you made in the document <span class='dialog-filename'>{0}</span>?",
     "SAVE_CLOSE_MULTI_MESSAGE"          : "Do you want to save your changes to the following files?",
+    "UNLOAD_NO_UNSAVED"                 : "This will quit {APP_NAME} entirely.",
+    "UNLOAD_WITH_UNSAVED"               : "You will lose your unsaved changes to the following files:",
     "EXT_MODIFIED_TITLE"                : "External Changes",
     "CONFIRM_FOLDER_DELETE_TITLE"       : "Confirm Delete",
     "CONFIRM_FOLDER_DELETE"             : "Are you sure you want to delete the folder <span class='dialog-filename'>{0}</span>?",
@@ -135,7 +137,7 @@ define({
     "DELETE"                            : "Delete",
     "BUTTON_YES"                        : "Yes",
     "BUTTON_NO"                         : "No",
-    
+
     // Find, Replace, Find in Files
     "FIND_MATCH_INDEX"                  : "{0} of {1}",
     "FIND_NO_RESULTS"                   : "No results",
@@ -183,10 +185,10 @@ define({
     "FIND_IN_FILES_EXPAND_COLLAPSE"     : "Ctrl/Cmd click to expand/collapse all",
     "REPLACE_IN_FILES_ERRORS_TITLE"     : "Replace Errors",
     "REPLACE_IN_FILES_ERRORS"           : "The following files weren't modified because they changed after the search or couldn't be written.",
-    
+
     "ERROR_FETCHING_UPDATE_INFO_TITLE"  : "Error Getting Update Info",
     "ERROR_FETCHING_UPDATE_INFO_MSG"    : "There was a problem getting the latest update information from the server. Please make sure you are connected to the internet and try again.",
-    
+
     // File exclusion filters
     "NEW_FILE_FILTER"                   : "New Exclusion Set\u2026",
     "CLEAR_FILE_FILTER"                 : "Don't Exclude Files",
@@ -340,7 +342,7 @@ define({
     "CMD_REPLACE_IN_FILES"                : "Replace in Files",
     "CMD_REPLACE_IN_SELECTED"             : "Replace in Selected File/Folder",
     "CMD_REPLACE_IN_SUBTREE"              : "Replace in\u2026",
-    
+
     // View menu commands
     "VIEW_MENU"                           : "View",
     "CMD_HIDE_SIDEBAR"                    : "Hide Sidebar",
@@ -554,7 +556,7 @@ define({
     "LANGUAGE_SUBMIT"                           : "Reload {APP_NAME}",
     "LANGUAGE_CANCEL"                           : "Cancel",
     "LANGUAGE_SYSTEM_DEFAULT"                   : "System Default",
-    
+
     // extensions/default/InlineTimingFunctionEditor
     "INLINE_TIMING_EDITOR_TIME"                 : "Time",
     "INLINE_TIMING_EDITOR_PROGRESSION"          : "Progression",

@@ -42,11 +42,11 @@ define(function (require, exports, module) {
      * 
      *     var myDomain = new NodeDomain("someDomain", "/path/to/SomeDomainDef.js"),
      *         $result = myDomain.exec("someCommand", arg1, arg2);
-     *     
+     *
      *     $result.done(function (value) {
      *         // the command succeeded!
      *     });
-     *     
+     *
      *     $result.fail(function (err) {
      *         // the command failed; act accordingly!
      *     });
@@ -80,7 +80,7 @@ define(function (require, exports, module) {
     /** 
      * The underlying Node connection object for this domain.
      * 
-     * @type {NodeConnection} 
+     * @type {NodeConnection}
      */
     NodeDomain.prototype.connection = null;
 

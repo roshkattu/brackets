@@ -133,10 +133,10 @@ module.exports = function (grunt) {
             request;
 
         pull = parseInt(pull, 10);
-        
+
         if (isNaN(pull)) {
             grunt.log.writeln(JSON.stringify(process.env));
-            
+
             if (travis) {
                 // Kicked off a travis build without a pull request, skip CLA check
                 grunt.log.writeln("Travis build without pull request");
@@ -146,22 +146,22 @@ module.exports = function (grunt) {
                 grunt.log.writeln("Missing pull request number. Use 'grunt cla-check-pull --pull=<NUMBER>'.");
                 done(false);
             }
-            
+
             return;
         }
-        
+
         options.host    = "api.github.com";
         options.path    = "/repos/adobe/brackets/issues/" + pull;
         options.method  = "GET";
         options.headers = {
             "User-Agent" : "Node.js"
         };
-            
+
         request = https.request(options, function (res) {
             res.on("data", function (chunk) {
                 body += chunk;
             });
-            
+
             res.on("end", function () {
                 var json    = JSON.parse(body),
                     login   = json.user && json.user.login;
@@ -180,13 +180,13 @@ module.exports = function (grunt) {
                     done(false);
                 }
             });
-            
+
             res.on("error", function (err) {
                 grunt.log.writeln(err);
                 done(false);
             });
         });
-        
+
         request.end();
     });
 
@@ -198,7 +198,7 @@ module.exports = function (grunt) {
             options = {},
             postdata = querystring.stringify({contributor: user}),
             request;
-        
+
         if (!user) {
             grunt.log.writeln("Missing user name. Use 'grunt cla-check --user=<GITHUB USER NAME>'.");
             done(false);
@@ -213,7 +213,7 @@ module.exports = function (grunt) {
             done();
             return;
         }
-        
+
         // Query dev.brackets.io for CLA status
         options.host    = "dev.brackets.io";
         options.path    = "/cla/brackets/check.cfm";
@@ -222,12 +222,12 @@ module.exports = function (grunt) {
             "Content-Type"      : "application/x-www-form-urlencoded",
             "Content-Length"    : postdata.length
         };
-        
+
         request = http.request(options, function (res) {
             res.on("data", function (chunk) {
                 body += chunk;
             });
-            
+
             res.on("end", function () {
                 if (body.match(/.*REJECTED.*/)) {
                     grunt.log.error(user + " has NOT submitted the contributor license agreement. See http://dev.brackets.io/brackets-contributor-license-agreement.html.");
@@ -237,17 +237,17 @@ module.exports = function (grunt) {
                     done();
                 }
             });
-            
+
             res.on("error", function (err) {
                 grunt.log.writeln(err);
                 done(false);
             });
         });
-        
+
         request.write(postdata);
         request.end();
     });
-    
+
     build.getGitInfo = getGitInfo;
     
     return build;

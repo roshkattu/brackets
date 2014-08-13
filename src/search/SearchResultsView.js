@@ -1,24 +1,24 @@
 /*
  * Copyright (c) 2014 Adobe Systems Incorporated. All rights reserved.
- *  
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and associated documentation files (the "Software"), 
- * to deal in the Software without restriction, including without limitation 
- * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
- * and/or sell copies of the Software, and to permit persons to whom the 
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
- *  
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *  
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- * 
+ *
  */
 
 /*global define, $, window, Mustache */
@@ -28,7 +28,7 @@
  */
 define(function (require, exports, module) {
     "use strict";
-    
+
     var CommandManager        = require("command/CommandManager"),
         Commands              = require("command/Commands"),
         DocumentManager       = require("document/DocumentManager"),
@@ -41,26 +41,26 @@ define(function (require, exports, module) {
         StringUtils           = require("utils/StringUtils"),
         Strings               = require("strings"),
         _                     = require("thirdparty/lodash"),
-        
+
         searchPanelTemplate   = require("text!htmlContent/search-panel.html"),
         searchResultsTemplate = require("text!htmlContent/search-results.html"),
         searchSummaryTemplate = require("text!htmlContent/search-summary.html");
-    
-    
-    /** 
-     * @const 
+
+
+    /**
+     * @const
      * The maximum results to show per page.
      * @type {number}
      */
     var RESULTS_PER_PAGE = 100;
-    
+
     /**
      * @const
      * Debounce time for document changes updating the search results view.
      * @type {number}
      */
     var UPDATE_TIMEOUT   = 400;
-    
+
     /**
      * @constructor
      * Handles the search results panel.
@@ -80,40 +80,40 @@ define(function (require, exports, module) {
         this._$table   = this._panel.$panel.find(".table-container");
         this._model    = model;
     }
-    
+
     /** @type {SearchModel} The search results model we're viewing. */
     SearchResultsView.prototype._model = null;
-    
+
     /**
      * Array with content used in the Results Panel
      * @type {Array.<{fileIndex: number, filename: string, fullPath: string, items: Array.<Object>}>}
      */
     SearchResultsView.prototype._searchList = [];
-    
+
     /** @type {Panel} Bottom panel holding the search results */
     SearchResultsView.prototype._panel = null;
-    
+
     /** @type {?string} The full path of the file that was open in the main editor on the initial search */
     SearchResultsView.prototype._initialFilePath = null;
-    
+
     /** @type {number} The index of the first result that is displayed */
     SearchResultsView.prototype._currentStart = 0;
-        
+
     /** @type {boolean} Used to remake the replace all summary after it is changed */
     SearchResultsView.prototype._allChecked = false;
-    
+
     /** @type {$.Element} The currently selected row */
     SearchResultsView.prototype._$selectedRow = null;
-    
+
     /** @type {$.Element} The element where the title is placed */
     SearchResultsView.prototype._$summary = null;
-    
+
     /** @type {$.Element} The table that holds the results */
     SearchResultsView.prototype._$table = null;
-    
+
     /** @type {number} The ID we use for timeouts when handling model changes. */
     SearchResultsView.prototype._timeoutID = null;
-        
+
     /**
      * @private
      * Handles when model changes. Updates the view, buffering changes if necessary so as not to churn too much.
@@ -126,7 +126,7 @@ define(function (require, exports, module) {
             this.close();
             return;
         }
-        
+
         var self = this;
         if (this._timeoutID) {
             window.clearTimeout(this._timeoutID);
@@ -140,7 +140,7 @@ define(function (require, exports, module) {
             this._updateResults();
         }
     };
-    
+
     /**
      * @private
      * Adds the listeners for close, prev, next, first, last and check all
@@ -172,13 +172,13 @@ define(function (require, exports, module) {
                 self._currentStart = self._getLastCurrentStart();
                 self._render();
             })
-            
+
             // Add the file to the working set on double click
             .on("dblclick.searchResults", ".table-container tr:not(.file-section)", function (e) {
                 var item = self._searchList[$(this).data("file-index")];
                 FileViewController.addToWorkingSetAndSelect(item.fullPath);
             })
-        
+
             // Add the click event listener directly on the table parent
             .on("click.searchResults .table-container", function (e) {
                 var $row = $(e.target).closest("tr");
@@ -222,7 +222,7 @@ define(function (require, exports, module) {
                                 item.collapsed = collapsed;
                             });
                         }
-                    
+
                     // This is a file row, show the result on click
                     } else {
                         // Grab the required item data
@@ -236,7 +236,7 @@ define(function (require, exports, module) {
                     }
                 }
             });
-        
+
         function updateHeaderCheckbox($checkAll) {
             var $allFileRows     = self._panel.$panel.find(".file-section"),
                 $checkedFileRows = $allFileRows.filter(function (index) {
@@ -246,7 +246,7 @@ define(function (require, exports, module) {
                 $checkAll.prop("checked", true);
             }
         }
-        
+
         function updateFileAndHeaderCheckboxes($clickedRow, isChecked) {
             var $firstMatch = ($clickedRow.data("item-index") === 0) ? $clickedRow :
                     $clickedRow.prevUntil(".file-section").last(),
@@ -254,7 +254,7 @@ define(function (require, exports, module) {
                 $siblingRows = $fileRow.nextUntil(".file-section"),
                 $fileCheckbox = $fileRow.find(".check-one-file"),
                 $checkAll = self._panel.$panel.find(".check-all");
-        
+
             if (isChecked) {
                 if (!$fileCheckbox.is(":checked")) {
                     var $checkedSibilings = $siblingRows.filter(function (index) {
@@ -276,7 +276,7 @@ define(function (require, exports, module) {
                 }
             }
         }
-        
+
         // Add the Click handlers for replace functionality if required
         if (this._model.isReplace) {
             this._panel.$panel
@@ -297,7 +297,7 @@ define(function (require, exports, module) {
                         item = self._searchList[$row.data("file-index")],
                         $matchRows = $row.nextUntil(".file-section"),
                         $checkAll = self._panel.$panel.find(".check-all");
-                    
+
                     if (item) {
                         self._model.results[item.fullPath].matches.forEach(function (match) {
                             match.isChecked = isChecked;
@@ -327,8 +327,8 @@ define(function (require, exports, module) {
                 });
         }
     };
-    
-    
+
+
     /**
      * @private
      * Shows the Results Summary
@@ -339,13 +339,13 @@ define(function (require, exports, module) {
             fileList  = Object.keys(this._model.results),
             filesStr,
             summary;
-        
+
         filesStr = StringUtils.format(
             Strings.FIND_NUM_FILES,
             count.files,
             (count.files > 1 ? Strings.FIND_IN_FILES_FILES : Strings.FIND_IN_FILES_FILE)
         );
-        
+
         // This text contains some formatting, so all the strings are assumed to be already escaped
         summary = StringUtils.format(
             Strings.FIND_TITLE_SUMMARY,
@@ -370,7 +370,7 @@ define(function (require, exports, module) {
             Strings:     Strings
         }));
     };
-    
+
     /**
      * @private
      * Shows the current set of results.
@@ -384,10 +384,10 @@ define(function (require, exports, module) {
             showMatches      = false,
             allInFileChecked = true,
             self             = this;
-        
+
         this._showSummary();
         this._searchList   = [];
-        
+
         // Iterates throuh the files to display the results sorted by filenamess. The loop ends as soon as
         // we filled the results for one page
         searchFiles.some(function (fullPath) {
@@ -426,7 +426,7 @@ define(function (require, exports, module) {
                 while (i < item.matches.length && matchesCounter < lastIndex) {
                     match     = item.matches[i];
                     multiLine = match.start.line !== match.end.line;
-                    
+
                     searchItems.push({
                         fileIndex:  self._searchList.length,
                         itemIndex:  searchItems.length,
@@ -466,7 +466,7 @@ define(function (require, exports, module) {
             }
         });
 
-        
+
         // Insert the search results
         this._$table
             .empty()
@@ -484,16 +484,16 @@ define(function (require, exports, module) {
                     $(this).trigger("click");
                 }
             });
-        
+
         if (this._$selectedRow) {
             this._$selectedRow.removeClass("selected");
             this._$selectedRow = null;
         }
-        
+
         this._panel.show();
         this._$table.scrollTop(0); // Otherwise scroll pos from previous contents is remembered
     };
-    
+
     /**
      * Updates the results view after a model change, preserving scroll position and selection.
      */
@@ -508,7 +508,7 @@ define(function (require, exports, module) {
             if (this._currentStart > numMatches) {
                 this._currentStart = this._getLastCurrentStart(numMatches);
             }
-            
+
             this._render();
 
             this._$table.scrollTop(scrollTop);
@@ -518,7 +518,7 @@ define(function (require, exports, module) {
             }
         }
     };
-        
+
     /**
      * @private
      * Returns one past the last result index displayed for the current page.
@@ -528,7 +528,7 @@ define(function (require, exports, module) {
     SearchResultsView.prototype._getLastIndex = function (numMatches) {
         return Math.min(this._currentStart + RESULTS_PER_PAGE, numMatches);
     };
-    
+
     /**
      * @private
      * Returns the last possible current start based on the given number of matches
@@ -539,7 +539,7 @@ define(function (require, exports, module) {
         numMatches = numMatches || this._model.countFilesMatches().matches;
         return Math.floor((numMatches - 1) / RESULTS_PER_PAGE) * RESULTS_PER_PAGE;
     };
-    
+
     /**
      * Opens the results panel and displays the current set of results from the model.
      */
@@ -548,18 +548,18 @@ define(function (require, exports, module) {
         this._currentStart  = 0;
         this._$selectedRow  = null;
         this._allChecked    = true;
-        
+
         // Save the currently open document's fullpath, if any, so we can sort it to the top of the result list.
         var currentDoc = DocumentManager.getCurrentDocument();
         this._initialFilePath = currentDoc ? currentDoc.file.fullPath : null;
 
         this._render();
-        
+
         // Listen for user interaction events with the panel and change events from the model.
         this._addPanelListeners();
         $(this._model).on("change.SearchResultsView", this._handleModelChange.bind(this));
     };
-    
+
     /**
      * Hides the Search Results Panel and unregisters listeners.
      */
@@ -572,7 +572,7 @@ define(function (require, exports, module) {
             $(this).triggerHandler("close");
         }
     };
-    
+
     // Public API
     exports.SearchResultsView = SearchResultsView;
 });

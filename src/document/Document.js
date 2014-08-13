@@ -42,7 +42,7 @@ define(function (require, exports, module) {
      *
      * Document dispatches these events:
      *
-     * __change__ -- When the text of the editor changes (including due to undo/redo). 
+     * __change__ -- When the text of the editor changes (including due to undo/redo).
      *
      * Passes ({Document}, {ChangeList}), where ChangeList is an array
      * of change record objects. Each change record looks like:
@@ -59,13 +59,13 @@ define(function (require, exports, module) {
      *
      * If "from" and "to" are undefined, then this is a replacement of the entire text content.
      *
-     * IMPORTANT: If you listen for the "change" event, you MUST also addRef() the document 
+     * IMPORTANT: If you listen for the "change" event, you MUST also addRef() the document
      * (and releaseRef() it whenever you stop listening). You should also listen to the "deleted"
      * event.
      *
      * __deleted__ -- When the file for this document has been deleted. All views onto the document should
      * be closed. The document will no longer be editable or dispatch "change" events.
-     * 
+     *
      * __languageChanged__ -- When the value of getLanguage() has changed. 2nd argument is the old value,
      * 3rd argument is the new value.
      *
@@ -115,7 +115,7 @@ define(function (require, exports, module) {
      * @type {boolean}
      */
     Document.prototype.isSaving = false;
-    
+
     /**
      * What we expect the file's timestamp to be on disk. If the timestamp differs from this, then
      * it means the file was modified by an app other than Brackets.
@@ -159,7 +159,7 @@ define(function (require, exports, module) {
      * @type {FileUtils.LINE_ENDINGS_CRLF|FileUtils.LINE_ENDINGS_LF}
      */
     Document.prototype._lineEndings = null;
-    
+
     /** Add a ref to keep this Document alive */
     Document.prototype.addRef = function () {
         //console.log("+++REF+++ "+this);
@@ -288,7 +288,7 @@ define(function (require, exports, module) {
         $(this).triggerHandler("change", [this, changeList]);
         $(exports).triggerHandler("documentChange", [this, changeList]);
     };
-    
+
     /**
      * Sets the contents of the document. Treated as reloading the document from disk: the document
      * will be marked clean with a new timestamp, the undo/redo history is cleared, and we re-check
@@ -310,7 +310,7 @@ define(function (require, exports, module) {
             // _handleEditorChange() triggers "change" event for us
         } else {
             this._text = text;
-            
+
             if (!initial) {
                 // We fake a change record here that looks like CodeMirror's text change records, but
                 // omits "from" and "to", by which we mean the entire text has changed.
@@ -472,9 +472,9 @@ define(function (require, exports, module) {
     };
     
     /**
-     * Adjusts a given position taking a given replaceRange-type edit into account. 
+     * Adjusts a given position taking a given replaceRange-type edit into account.
      * If the position is within the original edit range (start and end inclusive),
-     * it gets pushed to the end of the content that replaced the range. Otherwise, 
+     * it gets pushed to the end of the content that replaced the range. Otherwise,
      * if it's after the edit, it gets adjusted so it refers to the same character
      * it did before the edit.
      * @param {!{line:number, ch: number}} pos The position to adjust.
@@ -502,7 +502,7 @@ define(function (require, exports, module) {
         }
         return {line: line, ch: ch};
     };
-    
+
     /**
      * Like _.each(), but if given a single item not in an array, acts as
      * if it were an array containing just that item.
@@ -514,7 +514,7 @@ define(function (require, exports, module) {
             cb(itemOrArr, 0);
         }
     }
-    
+
     /**
      * Helper function for edit operations that operate on multiple selections. Takes an "edit list"
      * that specifies a list of replaceRanges that should occur, but where all the positions are with
@@ -534,15 +534,15 @@ define(function (require, exports, module) {
      *
      * @param {!Array.<{edit: {text: string, start:{line: number, ch: number}, end:?{line: number, ch: number}}
      *                        | Array.<{text: string, start:{line: number, ch: number}, end:?{line: number, ch: number}}>,
-     *                  selection: ?{start:{line:number, ch:number}, end:{line:number, ch:number}, 
+     *                  selection: ?{start:{line:number, ch:number}, end:{line:number, ch:number},
      *                              primary:boolean, reversed: boolean, isBeforeEdit: boolean}>}
-     *                        | ?Array.<{start:{line:number, ch:number}, end:{line:number, ch:number}, 
+     *                        | ?Array.<{start:{line:number, ch:number}, end:{line:number, ch:number},
      *                                  primary:boolean, reversed: boolean, isBeforeEdit: boolean}>}>} edits
      *     Specifies the list of edits to perform in a manner similar to CodeMirror's `replaceRange`. This array
      *     will be mutated.
      *
      *     `edit` is the edit to perform:
-     *         `text` will replace the current contents of the range between `start` and `end`. 
+     *         `text` will replace the current contents of the range between `start` and `end`.
      *         If `end` is unspecified, the text is inserted at `start`.
      *         `start` and `end` should be positions relative to the document *ignoring* all other edit descriptions
      *         (i.e., as if you were only performing this one edit on the document).
@@ -561,7 +561,7 @@ define(function (require, exports, module) {
      *     and then specify a resulting selection that shouldn't be fixed up for any of those edits (but should be
      *     fixed up for edits related to other selections). It can also be useful if you have several selections
      *     that should ignore the effects of a given edit because you've fixed them up already (this commonly happens
-     *     with line-oriented edits where multiple cursors on the same line should be ignored, but still tracked). 
+     *     with line-oriented edits where multiple cursors on the same line should be ignored, but still tracked).
      *     Within an edit group, edit positions must be specified relative to previous edits within that group. Also,
      *     the total bounds of edit groups must not overlap (e.g. edits in one group can't surround an edit from another group).
      *
@@ -571,7 +571,7 @@ define(function (require, exports, module) {
      */
     Document.prototype.doMultipleEdits = function (edits, origin) {
         var self = this;
-        
+
         // Sort the edits backwards, so we don't have to adjust the edit positions as we go along
         // (though we do have to adjust the selection positions).
         edits.sort(function (editDesc1, editDesc2) {
@@ -587,11 +587,11 @@ define(function (require, exports, module) {
                 return CodeMirror.cmpPos(edit2.start, edit1.start);
             }
         });
-        
+
         // Pull out the selections, in the same order as the edits.
         var result = _.cloneDeep(_.pluck(edits, "selection"));
-        
-        // Preflight the edits to specify "end" if unspecified and make sure they don't overlap. 
+
+        // Preflight the edits to specify "end" if unspecified and make sure they don't overlap.
         // (We don't want to do it during the actual edits, since we don't want to apply some of
         // the edits before we find out.)
         _.each(edits, function (editDesc, index) {
@@ -613,7 +613,7 @@ define(function (require, exports, module) {
                 }
             });
         });
-        
+
         // Perform the edits.
         this.batchOperation(function () {
             _.each(edits, function (editDesc, index) {
@@ -641,7 +641,7 @@ define(function (require, exports, module) {
                 });
             });
         });
-        
+
         result = _.chain(result)
             .filter(function (item) {
                 return item !== undefined;
@@ -656,7 +656,7 @@ define(function (require, exports, module) {
         });
         return result;
     };
-    
+
     /* (pretty toString(), to aid debugging) */
     Document.prototype.toString = function () {
         var dirtyInfo = (this.isDirty ? " (dirty!)" : " (clean)");
@@ -673,7 +673,7 @@ define(function (require, exports, module) {
     Document.prototype.getLanguage = function () {
         return this.language;
     };
-    
+
     /**
      * Updates the language to match the current mapping given by LanguageManager
      */

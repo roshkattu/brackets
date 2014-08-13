@@ -130,7 +130,7 @@ define(function (require, exports, module) {
      * @type {boolean}
      */
     var _hasErrors;
-    
+
     /**
      * Promise of the returned by the last call to inspectFile or null if linting is disabled. Used to prevent any stale promises
      * to cause updates of the UI.
@@ -152,7 +152,7 @@ define(function (require, exports, module) {
     function _unregisterAll() {
         _providers = {};
     }
-    
+
     /**
      * Returns a list of provider for given file path, if available.
      * Decision is made depending on the file extension.
@@ -189,7 +189,7 @@ define(function (require, exports, module) {
             response.resolve(null);
             return response.promise();
         }
-        
+
         DocumentManager.getDocumentText(file)
             .done(function (fileText) {
                 var perfTimerInspector = PerfUtils.markStart("CodeInspection:\t" + file.fullPath),
@@ -198,11 +198,11 @@ define(function (require, exports, module) {
                 masterPromise = Async.doInParallel(providerList, function (provider) {
                     var perfTimerProvider = PerfUtils.markStart("CodeInspection '" + provider.name + "':\t" + file.fullPath),
                         runPromise = new $.Deferred();
-                    
+
                     runPromise.done(function (scanResult) {
                         results.push({provider: provider, result: scanResult});
                     });
-                    
+
                     if (provider.scanFileAsync) {
                         window.setTimeout(function () {
                             // timeout error
@@ -245,7 +245,7 @@ define(function (require, exports, module) {
                     return runPromise.promise();
 
                 }, false);
-                
+
                 masterPromise.then(function () {
                     // sync async may have pushed results in different order, restore the original order
                     results.sort(function (a, b) {
@@ -338,7 +338,7 @@ define(function (require, exports, module) {
                 if (this !== _currentPromise) {
                     return;
                 }
-                
+
                 // how many errors in total?
                 var errors = results.reduce(function (a, item) { return a + (item.result ? item.result.errors.length : 0); }, 0);
 
@@ -436,12 +436,12 @@ define(function (require, exports, module) {
      * Registering any provider for the "javascript" language automatically unregisters the built-in
      * Brackets JSLint provider. This is a temporary convenience until UI exists for disabling
      * registered providers.
-     * 
+     *
      * Providers implement scanFile() if results are available synchronously, or scanFileAsync() if results
      * may require an async wait (if both are implemented, scanFile() is ignored). scanFileAsync() returns
      * a {$.Promise} object resolved with the same type of value as scanFile() is expected to return.
      * Rejecting the promise is treated as an internal error in the provider.
-     * 
+     *
      * @param {string} languageId
      * @param {{name:string, scanFileAsync:?function(string, string):!{$.Promise},
      *         scanFile:?function(string, string):?{errors:!Array, aborted:boolean}}} provider
@@ -454,7 +454,7 @@ define(function (require, exports, module) {
         if (!_providers[languageId]) {
             _providers[languageId] = [];
         }
-        
+
         if (languageId === "javascript") {
             // This is a special case to enable extension provider to replace the JSLint provider
             // in favor of their own implementation
@@ -462,7 +462,7 @@ define(function (require, exports, module) {
                 return registeredProvider.name === "JSLint";
             });
         }
-        
+
         _providers[languageId].push(provider);
         
         run();  // in case a file of this type is open currently

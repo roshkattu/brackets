@@ -164,7 +164,7 @@
 }
 
 /* Dark theme styling
- * 
+ *
  * These are overrides to make the UI look better when the editor theme is dark.
  * Eventually, these will likely be replaced by full-featured UI themes.
  */
@@ -232,13 +232,13 @@
         .close {
             color: #ddd;
         }
-            
+
         .CodeMirror-scroll {
             .CodeMirror-linenumbers {
                 background-color: @dark-bc-inline-widget;
             }
-        }            
-        
+        }
+
     }
 
     #editor-holder .inline-widget .CodeMirror, #editor-holder .inline-widget .CodeMirror-gutters {
@@ -276,16 +276,16 @@
             color: #bbb;
         }
     }
-    
+
     /* Custom scrollbar colors */
     &.platform-win {
         .CodeMirror-scrollbar-filler,
         .CodeMirror-gutter-filler {
             background-color: rgb(15, 15, 15);
         }
-        
+
         // Note: when changing padding/margins, may need to adjust metrics in ScrollTrackMarkers.js
-        
+
         #editor-holder {
             ::-webkit-scrollbar {
                 background-color: rgb(15, 15, 15);
@@ -309,7 +309,7 @@
         .CodeMirror-gutter-filler {
             background-color: #1d1f21;
         }
-        
+
         #editor-holder {
             ::-webkit-scrollbar-thumb {
                 box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.24) inset;

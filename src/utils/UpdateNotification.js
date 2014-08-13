@@ -67,10 +67,10 @@ define(function (require, exports, module) {
         "lastInfoURLFetchTime": "user",
         "updateInfo": "user"
     }, true);
-    
+
     // URL to load version info from. By default this is loaded no more than once a day. If
     // you force an update check it is always loaded.
-    
+
     // Information on all posted builds of Brackets. This is an Array, where each element is
     // an Object with the following fields:
     //

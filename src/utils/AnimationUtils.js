@@ -32,7 +32,7 @@ define(function (require, exports, module) {
     "use strict";
     
     var Async   = require("utils/Async");
-    
+
     /**
      * Start an animation by adding the given class to the given target. When the
      * animation is complete, removes the class, clears the event handler we attach
@@ -46,7 +46,7 @@ define(function (require, exports, module) {
     function animateUsingClass(target, animClass, timeoutDuration) {
         var result  = new $.Deferred(),
             $target = $(target);
-        
+
         timeoutDuration = timeoutDuration || 400;
         
         function finish(e) {
@@ -60,7 +60,7 @@ define(function (require, exports, module) {
                 .removeClass(animClass)
                 .off("webkitTransitionEnd", finish);
         }
-        
+
         if ($target.is(":hidden")) {
             // Don't do anything if the element is hidden because webkitTransitionEnd wouldn't fire
             result.resolve();

@@ -210,7 +210,7 @@ define(function (require, exports, module) {
             command.setChecked(value);
         }
     };
-    
+
     /**
      * Performs the sort and makes it the current sort method.
      */
@@ -335,7 +335,7 @@ define(function (require, exports, module) {
     // Initialize default values for sorting preferences
     PreferencesManager.stateManager.definePreference("currentSort", "string", Commands.SORT_WORKINGSET_BY_ADDED);
     PreferencesManager.stateManager.definePreference("automaticSort", "boolean", false);
-    
+
     PreferencesManager.convertPreferences(module, {"currentSort": "user", "automaticSort": "user"}, true);
     
     // Initialize items dependent on extensions/workingSet

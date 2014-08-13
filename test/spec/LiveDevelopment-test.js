@@ -606,12 +606,12 @@ define(function (require, exports, module) {
 
                 runs(function () {
                     expect(LiveDevelopment.status).toBe(LiveDevelopment.STATUS_ACTIVE);
-                    
+
                     var doc = DocumentManager.getOpenDocumentForPath(tempDir + "/test.xhtml");
                     expect(isOpenInBrowser(doc, LiveDevelopment.agents)).toBeTruthy();
                 });
             });
-            
+
             it("should should not start a browser connection for an opened css file", function () {
                 //open a file
                 runs(function () {

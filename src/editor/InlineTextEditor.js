@@ -81,7 +81,7 @@ define(function (require, exports, module) {
         InlineWidget.call(this);
 
         this.editor = null;
-        
+
         // We need to set this as a capture handler so CodeMirror doesn't handle Esc before we see it.
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.htmlContent.addEventListener("keydown", this.handleKeyDown, true);

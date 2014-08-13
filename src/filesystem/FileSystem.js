@@ -53,10 +53,10 @@
  * 
  * FileSystem dispatches the following events:
  * (NOTE: attach to these events via `FileSystem.on()` - not `$(FileSystem).on()`)
- * 
+ *
  * __change__ - Sent whenever there is a change in the file system. The handler
- *   is passed up to three arguments: the changed entry and, if that changed entry 
- *   is a Directory, a list of entries added to the directory and a list of entries 
+ *   is passed up to three arguments: the changed entry and, if that changed entry
+ *   is a Directory, a list of entries added to the directory and a list of entries
  *   removed from the Directory. The entry argument can be:
  *   *  a File - the contents of the file have changed, and should be reloaded.
  *   *  a Directory - an immediate child of the directory has been added, removed,

@@ -446,7 +446,7 @@ define({
     "LANGUAGE_SUBMIT"                           : "Επανεκκίνηση του {APP_NAME}",
     "LANGUAGE_CANCEL"                           : "Ακύρωση",
     "LANGUAGE_SYSTEM_DEFAULT"                   : "Προεπιλογή Συστήματος",
-    
+
     // extensions/default/InlineTimingFunctionEditor
     "INLINE_TIMING_EDITOR_TIME"                 : "Χρόνος",
     "INLINE_TIMING_EDITOR_PROGRESSION"          : "Πρόοδος",

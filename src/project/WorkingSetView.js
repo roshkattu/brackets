@@ -247,7 +247,7 @@ define(function (require, exports, module) {
         
         // Don't redraw the working set for the next events
         _suppressSortRedraw = true;
-        
+
         function drag(e) {
             var top = e.pageY - startPageY;
             
@@ -378,7 +378,7 @@ define(function (require, exports, module) {
                     ViewUtils.addScrollerShadow($openFilesContainer[0], null, true);
                 }
             }
-            
+
             // The drag is done, so set back to the default
             _suppressSortRedraw = false;
         }
@@ -398,7 +398,7 @@ define(function (require, exports, module) {
         
         // Style the element
         $listItem.css("position", "relative").css("z-index", 1);
-        
+
         // Envent Handlers
         var $holder = $(window);
         $holder.on("mousemove.workingSet", function (e) {

@@ -392,7 +392,7 @@ define({
     "LANGUAGE_SUBMIT"                           : "{APP_NAME} újratöltése",
     "LANGUAGE_CANCEL"                           : "Mégsem",
     "LANGUAGE_SYSTEM_DEFAULT"                   : "Rendszer Alapértelmezett",
-    
+
     // extensions/default/InlineColorEditor
     "COLOR_EDITOR_CURRENT_COLOR_SWATCH_TIP"     : "Jelenlegi szín",
     "COLOR_EDITOR_ORIGINAL_COLOR_SWATCH_TIP"    : "Eredeti szín",

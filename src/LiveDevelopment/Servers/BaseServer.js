@@ -173,7 +173,7 @@ define(function (require, exports, module) {
         if (!liveDocument) {
             return;
         }
-        
+
         // use the project relative path as a key to lookup requests
         var key = this._documentKey(liveDocument.doc.file.fullPath);
         
@@ -189,7 +189,7 @@ define(function (require, exports, module) {
         if (!liveDocument) {
             return;
         }
-        
+
         var key = this._liveDocuments[this._documentKey(liveDocument.doc.file.fullPath)];
         
         if (key) {

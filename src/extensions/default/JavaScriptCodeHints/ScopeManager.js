@@ -279,7 +279,7 @@ define(function (require, exports, module) {
         if (isFileExcludedInternal(file)) {
             return (new $.Deferred()).reject().promise();
         }
-        
+
         if (_.has(pendingTernRequests, key)) {
             requests = pendingTernRequests[key];
         } else {
@@ -831,7 +831,7 @@ define(function (require, exports, module) {
 
             return addPendingRequest(path, OFFSET_ZERO, MessageIds.TERN_UPDATE_FILE_MSG);
         }
-        
+
         /**
          * Handle a request from the worker for text of a file
          *
@@ -907,7 +907,7 @@ define(function (require, exports, module) {
                     }
                 });
             }
-            
+
             if (!isFileExcludedInternal(name)) {
                 getDocText(name).fail(function () {
                     getDocText(rootTernDir + name).fail(function () {

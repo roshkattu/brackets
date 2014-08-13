@@ -44,7 +44,7 @@
  *      The 2nd arg to the listener is which Editor became active; the 3rd arg is
  *      which Editor is deactivated as a result. Either one may be null.
  *      NOTE (#1257): `getFocusedEditor()` sometimes lags behind this event. Listeners
- *      should use the arguments or call `getActiveEditor()` to reliably see which Editor 
+ *      should use the arguments or call `getActiveEditor()` to reliably see which Editor
  *      just gained focus.
  */
 define(function (require, exports, module) {
@@ -87,7 +87,7 @@ define(function (require, exports, module) {
     var _currentlyViewedPath = null;
 
     /**
-     * DOM node representing UI of custom view  
+     * DOM node representing UI of custom view
      * @type {?JQuery}
      */
     var _$currentCustomViewer = null;
@@ -185,7 +185,7 @@ define(function (require, exports, module) {
      * position, and once the widget has been created inserts it into the editor.
      *
      * @param {!Editor} editor The host editor
-     * @param {Array.<{priority:number, provider:function(...)}>} providers 
+     * @param {Array.<{priority:number, provider:function(...)}>} providers
      *      prioritized list of providers
      * @param {string=} defaultErrorMsg Default message to display if no providers return non-null
      * @return {$.Promise} a promise that will be resolved when an InlineWidget 
@@ -336,7 +336,7 @@ define(function (require, exports, module) {
      * Registers a new jump-to-definition provider. When jump-to-definition is invoked each
      * registered provider is asked if it wants to provide jump-to-definition results, given
      * the current editor and cursor location. 
-     * 
+     *
      * @param {function(!Editor, !{line:number, ch:number}):?$.Promise} provider
      * The provider returns a promise that is resolved whenever it's done handling the operation,
      * or returns null to indicate the provider doesn't want to respond to this case. It is entirely
@@ -625,7 +625,7 @@ define(function (require, exports, module) {
     
     /**
      * Resets editor state to make sure `getFocusedEditor()`, `getActiveEditor()`,
-     * and `getCurrentFullEditor()` return null when an image or the NoEditor 
+     * and `getCurrentFullEditor()` return null when an image or the NoEditor
      * placeholder is displayed.
      */
     function _nullifyEditor() {
@@ -753,7 +753,7 @@ define(function (require, exports, module) {
      * implement and export two methods: 
      * - render
      *     @param {!string} fullPath Path to the image file
-     *     @param {!jQueryObject} $editorHolder The DOM element to append the view to.     
+     *     @param {!jQueryObject} $editorHolder The DOM element to append the view to.
      * - onRemove
      *   signs off listeners and performs any required clean up when editor manager closes
      *   the custom viewer
@@ -967,7 +967,7 @@ define(function (require, exports, module) {
     /**
      * Closes any focused inline widget. Else, asynchronously asks providers to create one.
      *
-     * @param {Array.<{priority:number, provider:function(...)}>} providers 
+     * @param {Array.<{priority:number, provider:function(...)}>} providers
      *   prioritized list of providers
      * @param {string=} errorMsg Default message to display if no providers return non-null
      * @return {!Promise} A promise resolved with true if an inline widget is opened or false
@@ -1087,8 +1087,8 @@ define(function (require, exports, module) {
     exports._notifyActiveEditorChanged    = _notifyActiveEditorChanged;
     exports._showCustomViewer             = _showCustomViewer;
     exports._closeCustomViewer            = _closeCustomViewer;
-    
-    
+
+
     
     exports.REFRESH_FORCE = REFRESH_FORCE;
     exports.REFRESH_SKIP  = REFRESH_SKIP;

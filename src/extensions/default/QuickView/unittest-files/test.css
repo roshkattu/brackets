@@ -166,8 +166,8 @@ background: -ms-linear-gradient(top,  #d2dfed 0%,#c8d7eb 26%,#bed0ea 51%,#a6c0e3
     background-image: repeating-radial-gradient(red, blue 20px, red 40px);    
 }
 
-.whitespaceCheck_linear_gradient { 
-    background : linear-gradient(to bottom, black 0%, white 100%); 
+.whitespaceCheck_linear_gradient {
+    background : linear-gradient(to bottom, black 0%, white 100%);
     background: linear-gradient(to bottom, black 0%, white 100%);
     background :linear-gradient(to bottom, black 0%, white 100%);
     background:linear-gradient(to bottom, black 0%, white 100%);

@@ -89,7 +89,7 @@ define(function (require, exports, module) {
                     expect(match.originalString).toEqual(str);
                 });
             }
-            
+
             // Valid cubic-bezier function cases
             it("should match bezier curve function in strict mode", function () {
                 match = TimingFunctionUtils.timingFunctionMatch("cubic-bezier(.1, .2, .3, .4)", false);
@@ -215,7 +215,7 @@ define(function (require, exports, module) {
             it("should correct cubic-bezier function with 5 parameters", function () {
                 testInvalidBezier("cubic-bezier(0, 0, 1, 1, 1)", ["cubic-bezier(0, 0, 1, 1)", "0", "0", "1", "1"]);
             });
-            
+
             // Real invalid cubic-beziers - they should NOT be corrected automatically
             it("should not match cubic-bezier function with invalid whitespace", function () {
                 match = TimingFunctionUtils.timingFunctionMatch("cubic-bezier (0, 0, 1, 1)", false);
@@ -251,7 +251,7 @@ define(function (require, exports, module) {
                     expect(match.originalString).toEqual(str);
                 });
             }
-            
+
             // Valid steps function cases
             it("should match steps function in strict mode", function () {
                 match = TimingFunctionUtils.timingFunctionMatch("steps(3, start)", false);
@@ -377,7 +377,7 @@ define(function (require, exports, module) {
             it("should correct steps function with 3 parameters", function () {
                 testInvalidStep("steps(1, start, end)", ["steps(1, start)", "1", "start"]);
             });
-            
+
             // Real invalid cubic-beziers - they should NOT be corrected automatically
             it("should not match steps function with no parens", function () {
                 match = TimingFunctionUtils.timingFunctionMatch("steps", false);

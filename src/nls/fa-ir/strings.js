@@ -82,7 +82,7 @@ define({
     "ERROR_MAX_FILES_TITLE"             : "خطا در فهرست بندی پرونده ها",
     "ERROR_MAX_FILES"                   : "مقدار پرونده های قابل فهرست بندی به حداکثر رسیده بهمین علیت عملگر بهنگام فهرست بندی با خطا مواجه می شود.",
 
-    // Live Preview error strings 
+    // Live Preview error strings
     "ERROR_LAUNCHING_BROWSER_TITLE"     : "خطا در اجرای مرورگر",
     "ERROR_CANT_FIND_CHROME"            : "مرورگر Google Chrome پیدا نشد. لطفا از نصب بودن آن اطمینان حاصل کنید.",
     "ERROR_LAUNCHING_BROWSER"           : "بروز خطا بهنگام اجرای مرورگر. (error {0})",
@@ -195,7 +195,7 @@ define({
 
      // Quick Docs
     "ERROR_QUICK_DOCS_PROVIDER_NOT_FOUND"   : "سند سریع برای مکان فعلی نمایشگر مکان موجود نمی باشد",
-     
+
     /**
      * ProjectManager
      */

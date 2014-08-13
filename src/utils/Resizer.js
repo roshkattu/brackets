@@ -61,11 +61,11 @@ define(function (require, exports, module) {
     // Load dependent modules
     var AppInit                 = require("utils/AppInit"),
         PreferencesManager      = require("preferences/PreferencesManager");
-    
+
     var $mainView;
     
     var isResizing = false;
-    
+
     /**
      * Shows a resizable element.
      * @param {DOMNode} element Html element to show if possible
@@ -165,7 +165,7 @@ define(function (require, exports, module) {
             console.error("Resizable panels must have a DOM id to use as a preferences key:", element);
             return;
         }
-        
+
         if (minSize === undefined) {
             minSize = DEFAULT_MIN_SIZE;
         }
@@ -409,7 +409,7 @@ define(function (require, exports, module) {
             }
         }
     }
-	
+
     // Scan DOM for horz-resizable and vert-resizable classes and make them resizable
     AppInit.htmlReady(function () {
         var minSize = DEFAULT_MIN_SIZE;
@@ -459,12 +459,12 @@ define(function (require, exports, module) {
         if (key) {
             return "user";
         }
-        
+
         return null;
     }
-    
+
     PreferencesManager.convertPreferences(module, {"panelState": "user"}, true, _isPanelPreferences);
-    
+
     exports.makeResizable   = makeResizable;
     exports.toggle          = toggle;
     exports.show            = show;

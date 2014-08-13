@@ -58,7 +58,7 @@ define(function (require, exports, module) {
     /** Special list item for the 'set as default' gesture in language switcher dropdown */
     var LANGUAGE_SET_AS_DEFAULT = {};
     
-    
+
     /**
      * Determine string based on count
      * @param {number} number Count
@@ -77,7 +77,7 @@ define(function (require, exports, module) {
     function _updateLanguageInfo(editor) {
         var doc = editor.document,
             lang = doc.getLanguage();
-        
+
         // Ensure width isn't left locked by a previous click of the dropdown (which may not have resulted in a "change" event at the time)
         languageSelect.$button.css("width", "auto");
         // Setting Untitled documents to non-text mode isn't supported yet, so disable the switcher in that case for now
@@ -149,7 +149,7 @@ define(function (require, exports, module) {
         var cursor = editor.getCursorPos(true);
         
         var cursorStr = StringUtils.format(Strings.STATUSBAR_CURSOR_POSITION, cursor.line + 1, cursor.ch + 1);
-        
+
         var sels = editor.getSelections(),
             selStr = "";
 
@@ -174,7 +174,7 @@ define(function (require, exports, module) {
     /**
      * Change indent size
      * @param {string} fullPath Path to file in current editor
-     * @param {string} value Size entered into status bar 
+     * @param {string} value Size entered into status bar
      */
     function _changeIndentWidth(fullPath, value) {
         $indentWidthLabel.removeClass("hidden");
@@ -250,7 +250,7 @@ define(function (require, exports, module) {
      * Handle active editor change event
      * @param {Event} event (unused)
      * @param {Editor} current Current editor
-     * @param {Editor} previous Previous editor 
+     * @param {Editor} previous Previous editor
      */
     function _onActiveEditorChange(event, current, previous) {
         if (previous) {
@@ -298,24 +298,24 @@ define(function (require, exports, module) {
         var languages = _.values(LanguageManager.getLanguages()).filter(function (language) {
             return !language.isBinary();
         });
-        
+
         // sort dropdown alphabetically
         languages.sort(function (a, b) {
             return a.getName().toLowerCase().localeCompare(b.getName().toLowerCase());
         });
-        
+
         languageSelect.items = languages;
-        
+
         // Add option to top of menu for persisting the override
         languageSelect.items.unshift("---");
         languageSelect.items.unshift(LANGUAGE_SET_AS_DEFAULT);
     }
-    
+
     /**
      * Initialize
      */
     function _init() {
-        
+
         $cursorInfo         = $("#status-cursor");
         $fileInfo           = $("#status-file");
         $indentType         = $("#indent-type");
@@ -326,14 +326,14 @@ define(function (require, exports, module) {
         languageSelect      = new DropdownButton("", [], function (item, index) {
             var document = EditorManager.getActiveEditor().document,
                 defaultLang = LanguageManager.getLanguageForPath(document.file.fullPath, true);
-            
+
             if (item === LANGUAGE_SET_AS_DEFAULT) {
                 var label = _.escape(StringUtils.format(Strings.STATUSBAR_SET_DEFAULT_LANG, FileUtils.getSmartFileExtension(document.file.fullPath)));
                 return { html: label, enabled: document.getLanguage() !== defaultLang };
             }
-            
+
             var html = _.escape(item.getName());
-            
+
             // Show indicators for currently selected & default languages for the current file
             if (item === defaultLang) {
                 html += " <span class='default-language'>" + Strings.STATUSBAR_DEFAULT_LANG + "</span>";
@@ -343,12 +343,12 @@ define(function (require, exports, module) {
             }
             return html;
         });
-        
+
         languageSelect.dropdownExtraClasses = "dropdown-status-bar";
         languageSelect.$button.addClass("btn-status-bar");
         $("#status-language").append(languageSelect.$button);
         languageSelect.$button.attr("title", Strings.STATUSBAR_LANG_TOOLTIP);
-        
+
         // indentation event handlers
         $indentType.on("click", _toggleIndentType);
         $indentWidthLabel
@@ -380,13 +380,13 @@ define(function (require, exports, module) {
         $(languageSelect).on("select", function (e, lang) {
             var document = EditorManager.getActiveEditor().document,
                 fullPath = document.file.fullPath;
-            
+
             if (lang === LANGUAGE_SET_AS_DEFAULT) {
                 // Set file's current language in preferences as a file extension override (only enabled if not default already)
                 var fileExtensionMap = PreferencesManager.get("language.fileExtensions");
                 fileExtensionMap[FileUtils.getSmartFileExtension(fullPath)] = document.getLanguage().getId();
                 PreferencesManager.set("language.fileExtensions", fileExtensionMap);
-                
+
             } else {
                 // Set selected language as a path override for just this one file (not persisted)
                 var defaultLang = LanguageManager.getLanguageForPath(fullPath, true);
@@ -405,7 +405,7 @@ define(function (require, exports, module) {
     
     // Add an event listener when the list of languages change
     $(LanguageManager).on("languageAdded languageModified", _populateLanguageDropdown);
-    
+
     AppInit.htmlReady(_init);
     AppInit.appReady(_populateLanguageDropdown);
 });

@@ -81,7 +81,7 @@ define(function (require, exports, module) {
     // Load JUnitXMLReporter
     require("test/thirdparty/jasmine-reporters/jasmine.junit_reporter");
     
-    // Load CodeMirror add-ons--these attach themselves to the CodeMirror module    
+    // Load CodeMirror add-ons--these attach themselves to the CodeMirror module
     require("thirdparty/CodeMirror2/addon/fold/xml-fold");
     require("thirdparty/CodeMirror2/addon/edit/matchtags");
     require("thirdparty/CodeMirror2/addon/edit/matchbrackets");

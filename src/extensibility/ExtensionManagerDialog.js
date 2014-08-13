@@ -164,7 +164,7 @@ define(function (require, exports, module) {
         });
     }
     
-    
+
     /**
      * @private
      * Install extensions from the local file system using the install dialog.
@@ -187,12 +187,12 @@ define(function (require, exports, module) {
             // Parse zip files and separate new installs vs. updates
             validatePromise = Async.doInParallel_aggregateErrors(paths, function (path) {
                 var result = new $.Deferred();
-                
+
                 FileSystem.resolve(path, function (err, file) {
                     var extension = FileUtils.getFileExtension(path),
                         isZip = file.isFile && (extension === "zip"),
                         errStr;
-                    
+
                     if (err) {
                         errStr = FileUtils.getFileErrorString(err);
                     } else if (!isZip) {
@@ -203,7 +203,7 @@ define(function (require, exports, module) {
                         result.reject(errStr);
                         return;
                     }
-                    
+
                     // Call validate() so that we open the local zip file and parse the
                     // package.json. We need the name to detect if this zip will be a
                     // new install or an update.
@@ -228,7 +228,7 @@ define(function (require, exports, module) {
                         result.reject(Package.formatError(err));
                     });
                 });
-                
+
                 return result.promise();
             });
 
@@ -244,7 +244,7 @@ define(function (require, exports, module) {
                         });
                     });
                 });
-                
+
                 // InstallExtensionDialog displays it's own errors, always
                 // resolve the outer promise
                 updatePromise.always(deferred.resolve);
@@ -252,10 +252,10 @@ define(function (require, exports, module) {
                 deferred.reject(errorArray);
             });
         });
-        
+
         return deferred.promise();
     }
-    
+
     /**
      * @private
      * Show a dialog that allows the user to browse and manage extensions.
@@ -410,7 +410,7 @@ define(function (require, exports, module) {
         // Handle the drag/drop zone
         var $dropzone = $("#install-drop-zone"),
             $dropmask = $("#install-drop-zone-mask");
-        
+
         $dropzone
             .on("dragover", function (event) {
                 _stopEvent(event);
@@ -445,7 +445,7 @@ define(function (require, exports, module) {
                 }
             })
             .on("drop", _stopEvent);
-        
+
         $dropmask
             .on("dragover", function (event) {
                 _stopEvent(event);
@@ -457,7 +457,7 @@ define(function (require, exports, module) {
             })
             .on("drop", function (event) {
                 _stopEvent(event);
-                
+
                 if (event.originalEvent.dataTransfer.files) {
                     // Attempt install
                     _installUsingDragAndDrop().fail(function (errorArray) {
@@ -480,13 +480,13 @@ define(function (require, exports, module) {
                         $dropzone.removeClass("validating");
                         $dropzone.addClass("drag");
                     });
-                    
+
                     // While installing, show validating message
                     $dropzone.removeClass("drop");
                     $dropzone.addClass("validating");
                 }
             });
-        
+
         return new $.Deferred().resolve(dialog).promise();
     }
     

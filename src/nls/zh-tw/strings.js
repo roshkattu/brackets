@@ -25,7 +25,7 @@
 /*global define */
 
 define({
-    
+
     /**
      * Errors
      */
@@ -45,7 +45,7 @@ define({
     "FILENAMES_LEDE"                    : "檔案名稱",
     "FILENAME"                          : "檔案名稱",
     "DIRECTORY_NAME"                    : "目錄名稱",
-    
+
 
     // Project error strings
     "ERROR_LOADING_PROJECT"             : "無法載入專案",
@@ -78,7 +78,7 @@ define({
     // Application error strings
     "ERROR_IN_BROWSER_TITLE"            : "不妙! {APP_NAME} 還不能在瀏覽器裡跑。",
     "ERROR_IN_BROWSER"                  : "{APP_NAME} 是以 HTML 打造，不過要以應用程式的方式執行才能編輯電腦上的檔案。請透過 <b>github.com/adobe/brackets-shell</b> 儲存庫中的應用程式介面來執行 {APP_NAME}。",
-    
+
     // ProjectManager max files error string
     "ERROR_MAX_FILES_TITLE"             : "無法建立檔案索引",
     "ERROR_MAX_FILES"                   : "建立索引的檔案數已達上限。會透過索引尋找檔案內容的功能可能會不太正常。",
@@ -87,7 +87,7 @@ define({
     "ERROR_LAUNCHING_BROWSER_TITLE"     : "無法啟動瀏覽器",
     "ERROR_CANT_FIND_CHROME"            : "找不到 Google Chrome 瀏覽器。請確定您有安裝。",
     "ERROR_LAUNCHING_BROWSER"           : "啟動瀏覽器時發生錯誤。 (錯誤 {0})",
-    
+
     "LIVE_DEVELOPMENT_ERROR_TITLE"      : "即時預覽錯誤",
     "LIVE_DEVELOPMENT_RELAUNCH_TITLE"   : "正在連到瀏覽器",
     "LIVE_DEVELOPMENT_ERROR_MESSAGE"    : "為了讓即時預覽功能順利連線，需要重新啟動 Chrome 並開啟遠端除錯功能。<br /><br />您是否要重新啟動 Chrome 並啟用遠端除錯功能?",
@@ -98,7 +98,7 @@ define({
     "LIVE_DEVELOPMENT_INFO_TITLE"       : "歡迎使用即時預覽!",
     "LIVE_DEVELOPMENT_INFO_MESSAGE"     : "即時預覽將 {APP_NAME} 與您的瀏覽器連線。讓您在瀏覽器中預覽 HTML 檔案，編輯的內容也會即時反應在預覽畫面上。<br /><br />因為 {APP_NAME} 才剛起步，即時預覽目前只能在 <strong>Google Chrome</strong> 上面執行，<strong>CSS 或 HTML 檔案</strong>的異動會即時反應。修改 JavaScript 檔案並儲存後會重新載入頁面。<br /><br />(您只會看到一次這段訊息。)",
     "LIVE_DEVELOPMENT_TROUBLESHOOTING"  : "想了解更多，請參考<a href='{0}' title='{0}'>即時預覽連結錯誤排解</a>。",
-    
+
     "LIVE_DEV_STATUS_TIP_NOT_CONNECTED" : "即時預覽",
     "LIVE_DEV_STATUS_TIP_PROGRESS1"     : "即時預覽: 連線中\u2026",
     "LIVE_DEV_STATUS_TIP_PROGRESS2"     : "即時預覽: 初始化中\u2026",
@@ -110,7 +110,7 @@ define({
     "LIVE_DEV_DETACHED_TARGET_CLOSED"          : "已取消即時預覽，因為頁面被關掉了",
     "LIVE_DEV_NAVIGATED_AWAY"                  : "已取消即時預覽，因為您連到專案外的頁面了",
     "LIVE_DEV_CLOSED_UNKNOWN_REASON"           : "即時預覽因為不明的錯誤而取消 ({0})",
-    
+
     "SAVE_CLOSE_TITLE"                  : "儲存變更",
     "SAVE_CLOSE_MESSAGE"                : "您想要儲存 <span class='dialog-filename'>{0}</span> 檔案的變更嗎?",
     "SAVE_CLOSE_MULTI_MESSAGE"          : "您想要儲存下列檔案的變更嗎?",
@@ -121,7 +121,7 @@ define({
     "EXT_MODIFIED_WARNING"              : "<span class='dialog-filename'>{0}</span> 被修改過了。<br /><br />您想要儲存檔案並覆寫蓋掉外部的變更嗎?",
     "EXT_MODIFIED_MESSAGE"              : "<span class='dialog-filename'>{0}</span> 被修改過了，但在 {APP_NAME} 中也有還沒儲存的變更。<br /><br />您想保留哪個版本呢?",
     "EXT_DELETED_MESSAGE"               : "<span class='dialog-filename'>{0}</span> 被刪除了，但在 {APP_NAME} 中還有沒儲存的變更。<br /><br />想要保留您變更的內容嗎?",
-    
+
     // Generic dialog/button labels
     "DONE"                              : "完成",
     "OK"                                : "確定",
@@ -133,7 +133,7 @@ define({
     "DELETE"                            : "刪除",
     "BUTTON_YES"                        : "是",
     "BUTTON_NO"                         : "否",
-    
+
     // Find, Replace, Find in Files
     "FIND_RESULT_COUNT"                 : "{0} 筆結果",
     "FIND_RESULT_COUNT_SINGLE"          : "1 筆結果",
@@ -182,10 +182,10 @@ define({
     "FIND_IN_FILES_EXPAND_COLLAPSE"     : "按住 Ctrl/Cmd 再用滑鼠點一下可以全部展開/收合",
     "REPLACE_IN_FILES_ERRORS_TITLE"     : "取代錯誤",
     "REPLACE_IN_FILES_ERRORS"           : "下列檔案沒有被修改，可能是搜尋後又被變更或是無法寫入。",
-    
+
     "ERROR_FETCHING_UPDATE_INFO_TITLE"  : "無法取得更新資訊",
     "ERROR_FETCHING_UPDATE_INFO_MSG"    : "由伺服器取得更新資訊時發生錯誤。請確定您已連線到 Internet 後再重試一次。",
-    
+
     // File exclusion filters
     "NEW_FILE_FILTER"                   : "新增排除集\u2026",
     "CLEAR_FILE_FILTER"                 : "不要排除檔案",
@@ -225,7 +225,7 @@ define({
     "KEYBOARD_CTRL"   : "Ctrl",
     "KEYBOARD_SHIFT"  : "Shift",
     "KEYBOARD_SPACE"  : "空白鍵",
-    
+
     /**
      * StatusBar strings
      */
@@ -259,8 +259,8 @@ define({
     "NOTHING_TO_LINT"                       : "沒有東西好 Lint",
     "LINTER_TIMED_OUT"                      : "{0} 等了 {1} 毫秒後逾時",
     "LINTER_FAILED"                         : "{0} 已終止，錯誤: {1}",
-    
-    
+
+
     /**
      * Command Name Constants
      */
@@ -319,7 +319,7 @@ define({
     "CMD_OPEN_LINE_BELOW"                 : "往下新增一行",
     "CMD_TOGGLE_CLOSE_BRACKETS"           : "自動插入右括號",
     "CMD_SHOW_CODE_HINTS"                 : "顯示程式提示",
-    
+
     // Search menu commands
     "FIND_MENU"                           : "尋找",
     "CMD_FIND"                            : "尋找",
@@ -335,7 +335,7 @@ define({
     "CMD_REPLACE_IN_FILES"                : "在檔案中取代",
     "CMD_REPLACE_IN_SELECTED"             : "在選取的檔案或資料夾中取代",
     "CMD_REPLACE_IN_SUBTREE"              : "取代\u2026",
-    
+
     // View menu commands
     "VIEW_MENU"                           : "檢視",
     "CMD_HIDE_SIDEBAR"                    : "隱藏側欄",
@@ -373,7 +373,7 @@ define({
     "CMD_SHOW_IN_EXPLORER"                : "在檔案總管中顯示",
     "CMD_SHOW_IN_FINDER"                  : "在 Finder 中顯示",
     "CMD_SHOW_IN_OS"                      : "在作業系統中顯示",
-    
+
     // Help menu commands
     "HELP_MENU"                           : "說明",
     "CMD_CHECK_FOR_UPDATE"                : "檢查是否有更新",
@@ -416,7 +416,7 @@ define({
     "BASEURL_ERROR_HASH_DISALLOWED"        : "URL 根位址不能有半型井號 (#)，例如 \"{0}\"。",
     "BASEURL_ERROR_INVALID_CHAR"           : "'{0}' 這類特殊字元一定要用 % 格式編碼過。",
     "BASEURL_ERROR_UNKNOWN_ERROR"          : "解析 URL 根位址時發生不明錯誤",
-    
+
     // Strings for themes-settings.html and themes-general.html
     "CURRENT_THEME"                        : "目前的佈景主題",
     "CUSTOM_SCROLLBARS"                    : "自訂捲軸",
@@ -427,7 +427,7 @@ define({
 
     // CSS Quick Edit
     "BUTTON_NEW_RULE"                      : "新增規則",
-    
+
     // Extension Management strings
     "INSTALL"                              : "安裝",
     "UPDATE"                               : "更新",
@@ -508,14 +508,14 @@ define({
     "EXTENSIONS_INSTALLED_TITLE"           : "已安裝",
     "EXTENSIONS_AVAILABLE_TITLE"           : "可使用",
     "EXTENSIONS_UPDATES_TITLE"             : "更新",
-    
+
     "INLINE_EDITOR_NO_MATCHES"             : "找不到符合的。",
     "CSS_QUICK_EDIT_NO_MATCHES"            : "既有 CSS 中沒有符合您選取內容的規則。<br> 按一下「新增規則」 建立一組。",
     "CSS_QUICK_EDIT_NO_STYLESHEETS"        : "您的專案中沒有 Stylesheet 樣式表檔案。<br>建立一個來新增 CSS 規則。",
 
     // Custom Viewers
     "IMAGE_VIEWER_LARGEST_ICON"            : "最大",
-    
+
     /**
      * Unit names
      */
@@ -536,20 +536,20 @@ define({
     "CMD_LOG_NODE_STATE"                        : "將 Node 狀態寫到 Console",
     "CMD_RESTART_NODE"                          : "重新啟動 Node",
     "CMD_SHOW_ERRORS_IN_STATUS_BAR"             : "在狀態列顯示錯誤訊息",
-    
+
     "LANGUAGE_TITLE"                            : "切換語言",
     "LANGUAGE_MESSAGE"                          : "語言:",
     "LANGUAGE_SUBMIT"                           : "重新載入 {APP_NAME}",
     "LANGUAGE_CANCEL"                           : "取消",
     "LANGUAGE_SYSTEM_DEFAULT"                   : "系統預設",
-    
+
     // extensions/default/InlineTimingFunctionEditor
     "INLINE_TIMING_EDITOR_TIME"                 : "時間",
     "INLINE_TIMING_EDITOR_PROGRESSION"          : "進度",
     "BEZIER_EDITOR_INFO"                        : "<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> 移動選取的控制點<br><kbd class='text'>Shift</kbd> 移動 10 個單位<br><kbd class='text'>Tab</kbd> 切換控制點",
     "STEPS_EDITOR_INFO"                         : "<kbd>↑</kbd><kbd>↓</kbd> 增加或減少 Step 數<br><kbd>←</kbd><kbd>→</kbd> 'Start' 或 'End'",
     "INLINE_TIMING_EDITOR_INVALID"              : "原始值 <code>{0}</code> 無效，因此改以 <code>{1}</code> 函式顯示。 檔案在第一次編輯後將被更新。",
-    
+
     // extensions/default/InlineColorEditor
     "COLOR_EDITOR_CURRENT_COLOR_SWATCH_TIP"     : "目前的色彩",
     "COLOR_EDITOR_ORIGINAL_COLOR_SWATCH_TIP"    : "原來的色彩",
@@ -558,21 +558,21 @@ define({
     "COLOR_EDITOR_HSLA_BUTTON_TIP"              : "HSLa 格式",
     "COLOR_EDITOR_USED_COLOR_TIP_SINGULAR"      : "{0} (用了 {1} 次)",
     "COLOR_EDITOR_USED_COLOR_TIP_PLURAL"        : "{0} (用了 {1} 次)",
-    
+
     // extensions/default/JavaScriptCodeHints
     "CMD_JUMPTO_DEFINITION"                     : "跳到定義位置",
     "CMD_SHOW_PARAMETER_HINT"                   : "顯示參數提示",
     "NO_ARGUMENTS"                              : "<沒有參數>",
-    
+
     // extensions/default/JSLint
     "JSLINT_NAME"                               : "JSLint",
-    
+
     // extensions/default/QuickView
     "CMD_ENABLE_QUICK_VIEW"                     : "游標停留時快速檢視",
-    
+
     // extensions/default/RecentProjects
     "CMD_TOGGLE_RECENT_PROJECTS"                : "最近開啟的專案",
-    
+
     // extensions/default/WebPlatformDocs
     "DOCS_MORE_LINK"                            : "更多資訊"
 });

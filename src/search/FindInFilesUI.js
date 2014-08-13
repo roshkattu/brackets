@@ -1,24 +1,24 @@
 /*
  * Copyright (c) 2014 Adobe Systems Incorporated. All rights reserved.
- *  
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and associated documentation files (the "Software"), 
- * to deal in the Software without restriction, including without limitation 
- * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
- * and/or sell copies of the Software, and to permit persons to whom the 
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
- *  
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *  
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- * 
+ *
  */
 
 /*jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
@@ -32,7 +32,7 @@
  */
 define(function (require, exports, module) {
     "use strict";
-    
+
     var AppInit           = require("utils/AppInit"),
         CommandManager    = require("command/CommandManager"),
         Commands          = require("command/Commands"),
@@ -55,10 +55,10 @@ define(function (require, exports, module) {
 
     /** @const Maximum number of files to do replacements in-memory instead of on disk. */
     var MAX_IN_MEMORY = 20;
-    
+
     /** @type {SearchResultsView} The results view. Initialized in htmlReady() */
     var _resultsView = null;
-    
+
     /** @type {FindBar} Find bar containing the search UI. */
     var _findBar = null;
 
@@ -106,7 +106,7 @@ define(function (require, exports, module) {
                 StatusBar.hideBusyIndicator();
             });
     }
-    
+
     /**
      * @private
      * Displays a non-modal embedded dialog above the code mirror editor that allows the user to do
@@ -120,14 +120,14 @@ define(function (require, exports, module) {
         if (scope && EditorManager.getCustomViewerForPath(scope.fullPath)) {
             return;
         }
-        
+
         if (scope instanceof InMemoryFile) {
             CommandManager.execute(Commands.FILE_OPEN, { fullPath: scope.fullPath }).done(function () {
                 CommandManager.execute(Commands.CMD_FIND);
             });
             return;
         }
-        
+
         // Default to searching for the current selection
         var currentEditor = EditorManager.getActiveEditor(),
             initialQuery  = "";
@@ -139,9 +139,9 @@ define(function (require, exports, module) {
         } else if (currentEditor) {
             initialQuery = FindUtils.getInitialQueryFromSelection(currentEditor);
         }
-        
+
         FindInFiles.clearSearch();
-        
+
         // Close our previous find bar, if any. (The open() of the new _findBar will
         // take care of closing any other find bar instances.)
         if (_findBar) {
@@ -165,10 +165,10 @@ define(function (require, exports, module) {
             // TODO: should have API on filterPicker to figure out if dialog is open
             return !_findBar.isEnabled() || $(".modal.instance .exclusions-editor").length > 0;
         };
-        
+
         var candidateFilesPromise = FindInFiles.getCandidateFiles(scope),  // used for eventual search, and in exclusions editor UI
             filterPicker;
-        
+
         function handleQueryChange() {
             // Check the query expression on every input event. This way the user is alerted
             // to any RegEx syntax errors immediately.
@@ -186,7 +186,7 @@ define(function (require, exports, module) {
                 _findBar.showError(queryResult.error);
             }
         }
-        
+
         function startSearch(replaceText) {
             var queryInfo = _findBar.getQueryInfo();
             if (queryInfo && queryInfo.query) {
@@ -204,11 +204,11 @@ define(function (require, exports, module) {
             }
             return null;
         }
-        
+
         function startReplace() {
             startSearch(_findBar.getReplaceText());
         }
-        
+
         $(_findBar)
             .on("doFind.FindInFiles", function () {
                 // Subtle issue: we can't just pass startSearch directly as the handler, because
@@ -220,15 +220,15 @@ define(function (require, exports, module) {
                 $(_findBar).off(".FindInFiles");
                 _findBar = null;
             });
-        
+
         if (showReplace) {
             // We shouldn't get a "doReplace" in this case, since the Replace button
             // is hidden when we set options.multifile.
             $(_findBar).on("doReplaceAll.FindInFiles", startReplace);
         }
-        
+
         var oldModalBarHeight = _findBar._modalBar.height();
-        
+
         // Show file-exclusion UI *unless* search scope is just a single file
         if (!scope || scope.isDirectory) {
             var exclusionsContext = {
@@ -240,9 +240,9 @@ define(function (require, exports, module) {
             // TODO: include in FindBar? (and disable it when FindBar is disabled)
             _findBar._modalBar.getRoot().find(".scope-group").append(filterPicker);
         }
-        
+
         handleQueryChange();
-        
+
         // Appending FilterPicker and query text can change height of modal bar, so resize editor.
         // Preserve scroll position of the current full editor across the editor refresh, adjusting
         // for the height of the modal bar so the code doesn't appear to shift if possible.
@@ -257,7 +257,7 @@ define(function (require, exports, module) {
             fullEditor._codeMirror.scrollTo(scrollPos.x, scrollPos.y + _findBar._modalBar.height());
         }
     }
-    
+
     /**
      * @private
      * Finish a replace across files operation when the user clicks "Replace" on the results panel.
@@ -268,7 +268,7 @@ define(function (require, exports, module) {
         if (replaceText === null) {
             return;
         }
-        
+
         // Clone the search results so that they don't get updated in the middle of the replacement.
         var resultsClone = _.cloneDeep(model.results),
             replacedFiles = Object.keys(resultsClone).filter(function (path) {
@@ -276,7 +276,7 @@ define(function (require, exports, module) {
             }),
             isRegexp = model.queryInfo.isRegexp,
             replacePromise;
-        
+
         function processReplace(forceFilesOpen) {
             StatusBar.showBusyIndicator(true);
             FindInFiles.doReplace(resultsClone, replaceText, { forceFilesOpen: forceFilesOpen, isRegexp: isRegexp })
@@ -286,7 +286,7 @@ define(function (require, exports, module) {
                                 return ProjectManager.makeProjectRelativeIfPossible(errorInfo.item);
                             })
                         );
-                    
+
                     Dialogs.showModalDialog(
                         DefaultDialogs.DIALOG_ID_ERROR,
                         Strings.REPLACE_IN_FILES_ERRORS_TITLE,
@@ -304,7 +304,7 @@ define(function (require, exports, module) {
                     StatusBar.hideBusyIndicator();
                 });
         }
-                
+
         if (replacedFiles.length <= MAX_IN_MEMORY) {
             // Just do the replacements in memory.
             _resultsView.close();
@@ -337,7 +337,7 @@ define(function (require, exports, module) {
     }
 
     // Command handlers
-    
+
     /**
      * @private
      * Bring up the Find in Files UI with the replace options.
@@ -345,7 +345,7 @@ define(function (require, exports, module) {
     function _showReplaceBar() {
         _showFindBar(null, true);
     }
-    
+
     /**
      * @private
      * Search within the file/subtree defined by the sidebar selection
@@ -354,7 +354,7 @@ define(function (require, exports, module) {
         var selectedEntry = ProjectManager.getSelectedItem();
         _showFindBar(selectedEntry);
     }
-    
+
     /**
      * @private
      * Search within the file/subtree defined by the sidebar selection
@@ -363,7 +363,7 @@ define(function (require, exports, module) {
         var selectedEntry = ProjectManager.getSelectedItem();
         _showFindBar(selectedEntry, true);
     }
-    
+
     /**
      * @private
      * Close the open search bar, if any. For unit tests.
@@ -373,7 +373,7 @@ define(function (require, exports, module) {
             _findBar.close();
         }
     }
-    
+
     // Initialize items dependent on HTML DOM
     AppInit.htmlReady(function () {
         var model = FindInFiles.searchModel;
@@ -386,22 +386,22 @@ define(function (require, exports, module) {
                 FindInFiles.clearSearch();
             });
     });
-    
+
     // Initialize: register listeners
     $(ProjectManager).on("beforeProjectClose", function () { _resultsView.close(); });
-    
+
     // Initialize: command handlers
     CommandManager.register(Strings.CMD_FIND_IN_FILES,       Commands.CMD_FIND_IN_FILES,       _showFindBar);
     CommandManager.register(Strings.CMD_FIND_IN_SELECTED,    Commands.CMD_FIND_IN_SELECTED,    _showFindBarForSubtree);
     CommandManager.register(Strings.CMD_FIND_IN_SUBTREE,     Commands.CMD_FIND_IN_SUBTREE,     _showFindBarForSubtree);
-    
+
     CommandManager.register(Strings.CMD_REPLACE_IN_FILES,    Commands.CMD_REPLACE_IN_FILES,    _showReplaceBar);
     CommandManager.register(Strings.CMD_REPLACE_IN_SELECTED, Commands.CMD_REPLACE_IN_SELECTED, _showReplaceBarForSubtree);
     CommandManager.register(Strings.CMD_REPLACE_IN_SUBTREE,  Commands.CMD_REPLACE_IN_SUBTREE,  _showReplaceBarForSubtree);
-    
+
     // Public exports
     exports.searchAndShowResults = searchAndShowResults;
-    
+
     // For unit testing
     exports._showFindBar  = _showFindBar;
     exports._closeFindBar = _closeFindBar;

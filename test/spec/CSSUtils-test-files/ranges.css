@@ -5,34 +5,34 @@
                          at
                          0 0
     );
-    
-    shape-inside: circle   (0px 
-                         at 
-                            0px 
-                         
+
+    shape-inside: circle   (0px
+                         at
+                            0px
+
         0px
-    );     
-    
-    shape-inside: polygon(0 0, 
-                          100px
-        
-        0, 
-                          100px 100px
-    
-    
     );
-    
-    
-    shape-inside: 
+
+    shape-inside: polygon(0 0,
+                          100px
+
+        0,
+                          100px 100px
+
+
+    );
+
+
+    shape-inside:
 polygon(
-        
-        
-        nonzero, 
-                          0 0, 
-                          100px 
-0, 
-                                                                                    100px 
-        
+
+
+        nonzero,
+                          0 0,
+                          100px
+0,
+                                                                                    100px
+
         100px
                                         );
                                 }
@@ -44,12 +44,12 @@ polygon(
         -webkit-filter: grayscale(100%);
     }
     100% {
-        -webkit-filter: 
-            
-            
-            grayscale   
+        -webkit-filter:
+
+
+            grayscale
                                                                                 (  0  %  )
-            
+
 ;
     }
 }

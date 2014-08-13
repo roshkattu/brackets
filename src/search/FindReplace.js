@@ -72,12 +72,12 @@ define(function (require, exports, module) {
      */
     var currentDocument = null;
 
-    /** 
+    /**
      * Currently open Find or Find/Replace bar, if any
-     * @type {?FindBar} 
+     * @type {?FindBar}
      */
     var findBar;
-    
+
     function SearchState() {
         this.searchStartPos = null;
         this.parsedQuery = null;
@@ -125,12 +125,12 @@ define(function (require, exports, module) {
             return queryInfo.query;
         }
     }
-    
+
     /**
      * @private
      * Determine the query from the given info and store it in the state.
      * @param {SearchState} state The state to store the parsed query in
-     * @param {{query: string, caseSensitive: boolean, isRegexp: boolean}} queryInfo 
+     * @param {{query: string, caseSensitive: boolean, isRegexp: boolean}} queryInfo
      *      The query info object as returned by FindBar.getQueryInfo()
      */
     function setQueryInfo(state, queryInfo) {
@@ -141,13 +141,13 @@ define(function (require, exports, module) {
             state.parsedQuery = parseQuery(queryInfo);
         }
     }
-    
+
     /**
      * @private
-     * Show the current match index by finding matchRange in the resultSet stored 
+     * Show the current match index by finding matchRange in the resultSet stored
      * in the search state if this is the first call for a new search query. For
      * subsequent calls, just compare matchRange with the next match in the resultSet
-     * based on the search direction and show the next match if they are the same. 
+     * based on the search direction and show the next match if they are the same.
      * If not, then find the match index by searching matchRange in the entire resultSet.
      *
      * @param {!SearchState} state The search state that has the array of search result
@@ -159,7 +159,7 @@ define(function (require, exports, module) {
         if (!state.foundAny) {
             return;
         }
-        
+
         if (findBar) {
             if (state.matchIndex === -1) {
                 state.matchIndex = _.findIndex(state.resultSet, matchRange);
@@ -167,14 +167,14 @@ define(function (require, exports, module) {
                 state.matchIndex = searchBackwards ? state.matchIndex - 1 : state.matchIndex + 1;
                 // Adjust matchIndex for modulo wraparound
                 state.matchIndex = (state.matchIndex + state.resultSet.length) % state.resultSet.length;
-                
-                // Confirm that we find the right matchIndex. If not, then search 
+
+                // Confirm that we find the right matchIndex. If not, then search
                 // matchRange in the entire resultSet.
                 if (!_.isEqual(state.resultSet[state.matchIndex], matchRange)) {
                     state.matchIndex = _.findIndex(state.resultSet, matchRange);
                 }
             }
-        
+
             if (state.matchIndex !== -1) {
                 // Convert to 1-based by adding one before showing the index.
                 findBar.showFindCount(StringUtils.format(Strings.FIND_MATCH_INDEX,
@@ -182,7 +182,7 @@ define(function (require, exports, module) {
             }
         }
     }
-       
+
     /**
      * @private
      * Returns the next match for the current query (from the search state) before/after the given position. Wraps around
@@ -237,7 +237,7 @@ define(function (require, exports, module) {
             // no need to scroll if the line with the match is in view
             centerOptions = Editor.BOUNDARY_IGNORE_TOP;
         }
-        
+
         // Make sure the primary selection is fully visible on screen.
         var primary = _.find(selections, function (sel) {
             return sel.primary;
@@ -248,7 +248,7 @@ define(function (require, exports, module) {
         editor._codeMirror.scrollIntoView({from: primary.start, to: primary.end});
         editor.setSelections(selections, center, centerOptions);
     }
-    
+
     /**
      * Returns the range of the word surrounding the given editor position. Similar to getWordAt() from CodeMirror.
      *
@@ -270,7 +270,7 @@ define(function (require, exports, module) {
         }
         return {start: {line: pos.line, ch: start}, end: {line: pos.line, ch: end}, text: line.slice(start, end)};
     }
-    
+
     /**
      * @private
      * Helper function. Returns true if two selections are equal.
@@ -283,7 +283,7 @@ define(function (require, exports, module) {
     }
 
     /**
-     * Expands each empty range in the selection to the nearest word boundaries. Then, if the primary selection 
+     * Expands each empty range in the selection to the nearest word boundaries. Then, if the primary selection
      * was already a range (even a non-word range), adds the next instance of the contents of that range as a selection.
      *
      * @param {!Editor} editor The editor to search in
@@ -296,13 +296,13 @@ define(function (require, exports, module) {
         if (!editor) {
             return;
         }
-        
+
         var selections = editor.getSelections(),
             primarySel,
             primaryIndex,
             searchText,
             added = false;
-        
+
         _.each(selections, function (sel, index) {
             var isEmpty = (CodeMirror.cmpPos(sel.start, sel.end) === 0);
             if (sel.primary) {
@@ -323,13 +323,13 @@ define(function (require, exports, module) {
                 }
             }
         });
-        
+
         if (searchText && searchText.length) {
             // We store this as a query in the state so that if the user next does a "Find Next",
             // it will use the same query (but throw away the existing selection).
             var state = getSearchState(editor._codeMirror);
             setQueryInfo(state, { query: searchText, isCaseSensitive: false, isRegexp: false });
-            
+
             // Skip over matches that are already in the selection.
             var searchStart = primarySel.end,
                 nextMatch,
@@ -341,7 +341,7 @@ define(function (require, exports, module) {
                     // JSLint complains about creating a function in a loop, even though it's safe in this case.
                     isInSelection = _.find(selections, _.partial(_selEq, nextMatch));
                     searchStart = nextMatch.end;
-                    
+
                     // If we've gone all the way around, then all instances must have been selected already.
                     if (CodeMirror.cmpPos(searchStart, primarySel.end) === 0) {
                         nextMatch = null;
@@ -349,18 +349,18 @@ define(function (require, exports, module) {
                     }
                 }
             } while (nextMatch && isInSelection);
-            
+
             if (nextMatch) {
                 nextMatch.primary = true;
                 selections.push(nextMatch);
                 added = true;
             }
         }
-        
+
         if (removePrimary) {
             selections.splice(primaryIndex, 1);
         }
-        
+
         if (added) {
             // Center the new match, but avoid scrolling to matches that are already on screen.
             _selectAndScrollTo(editor, selections, true, true);
@@ -369,11 +369,11 @@ define(function (require, exports, module) {
             _selectAndScrollTo(editor, selections, false);
         }
     }
-    
+
     function _skipCurrentMatch(editor) {
         return _expandWordAndAddNextToSelection(editor, true);
     }
-    
+
     /**
      * Takes the primary selection, expands it to a word range if necessary, then sets the selection to
      * include all instances of that range. Removes all other selections. Does nothing if the selection
@@ -384,7 +384,7 @@ define(function (require, exports, module) {
         if (!editor) {
             return;
         }
-        
+
         var sel = editor.getSelection(),
             newSelections = [];
         if (CodeMirror.cmpPos(sel.start, sel.end) === 0) {
@@ -395,7 +395,7 @@ define(function (require, exports, module) {
                 state = getSearchState(editor._codeMirror),
                 nextMatch;
             setQueryInfo(state, { query: editor.document.getRange(sel.start, sel.end), isCaseSensitive: false, isRegexp: false });
-            
+
             while ((nextMatch = _getNextMatch(editor, false, searchStart, false)) !== null) {
                 if (_selEq(sel, nextMatch)) {
                     nextMatch.primary = true;
@@ -403,7 +403,7 @@ define(function (require, exports, module) {
                 newSelections.push(nextMatch);
                 searchStart = nextMatch.end;
             }
-            
+
             // This should find at least the original selection, but just in case...
             if (newSelections.length) {
                 // Don't change the scroll position.
@@ -418,7 +418,7 @@ define(function (require, exports, module) {
             state.markedCurrent.clear();
         }
     }
-    
+
     /**
      * Selects the next match (or prev match, if searchBackwards==true) starting from either the current position
      * (if pos unspecified) or the given position (if pos specified explicitly). The starting position
@@ -477,7 +477,7 @@ define(function (require, exports, module) {
             clearHighlights(cm, state);
         });
     }
-    
+
     function toggleHighlighting(editor, enabled) {
         // Temporarily change selection color to improve highlighting - see LESS code for details
         if (enabled) {
@@ -545,9 +545,9 @@ define(function (require, exports, module) {
                     ScrollTrackMarkers.addTickmarks(editor, scrollTrackPositions);
                 }
                 
-                // Here we only update find bar with no result. In the case of a match 
+                // Here we only update find bar with no result. In the case of a match
                 // a findNext() call is guaranteed to be followed by this function call,
-                // and findNext() in turn calls _updateFindBarWithMatchInfo() to show the 
+                // and findNext() in turn calls _updateFindBarWithMatchInfo() to show the
                 // match index.
                 if (state.resultSet.length === 0) {
                     findBar.showFindCount(Strings.FIND_NO_RESULTS);
@@ -645,7 +645,7 @@ define(function (require, exports, module) {
                 $(findBar).off(".FindReplace");
                 findBar = null;
             });
-  
+
         handleQueryChange(editor, state, true);
     }
     
@@ -674,12 +674,12 @@ define(function (require, exports, module) {
             findBar.close();
         }
     }
-    
+
     function doReplace(editor, all) {
         var cm = editor._codeMirror,
             state = getSearchState(cm),
             replaceText = findBar.getReplaceText();
-        
+
         if (all) {
             findBar.close();
             // Delegate to Replace in Files.
@@ -744,7 +744,7 @@ define(function (require, exports, module) {
             replace(editor);
         }
     }
-    
+
     $(DocumentManager).on("currentDocumentChange", _handleDocumentChange);
 
     CommandManager.register(Strings.CMD_FIND,                   Commands.CMD_FIND,                  _launchFind);

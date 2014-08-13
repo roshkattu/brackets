@@ -48,16 +48,16 @@ define(function (require, exports, module) {
      * @const @type {!Object}
      */
     var ZERO_FILES_TO_SEARCH = {};
-    
+
     /**
      * The search query and results model.
-     * @type {SearchModel} 
+     * @type {SearchModel}
      */
     var searchModel = new SearchModel();
     
     /* Forward declarations */
     var _documentChangeHandler, _fileSystemChangeHandler, _fileNameChangeHandler;
-    
+
     /** Remove the listeners that were tracking potential search result changes */
     function _removeListeners() {
         $(DocumentModule).off("documentChange", _documentChangeHandler);
@@ -109,7 +109,7 @@ define(function (require, exports, module) {
             matches.push({
                 start:       {line: lineNum, ch: ch},
                 end:         {line: lineNum + numMatchedLines - 1, ch: (numMatchedLines === 1 ? ch + totalMatchLength : lastLineLength)},
-                
+
                 // Note that the following offsets from the beginning of the file are *not* updated if the search
                 // results change. These are currently only used for multi-file replacement, and we always
                 // abort the replace (by shutting the results panel) if we detect any result changes, so we don't
@@ -118,7 +118,7 @@ define(function (require, exports, module) {
                 // doing a replace) or properly update them.
                 startOffset: match.index,
                 endOffset:   match.index + totalMatchLength,
-                
+
                 line:        line,
                 result:      match,
                 isChecked:   true
@@ -130,7 +130,7 @@ define(function (require, exports, module) {
                 queryExpr.lastIndex = 0;
                 break;
             }
-            
+
             // Pathological regexps like /^/ return 0-length matches. Ensure we make progress anyway
             if (totalMatchLength === 0) {
                 queryExpr.lastIndex++;
@@ -155,7 +155,7 @@ define(function (require, exports, module) {
         
         // Remove the results before we make any changes, so the SearchModel can accurately update its count.
         searchModel.removeResults(fullPath);
-        
+
         changeList.forEach(function (change) {
             lines = [];
             start = 0;
@@ -227,7 +227,7 @@ define(function (require, exports, module) {
                 }
             }
         });
-        
+
         // Always re-add the results, even if nothing changed.
         if (resultInfo && resultInfo.matches.length) {
             searchModel.setResults(fullPath, resultInfo);
@@ -240,11 +240,11 @@ define(function (require, exports, module) {
         }
     }
     
-    
+
     /**
      * Checks that the file matches the given subtree scope. To fully check whether the file
      * should be in the search set, use _inSearchScope() instead - a supserset of this.
-     * 
+     *
      * @param {!File} file
      * @param {?FileSystemEntry} scope Search scope, or null if whole project
      * @return {boolean}
@@ -270,7 +270,7 @@ define(function (require, exports, module) {
     function _isReadableText(fullPath) {
         return !LanguageManager.getLanguageForPath(fullPath).isBinary();
     }
-    
+
     /**
      * Finds all candidate files to search in the given scope's subtree that are not binary content. Does NOT apply
      * the current filter yet.
@@ -291,7 +291,7 @@ define(function (require, exports, module) {
             return ProjectManager.getAllFiles(filter, true);
         }
     }
-    
+
     /**
      * Checks that the file is eligible for inclusion in the search (matches the user's subtree scope and
      * file exclusion filters, and isn't binary). Used when updating results incrementally - during the
@@ -322,12 +322,12 @@ define(function (require, exports, module) {
         if (!_isReadableText(file.fullPath)) {
             return false;
         }
-        
+
         // Replicate the filtering filterFileList() does
         return FileFilters.filterPath(searchModel.filter, file.fullPath);
     }
 
-    
+
     /**
      * @private
      * Tries to update the search result on document changes
@@ -341,22 +341,22 @@ define(function (require, exports, module) {
             _updateResults(document, change);
         }
     };
-    
+
     /**
      * @private
      * Finds search results in the given file and adds them to 'searchResults.' Resolves with
      * true if any matches found, false if none found. Errors reading the file are treated the
      * same as if no results found.
-     * 
+     *
      * Does not perform any filtering - assumes caller has already vetted this file as a search
      * candidate.
-     * 
+     *
      * @param {!File} file
      * @return {$.Promise}
      */
     function _doSearchInOneFile(file) {
         var result = new $.Deferred();
-        
+
         DocumentManager.getDocumentText(file)
             .done(function (text, timestamp) {
                 // Note that we don't fire a model change here, since this is always called by some outer batch
@@ -370,7 +370,7 @@ define(function (require, exports, module) {
                 // is skipped and we move on to the next file.
                 result.resolve(false);
             });
-        
+
         return result.promise();
     }
     
@@ -380,7 +380,7 @@ define(function (require, exports, module) {
      * @param {{query: string, caseSensitive: boolean, isRegexp: boolean}} queryInfo Query info object
      * @param {!$.Promise} candidateFilesPromise Promise from getCandidateFiles(), which was called earlier
      * @param {?string} filter A "compiled" filter as returned by FileFilters.compile(), or null for no filter
-     * @return {?$.Promise} A promise that's resolved with the search results (or ZERO_FILES_TO_SEARCH) or rejected when the find competes. 
+     * @return {?$.Promise} A promise that's resolved with the search results (or ZERO_FILES_TO_SEARCH) or rejected when the find competes.
      *      Will be null if the query is invalid.
      */
     function _doSearch(queryInfo, candidateFilesPromise, filter) {
@@ -398,7 +398,7 @@ define(function (require, exports, module) {
             .then(function (fileListResult) {
                 // Filter out files/folders that match user's current exclusion filter
                 fileListResult = FileFilters.filterFileList(filter, fileListResult);
-                
+
                 if (fileListResult.length) {
                     return Async.doInParallel(fileListResult, _doSearchInOneFile);
                 } else {
@@ -411,7 +411,7 @@ define(function (require, exports, module) {
 
                 // Listen for FS & Document changes to keep results up to date
                 _addListeners();
-                
+
                 if (zeroFilesToken === ZERO_FILES_TO_SEARCH) {
                     return zeroFilesToken;
                 } else {
@@ -420,13 +420,13 @@ define(function (require, exports, module) {
             }, function (err) {
                 console.log("find in files failed: ", err);
                 PerfUtils.finalizeMeasurement(perfTimer);
-                
+
                 // In jQuery promises, returning the error here propagates the rejection,
                 // unlike in Promises/A, where we would need to re-throw it to do so.
                 return err;
             });
     }
-    
+
     /**
      * @private
      * Clears any previous search information, removing update listeners and clearing the model.
@@ -466,13 +466,13 @@ define(function (require, exports, module) {
      *      The list of results to replace, as returned from _doSearch..
      * @param {string} replaceText The text to replace each result with.
      * @param {?Object} options An options object:
-     *      forceFilesOpen: boolean - Whether to open all files in editors and do replacements there rather than doing the 
+     *      forceFilesOpen: boolean - Whether to open all files in editors and do replacements there rather than doing the
      *          replacements on disk. Note that even if this is false, files that are already open in editors will have replacements
      *          done in memory.
      *      isRegexp: boolean - Whether the original query was a regexp. If true, $-substitution is performed on the replaceText.
      * @return {$.Promise} A promise that's resolved when the replacement is finished or rejected with an array of errors
      *      if there were one or more errors. Each individual item in the array will be a {item: string, error: string} object,
-     *      where item is the full path to the file that could not be updated, and error is either a FileSystem error or one 
+     *      where item is the full path to the file that could not be updated, and error is either a FileSystem error or one
      *      of the `FindInFiles.ERROR_*` constants.
      */
     function doReplace(results, replaceText, options) {
@@ -481,7 +481,7 @@ define(function (require, exports, module) {
             exports._replaceDone = true;
         });
     }
-    
+
     /**
      * @private
      * Moves the search results from the previous path to the new one and updates the results list, if required
@@ -538,7 +538,7 @@ define(function (require, exports, module) {
         function _addSearchResultsForEntry(entry) {
             var addedFiles = [],
                 deferred = new $.Deferred();
-            
+
             // gather up added files
             var visitor = function (child) {
                 // Replicate filtering that getAllFiles() does
@@ -613,7 +613,7 @@ define(function (require, exports, module) {
     exports.getCandidateFiles    = getCandidateFiles;
     exports.clearSearch          = clearSearch;
     exports.ZERO_FILES_TO_SEARCH = ZERO_FILES_TO_SEARCH;
-    
+
     // For unit tests only
     exports._documentChangeHandler = _documentChangeHandler;
     exports._fileNameChangeHandler = _fileNameChangeHandler;

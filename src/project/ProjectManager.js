@@ -78,11 +78,11 @@ define(function (require, exports, module) {
         FileSyncManager     = require("project/FileSyncManager"),
         EditorManager       = require("editor/EditorManager");
     
-    
+
     // Define the preference to decide how to sort the Project Tree files
     PreferencesManager.definePreference("sortDirectoriesFirst", "boolean", brackets.platform !== "mac");
-    
-    
+
+
     /**
      * @private
      * Forward declaration for the _fileSystemChange and _fileSystemRename functions to make JSLint happy.
@@ -202,7 +202,7 @@ define(function (require, exports, module) {
      * RegEx to validate if a filename is not allowed even if the system allows it.
      * This is done to prevent cross-platform issues.
      */
-            
+
     var _illegalFilenamesRegEx = /^(\.+|com[1-9]|lpt[1-9]|nul|con|prn|aux|)$|\.+$/i;
     
     var suppressToggleOpen = false;
@@ -222,14 +222,14 @@ define(function (require, exports, module) {
      * initialized in _generateSortPrefixes.
      */
     var _dirFirst;
-    
+
     /**
      * @private
      * @type {Number}
      * Tracks the timeoutID for mouseup events.
      */
     var _mouseupTimeoutId = null;
-    
+
     /**
      * @private
      * Generates the prefixes used for sorting the files in the project tree
@@ -240,10 +240,10 @@ define(function (require, exports, module) {
         _dirFirst             = PreferencesManager.get("sortDirectoriesFirst");
         _sortPrefixDir        = _dirFirst ? "a" : "";
         _sortPrefixFile       = _dirFirst ? "b" : "";
-        
+
         return previousDirFirst !== _dirFirst;
     }
-    
+
     /**
      * @private
      */
@@ -372,7 +372,7 @@ define(function (require, exports, module) {
         var context = { location : { scope: "user",
                                      layer: "project",
                                      layerID: _projectRoot.fullPath} };
-        
+
         _projectBaseUrl = projectBaseUrl;
 
         // Ensure trailing slash to be consistent with _projectRoot.fullPath
@@ -768,7 +768,7 @@ define(function (require, exports, module) {
                         window.clearTimeout(_mouseupTimeoutId);
                         _mouseupTimeoutId = null;
                     }
-                    
+
                 });
 
             // fire selection changed events for sidebar-selection
@@ -835,7 +835,7 @@ define(function (require, exports, module) {
         }
         return null;
     }
-    
+
     /**
      * @private
      * See shouldShow
@@ -1057,6 +1057,10 @@ define(function (require, exports, module) {
      * @return {!string} fullPath reference
      */
     function _getWelcomeProjectPath() {
+        if (brackets.inBrowser) {
+            return "/Getting Started";
+        }
+
         var initialPath = FileUtils.getNativeBracketsDirectoryPath(),
             sampleUrl = Urls.GETTING_STARTED;
         if (sampleUrl) {
@@ -1173,7 +1177,7 @@ define(function (require, exports, module) {
             PreferencesManager._setProjectSettingsFile();
         }
     }
-    
+
     /**
      * Loads the given folder as a project. Does NOT prompt about any unsaved changes - use openProject()
      * instead to check for unsaved changes and (optionally) let the user choose the folder to open.
@@ -1203,7 +1207,7 @@ define(function (require, exports, module) {
             if (_projectRoot && _projectRoot.fullPath === rootPath) {
                 return (new $.Deferred()).resolve().promise();
             }
-            
+
             // About to close current project (if any)
             if (_projectRoot) {
                 $(exports).triggerHandler("beforeProjectClose", _projectRoot);
@@ -1219,7 +1223,7 @@ define(function (require, exports, module) {
                     PreferencesManager._reloadUserPrefs(_projectRoot);
                     $(exports).triggerHandler("projectClose", _projectRoot);
                 }
-                
+
                 startLoad.resolve();
             });
         }
@@ -1238,12 +1242,12 @@ define(function (require, exports, module) {
             if (!isUpdating) {
                 PreferencesManager._stateProjectLayer.setProjectPath(rootPath);
             }
-            
+
             // restore project tree state from last time this project was open
             _projectInitialLoad.previous = PreferencesManager.getViewState("project.treeState", context) || [];
 
             // Populate file tree as long as we aren't running in the browser
-            if (!brackets.inBrowser) {
+            if (true) {
                 if (!isUpdating) {
                     _watchProjectRoot(rootPath);
                 }
@@ -1253,12 +1257,12 @@ define(function (require, exports, module) {
                     if (exists) {
                         var projectRootChanged = (!_projectRoot || !rootEntry) ||
                             _projectRoot.fullPath !== rootEntry.fullPath;
-                        
+
                         // Success!
                         var perfTimerName = PerfUtils.markStart("Load Project: " + rootPath);
 
                         _projectRoot = rootEntry;
-                        
+
                         if (projectRootChanged) {
                             _reloadProjectPreferencesScope();
                             PreferencesManager._setCurrentEditingFile(rootPath);
@@ -1300,8 +1304,8 @@ define(function (require, exports, module) {
                     } else {
                         _showErrorDialog(ERR_TYPE_LOADING_PROJECT_NATIVE, null, rootPath, err || FileSystemError.NOT_FOUND)
                             .done(function () {
-                                // Reset _projectRoot to null so that the following _loadProject call won't 
-                                // run the 'beforeProjectClose' event a second time on the original project, 
+                                // Reset _projectRoot to null so that the following _loadProject call won't
+                                // run the 'beforeProjectClose' event a second time on the original project,
                                 // which is now partially torn down (see #6574).
                                 _projectRoot = null;
 
@@ -1706,7 +1710,7 @@ define(function (require, exports, module) {
                 }
                 
                 _redraw(true);
-                
+
                 result.reject();
             }
 
@@ -1863,6 +1867,10 @@ define(function (require, exports, module) {
      * @param {!(File|Directory)} entry File or Directory to rename
      */
     function renameItemInline(entry) {
+        if (brackets.unsupportedInBrowser()) {
+            return;
+        }
+
         // First make sure the item in the tree is visible - jsTree's rename API doesn't do anything to ensure inline input is visible
         showInTree(entry)
             .done(function ($selected) {
@@ -2017,6 +2025,9 @@ define(function (require, exports, module) {
      * @param {!(File|Directory)} entry File or Directory to delete
      */
     function deleteItem(entry) {
+        if (brackets.unsupportedInBrowser()) {
+            return;
+        }
         var result = new $.Deferred();
 
         entry.moveToTrash(function (err) {
@@ -2262,8 +2273,8 @@ define(function (require, exports, module) {
         DocumentManager.notifyPathNameChanged(oldName, newName);
     };
     
-    
-    
+
+
     // Initialize variables and listeners that depend on the HTML DOM
     AppInit.htmlReady(function () {
         $projectTreeContainer = $("#project-files-container");
@@ -2301,7 +2312,7 @@ define(function (require, exports, module) {
             projectPath = key.substr(pathPrefix.length);
             return "user project.treeState " + projectPath;
         }
-        
+
         pathPrefix = "projectBaseUrl_";
         if (key.indexOf(pathPrefix) === 0) {
             // Get the project path from the old preference key by stripping "projectBaseUrl_[Directory "
@@ -2313,7 +2324,7 @@ define(function (require, exports, module) {
 
         return null;
     }
-    
+
     // Init default project path to welcome project
     PreferencesManager.stateManager.definePreference("projectPath", "string", _getWelcomeProjectPath());
 
@@ -2323,7 +2334,7 @@ define(function (require, exports, module) {
         "welcomeProjects": "user",
         "projectBaseUrl_": "user"
     }, true, _checkPreferencePrefix);
-    
+
     // Initialize the sort prefixes and make sure to change them when the sort pref changes
     _generateSortPrefixes();
     PreferencesManager.on("change", "sortDirectoriesFirst", function () {

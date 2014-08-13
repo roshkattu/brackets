@@ -179,7 +179,7 @@ define(function (require, exports, module) {
     /*
      * Returns a sorted and formatted list of hints with the query substring
      * highlighted.
-     * 
+     *
      * @param {Array.<Object>} hints - the list of hints to format
      * @param {string} query - querystring used for highlighting matched
      *      poritions of each hint
@@ -210,7 +210,7 @@ define(function (require, exports, module) {
             return $hintObj;
         });
     }
-    
+
     /**
      * Returns a list of availble CSS propertyname or -value hints if possible for the current
      * editor context. 
@@ -238,7 +238,7 @@ define(function (require, exports, module) {
     CssPropHints.prototype.getHints = function (implicitChar) {
         this.cursor = this.editor.getCursorPos();
         this.info = CSSUtils.getInfoAtPos(this.editor, this.cursor);
-        
+
         var needle = this.info.name,
             valueNeedle = "",
             context = this.info.context,
@@ -246,7 +246,7 @@ define(function (require, exports, module) {
             namedFlows,
             result,
             selectInitial = false;
-            
+
         // Clear the exclusion if the user moves the cursor with left/right arrow key.
         this.updateExclusion(true);
         
@@ -307,7 +307,7 @@ define(function (require, exports, module) {
             
             lastContext = CSSUtils.PROP_NAME;
             needle = needle.substr(0, this.info.offset);
-   
+
             result = $.map(properties, function (pvalues, pname) {
                 var result = StringMatch.stringMatch(pname, needle, stringMatcherOptions);
                 if (result) {
@@ -348,7 +348,7 @@ define(function (require, exports, module) {
         if (hint.jquery) {
             hint = hint.text();
         }
-        
+
         if (this.info.context !== CSSUtils.PROP_NAME && this.info.context !== CSSUtils.PROP_VALUE) {
             return false;
         }
@@ -437,7 +437,7 @@ define(function (require, exports, module) {
         CodeHintManager.registerHintProvider(cssPropHints, ["css", "scss", "less"], 0);
         
         ExtensionUtils.loadStyleSheet(module, "styles/brackets-css-hints.css");
-        
+
         // For unit testing
         exports.cssPropHintProvider = cssPropHints;
     });

@@ -334,7 +334,7 @@ define(function (require, exports, module) {
         }).one("shown", function () {
             var $primaryBtn = $dlg.find(".primary:enabled"),
                 $otherBtn   = $dlg.find(".modal-footer .dialog-button:enabled:eq(0)");
-            
+
             // Set focus to the primary button, to any other button, or to the dialog depending
             // if there are buttons
             if ($primaryBtn.length) {
@@ -353,7 +353,7 @@ define(function (require, exports, module) {
         $dlg.one("click", ".dialog-button", function (e) {
             _processButton($dlg, $(this).attr("data-button-id"), autoDismiss);
         });
-                
+
         // Run the dialog
         $dlg
             .modal({

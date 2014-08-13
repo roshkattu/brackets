@@ -40,7 +40,7 @@ define(function (require, exports, module) {
         ExtensionLoader      = require("utils/ExtensionLoader"),
         NodeConnection       = require("utils/NodeConnection"),
         PreferencesManager   = require("preferences/PreferencesManager");
-    
+
     PreferencesManager.definePreference("proxy", "string", undefined);
     
     var Errors = {
@@ -161,7 +161,7 @@ define(function (require, exports, module) {
             })
                 .done(function (result) {
                     result.keepFile = false;
-                    
+
                     if (result.installationStatus !== InstallationStatuses.INSTALLED || _doUpdate) {
                         d.resolve(result);
                     } else {
@@ -278,12 +278,12 @@ define(function (require, exports, module) {
     /**
      * On success, resolves with an extension metadata object; at that point, the extension has already
      * started running in Brackets. On failure (including validation errors), rejects with an error object.
-     * 
+     *
      * An error object consists of either a string error code OR an array where the first entry is the error
      * code and the remaining entries are further info. The error code string is one of either
      * ExtensionsDomain.Errors or Package.Errors. Use formatError() to convert an error object to a friendly,
      * localized error message.
-     * 
+     *
      * @param {string} path Absolute path to the package zip file
      * @param {?string} filenameHint Hint for the extension folder's name (used in favor of
      *          path's filename if present, and if no package metadata present).
@@ -296,7 +296,7 @@ define(function (require, exports, module) {
         install(path, filenameHint)
             .done(function (result) {
                 result.keepFile = true;
-                
+
                 var installationStatus = result.installationStatus;
                 if (installationStatus === InstallationStatuses.ALREADY_INSTALLED ||
                         installationStatus === InstallationStatuses.NEEDS_UPDATE ||
@@ -478,6 +478,9 @@ define(function (require, exports, module) {
     // TODO: duplicates code from StaticServer
     // TODO: can this be done lazily?
     AppInit.appReady(function () {
+        if (brackets.inBrowser) {
+            return;
+        }
         _nodeConnection = new NodeConnection();
         _nodeConnection.connect(true).then(function () {
             var domainPath = FileUtils.getNativeBracketsDirectoryPath() + "/" + FileUtils.getNativeModuleDirectoryPath(module) + "/node/ExtensionManagerDomain";

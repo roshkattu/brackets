@@ -415,7 +415,7 @@ define({
     "LANGUAGE_SUBMIT"                           : "Reštartovať {APP_NAME}",
     "LANGUAGE_CANCEL"                           : "Zrušiť",
     "LANGUAGE_SYSTEM_DEFAULT"                   : "Predvolený v systéme",
-    
+
     // extensions/default/InlineColorEditor
     "COLOR_EDITOR_CURRENT_COLOR_SWATCH_TIP"     : "Aktuálna farba",
     "COLOR_EDITOR_ORIGINAL_COLOR_SWATCH_TIP"    : "Pôvodná farba",

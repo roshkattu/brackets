@@ -2,9 +2,9 @@
 /*global define, $ */
 define(function (require, exports, module) {
     "use strict";
-    
+
     var Cup = require('china/Cup').Cup;
-    
+
     var coffeeCup = new Cup(false);
     coffeeCup.
 });

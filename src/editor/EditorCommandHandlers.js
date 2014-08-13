@@ -46,7 +46,7 @@ define(function (require, exports, module) {
      */
     var DIRECTION_UP    = -1;
     var DIRECTION_DOWN  = +1;
-        
+
     /**
      * @private
      * Creates special regular expressions that matches the line prefix but not the block prefix or suffix
@@ -58,7 +58,7 @@ define(function (require, exports, module) {
         var i, character,
             subExps   = [],
             prevChars = "";
-        
+
         for (i = lineSyntax.length; i < blockSyntax.length; i++) {
             character = blockSyntax.charAt(i);
             subExps.push(prevChars + "[^" + StringUtils.regexEscape(character) + "]");
@@ -80,11 +80,11 @@ define(function (require, exports, module) {
      */
     function _createLineExpressions(prefixes, blockPrefix, blockSuffix) {
         var lineExp = [], escapedPrefix, nothingPushed;
-        
+
         prefixes.forEach(function (prefix) {
             escapedPrefix = StringUtils.regexEscape(prefix);
             nothingPushed = true;
-            
+
             if (blockPrefix && blockPrefix.indexOf(prefix) === 0) {
                 lineExp.push(_createSpecialLineExp(prefix, blockPrefix));
                 nothingPushed = false;
@@ -173,7 +173,7 @@ define(function (require, exports, module) {
      * @param {string=} blockPrefix, e.g. "<!--"
      * @param {string=} blockSuffix, e.g. "-->"
      * @param {!Editor} editor The editor to edit within.
-     * @param {!{selectionForEdit: {start:{line:number, ch:number}, end:{line:number, ch:number}, reversed:boolean, primary:boolean}, 
+     * @param {!{selectionForEdit: {start:{line:number, ch:number}, end:{line:number, ch:number}, reversed:boolean, primary:boolean},
      *           selectionsToTrack: Array.<{start:{line:number, ch:number}, end:{line:number, ch:number}, reversed:boolean, primary:boolean}>}}
      *      lineSel A line selection as returned from `Editor.convertToLineSelections()`. `selectionForEdit` is the selection to perform
      *      the line comment operation on, and `selectionsToTrack` are a set of selections associated with this line that need to be
@@ -236,14 +236,14 @@ define(function (require, exports, module) {
         }
         return {edit: editGroup, selection: trackedSels};
     }
-    
+
     /**
      * @private
      * Given a token context it will search backwards to determine if the given token is part of a block comment
      * that doesn't start at the initial token. This is used to know if a line comment is part of a block comment
      * or if a block delimiter is the prefix or suffix, by passing a token context at that position. Since the
      * token context will be moved backwards a lot, it is better to pass a new context.
-     * 
+     *
      * @param {!{editor:{CodeMirror}, pos:{ch:{number}, line:{number}}, token:{object}}} ctx  token context
      * @param {!string} prefix  the block comment prefix
      * @param {!string} suffix  the block comment suffix
@@ -330,7 +330,7 @@ define(function (require, exports, module) {
             // Track the original selection.
             selectionsToTrack = [_.cloneDeep(sel)];
         }
-        
+
         // First move the context to the first none white-space token
         if (!ctx.token.type && !/\S/.test(ctx.token.string)) {
             result = TokenUtils.moveSkippingWhitespace(TokenUtils.moveNextToken, ctx);
@@ -341,7 +341,7 @@ define(function (require, exports, module) {
             result = TokenUtils.moveSkippingWhitespace(TokenUtils.moveNextToken, ctx) && editor.indexFromPos(ctx.pos) <= selEndIndex;
             commentAtStart = false;
         }
-        
+
         // We are now in a comment, lets check if it is a block or a line comment
         if (result && ctx.token.type === "comment") {
             // This token might be at a line comment, but we can't be sure yet
@@ -380,20 +380,20 @@ define(function (require, exports, module) {
             if (isBlockComment) {
                 // Save the initial position to start searching for the suffix from here
                 initialPos = _.cloneDeep(ctx.pos);
-                
+
                 // Find the position of the start of the prefix
                 result = true;
                 while (result && !ctx.token.string.match(prefixExp)) {
                     result = TokenUtils.moveSkippingWhitespace(TokenUtils.movePrevToken, ctx);
                 }
                 prefixPos = result && {line: ctx.pos.line, ch: ctx.token.start};
-                
+
                 // Restore the context at the initial position to find the position of the start of the suffix,
                 // but only when we found the prefix alone in one line
                 if (ctx.token.string === prefix && prefix === suffix) {
                     ctx = TokenUtils.getInitialContext(editor._codeMirror, _.cloneDeep(initialPos));
                 }
-                
+
                 while (result && !ctx.token.string.match(suffixExp)) {
                     result = TokenUtils.moveSkippingWhitespace(TokenUtils.moveNextToken, ctx);
                 }
@@ -405,7 +405,7 @@ define(function (require, exports, module) {
                         editor.indexFromPos(ctx.pos) <= selEndIndex;
                 } while (result && !ctx.token.string.match(prefixExp));
                 invalidComment = result && !!ctx.token.string.match(prefixExp);
-                
+
                 // Make sure we didn't search so far backward or forward that we actually found a block comment
                 // that's entirely before or after the selection.
                 suffixEnd = suffixPos && { line: suffixPos.line, ch: suffixPos.ch + suffix.length };
@@ -472,7 +472,7 @@ define(function (require, exports, module) {
                             }
                         }
                         // Now adjust for the prefix insertion. In this case, we do
-                        // want to adjust positions that are exactly at the insertion 
+                        // want to adjust positions that are exactly at the insertion
                         // point.
                         if (CodeMirror.cmpPos(pos, sel.start) >= 0) {
                             if (completeLineSel) {
@@ -495,7 +495,7 @@ define(function (require, exports, module) {
                 var line          = doc.getLine(prefixPos.line).trim(),
                     prefixAtStart = prefixPos.ch === 0 && prefix.length === line.length,
                     suffixAtStart = false;
-                
+
                 if (suffixPos) {
                     line = doc.getLine(suffixPos.line).trim();
                     suffixAtStart = suffixPos.ch === 0 && suffix.length === line.length;
@@ -525,7 +525,7 @@ define(function (require, exports, module) {
 
             edit = {edit: editGroup, selection: selectionsToTrack};
         }
-        
+
         return edit;
     }
     
@@ -542,7 +542,7 @@ define(function (require, exports, module) {
      * @param {!Editor} editor
      * @param {!String} prefix
      * @param {!String} suffix
-     * @param {!{selectionForEdit: {start:{line:number, ch:number}, end:{line:number, ch:number}, reversed:boolean, primary:boolean}, 
+     * @param {!{selectionForEdit: {start:{line:number, ch:number}, end:{line:number, ch:number}, reversed:boolean, primary:boolean},
      *           selectionsToTrack: Array.<{start:{line:number, ch:number}, end:{line:number, ch:number}, reversed:boolean, primary:boolean}>}}
      *      lineSel A line selection as returned from `Editor.convertToLineSelections()`. `selectionForEdit` is the selection to perform
      *      the line comment operation on, and `selectionsToTrack` are a set of selections associated with this line that need to be
@@ -562,7 +562,7 @@ define(function (require, exports, module) {
         if (sel.end.line === sel.start.line + 1 && sel.end.ch === 0) {
             sel.end = {line: sel.start.line, ch: editor.document.getLine(sel.start.line).length};
         }
-        
+
         // Now just run the standard block comment code, but make sure to track any associated selections
         // that were subsumed into this line selection.
         return _getBlockCommentPrefixSuffixEdit(editor, prefix, suffix, [], sel, lineSel.selectionsToTrack);
@@ -659,10 +659,10 @@ define(function (require, exports, module) {
         // they shouldn't overlap, and `doMultipleEdits()` will take care of sorting the edits so the
         // selections can be tracked appropriately.
         edits.push.apply(edits, _getLineCommentEdits(editor, lineCommentSels));
-        
+
         editor.setSelections(editor.document.doMultipleEdits(edits));
     }
-        
+
     /**
      * Duplicates the selected text, or current line if no selection. The cursor/selection is left
      * on the second copy.
@@ -689,7 +689,7 @@ define(function (require, exports, module) {
                 rangeSels.push(sel);
             }
         });
-        
+
         var cursorLineSels = editor.convertToLineSelections(cursorSels);
         _.each(cursorLineSels, function (lineSel, index) {
             var sel = lineSel.selectionForEdit;
@@ -716,7 +716,7 @@ define(function (require, exports, module) {
         if (!editor) {
             return;
         }
-        
+
         // Walk the selections, calculating the deletion edits we need to do as we go;
         // document.doMultipleEdits() will take care of adjusting the edit locations when
         // it actually performs the edits.
@@ -725,7 +725,7 @@ define(function (require, exports, module) {
             to,
             lineSelections = editor.convertToLineSelections(editor.getSelections()),
             edits = [];
-        
+
         _.each(lineSelections, function (lineSel, index) {
             var sel = lineSel.selectionForEdit,
                 selStartLine = sel.start.line;
@@ -734,7 +734,7 @@ define(function (require, exports, module) {
             to = sel.end; // this is already at the beginning of the line after the last selected line
             if (to.line === editor.getLastVisibleLine() + 1) {
                 // Instead of deleting the newline after the last line, delete the newline
-                // before the beginning of the line--unless this is the entire visible content 
+                // before the beginning of the line--unless this is the entire visible content
                 // of the editor, in which case just delete the line content.
                 if (from.line > editor.getFirstVisibleLine()) {
                     from.line -= 1;
@@ -830,7 +830,7 @@ define(function (require, exports, module) {
                         editGroup.push({text: "", start: { line: sel.end.line - 1, ch: lineLength }, end: { line: sel.end.line, ch: 0 }});
                     }
                     editGroup.push({text: nextText, start: { line: sel.start.line, ch: 0 }});
-                    
+
                     // In this case, we don't need to track selections, because the edits are done in such a way that
                     // the existing selections will automatically be updated properly by CodeMirror as it does the edits.
                     edits.push({edit: editGroup});
@@ -895,14 +895,14 @@ define(function (require, exports, module) {
             newSelections,
             line;
         
-        // First, insert all the newlines (skipping multiple selections on the same line), 
+        // First, insert all the newlines (skipping multiple selections on the same line),
         // then indent them all. (We can't easily do them all at once, because doMultipleEdits()
         // won't do the indentation for us, but we want its help tracking any selection changes
         // as the result of the edits.)
         
         // Note that we don't just use `editor.getLineSelections()` here because we don't actually want
         // to coalesce adjacent selections - we just want to ignore dupes.
-        
+
         doc.batchOperation(function () {
             _.each(selections, function (sel, index) {
                 if (index === 0 ||
@@ -940,7 +940,7 @@ define(function (require, exports, module) {
                 }
             });
             newSelections = doc.doMultipleEdits(edits, "+input");
-            
+
             // Now indent each added line (which doesn't mess up any line numbers, and
             // we're going to set the character offset to the last position on each line anyway).
             _.each(newSelections, function (sel) {
@@ -1006,7 +1006,7 @@ define(function (require, exports, module) {
             editor.setSelections(_.pluck(editor.convertToLineSelections(editor.getSelections(), { expandEndAtStartOfLine: true }), "selectionForEdit"));
         }
     }
-    
+
     /**
      * @private
      * Takes the current selection and splits each range into separate selections, one per line.
@@ -1057,7 +1057,7 @@ define(function (require, exports, module) {
             editor.setSelections(origSels.concat(newSels));
         }
     }
-    
+
     /**
      * @private
      * Adds a cursor on the previous line before each selected range to the selection.
@@ -1066,7 +1066,7 @@ define(function (require, exports, module) {
     function addCursorToPrevLine(editor) {
         addCursorToSelection(editor, -1);
     }
-    
+
     /**
      * @private
      * Adds a cursor on the next line after each selected range to the selection.

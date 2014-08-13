@@ -33,10 +33,10 @@ define(function (require, exports, module) {
         FileUtils            = brackets.getModule("file/FileUtils"),
         PreferencesManager   = brackets.getModule("preferences/PreferencesManager");
 
-    
+
     /**
      * @private
-     * 
+     *
      * Prefences manager for this extension
      */
     var _prefs = PreferencesManager.getExtensionPrefs("staticserver");

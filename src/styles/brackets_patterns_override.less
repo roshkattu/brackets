@@ -474,11 +474,11 @@ a:focus {
         min-width: 200px;
         z-index: @z-index-brackets-stylesheet-menu;
     }
-    
+
     &.dropdown-menu li a {
         padding: 1px 15px 1px 15px;
         color: @bc-black;
-        
+
         &.disabled {
             color: @bc-gray;
             &:hover {
@@ -490,7 +490,7 @@ a:focus {
     &.dropdown-menu .stylesheet-link {
         display: block;
     }
-    
+
     &.dropdown-menu a.selected {
         background: @tc-highlight;
         color: @bc-black !important;
@@ -509,7 +509,7 @@ a:focus {
             display: inline-block;
         }
     }
-    
+
     &.dropdown-menu a:hover {
         /* toggle checkmark visibility */
         &.checked::before {
@@ -532,12 +532,12 @@ a:focus {
     -webkit-transform-origin: 0 100%;
     height: auto;
     max-height: 80%;
-    
+
     // Improve how bottom of the dropdown joins with top of status bar button
     margin-top: -6px;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    
+
     li a .default-language {
         font-style: italic;
         color: @tc-quiet-text;
@@ -561,11 +561,11 @@ a:focus {
     .stylesheet-link, .stylesheet-name {
         white-space: nowrap;
     }
-    
+
     .stylesheet-name {
         color: @tc-text;
     }
-    
+
     .stylesheet-dir {
         color: @tc-quiet-text;
     }
@@ -777,15 +777,15 @@ a[href^="http"] {
             // Enable text selection
             cursor: auto;
             .user-select(text);
-            
+
             h3 {
                 font-weight: normal;
                 margin: 0 0 10px;
             }
-            
+
             ul {
                 margin-bottom: 0 0 20px;
-                
+
                 > li {
                     margin-bottom: 10px;
                 }
@@ -1198,7 +1198,7 @@ input[type="color"],
         box-shadow: @tc-button-down-shadow;
         color: @tc-link;
     }
-    
+
     &:active:not([disabled]) {
         background-image: none;
         background-color: @tc-button-down-background;
@@ -1232,7 +1232,7 @@ input[type="color"],
             outline: none;
         }
     }
-    
+
     // Update Button Type
     &.update {
         background-color: #91cc41;
@@ -1241,7 +1241,7 @@ input[type="color"],
         color: #fff;
         font-weight: @font-weight-semibold;
         text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.24);
-        
+
         &:active {
             background-color: #82b839;
             border-color: #5b8028;
@@ -1439,7 +1439,7 @@ code {
 .dropdown-menu {
     background-color: #fff;
     color: #000;
-    
+
     .divider {
         background-color: #eaeaea;
         border: none;
@@ -1449,7 +1449,7 @@ code {
 .form-horizontal {
     .controls {
         margin-left: 170px;
-        
+
         input[type='checkbox'] {
              margin-top: 8px;
          }

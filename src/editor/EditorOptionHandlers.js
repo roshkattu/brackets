@@ -35,7 +35,7 @@ define(function (require, exports, module) {
         PreferencesManager      = require("preferences/PreferencesManager"),
         Strings                 = require("strings"),
         _                       = require("thirdparty/lodash");
-    
+
     // Constants for the preferences referred to in this file
     var SHOW_LINE_NUMBERS = "showLineNumbers",
         STYLE_ACTIVE_LINE = "styleActiveLine",
@@ -78,7 +78,7 @@ define(function (require, exports, module) {
     /**
      * @private
      * Creates a function that will toggle the named preference.
-     * 
+     *
      * @param {string} prefName Name of preference that should be toggled by the function
      */
     function _getToggler(prefName) {
@@ -91,7 +91,7 @@ define(function (require, exports, module) {
         _.each(_optionMapping, function (commandName, prefName) {
             CommandManager.get(commandName).setChecked(PreferencesManager.get(prefName));
         });
-        
+
         if (!Editor.getShowLineNumbers()) {
             Editor._toggleLinePadding(true);
         }
