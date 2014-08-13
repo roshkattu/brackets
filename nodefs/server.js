@@ -50,8 +50,16 @@ var fs = require('fs'),
         socket.on('execCommand', function(command, data, callback){
             //Switch the command, execute it and send back the return
             switch(command){
+                    //Call mkdir
                     case "mkdir":
                         mkdir(data.path, function(response){
+                            callback(response);
+                        });
+                    break;
+
+                    //call readfile
+                    case "readfile":
+                        readfile(data.path, data.otpions, function(response){
                             callback(response);
                         });
                     break;
