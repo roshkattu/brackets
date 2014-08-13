@@ -153,19 +153,11 @@ define(function (require, exports, module) {
         Log("Stat called: ["+path+"]");
         Socket.emit('execCommand', 'stat', {path: path}, function(err, stats){
             if(err){
+                //Return error
                 callback(err);
             }
-            var options = {
-                isFile: stats.isFile(),
-                mtime: stats.mtime,
-                size: stats.size,
-                realPath: stats.realPath,
-                hash: stats.mtime.getTime()
-            };
-
-            var fsStats = new FileSystemStats(options);
-            console.log(fsStats);
-            callback(null, fsStats);
+            //Return file stats
+            callback(null, stats);
         });
     }
 
@@ -179,8 +171,8 @@ define(function (require, exports, module) {
     function readFile(path, options, callback){
         //Emit readfile command to the nodejs server and wait for callback
         Log("Readfile called: ["+path+"]");
-        Socket.emit('execCommand', 'readfile', {path: path, options: options}, function(data, stats){
-            callback(data, stats);
+        Socket.emit('execCommand', 'readfile', {path: path, options: options}, function(err, stats){
+            callback(err, stats);
         });
     }
 
@@ -195,8 +187,8 @@ define(function (require, exports, module) {
     function writeFile(path, data, options, callback){
         //Emit writefile command to the nodejs server and wait for callback
         Log("Writefile called: ["+path+"]");
-        Socket.emit('execCommand', 'writefile', {path: path, data: data, options: options}, function(serr, stats, created){
-            callback(serr, stats, created);
+        Socket.emit('execCommand', 'writefile', {path: path, data: data, options: options}, function(err, stats, created){
+            callback(err, stats, created);
         });
     }
 

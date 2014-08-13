@@ -53,36 +53,36 @@ var fs = require('fs'),
             switch(command){
                     //Call mkdir
                     case "mkdir":
-                        mkdir(data.path, function(response){
-                            callback(response);
+                        mkdir(data.path, function(err, stats){
+                            callback(err, stats);
                         });
                     break;
 
                     //call readfile
                     case "readfile":
-                        readfile(data.path, data.otpions, function(response){
-                            callback(response);
+                        readfile(data.path, data.otpions, function(err, stats){
+                            callback(err, stats);
                         });
                     break;
 
                     //call stat
                     case "stat":
-                        stat(data.path, function(response){
-                            callback(response);
+                        stat(data.path, function(err, stats){
+                            callback(err, stats);
                         })
                     break;
 
                     //exists call
                     case "exists":
-                        exists(data.path, function(response){
-                            callback(response);
+                        exists(data.path, function(err, exists){
+                            callback(err, exists);
                         });
                     break;
 
                     //readdir call
                     case "readdir":
-                        readdir(data.path, function(response, _files, _file_stats){
-                            callback(response, _files, _file_stats);
+                        readdir(data.path, function(err, _files, _file_stats){
+                            callback(err, _files, _file_stats);
                         });
                     break;
 
@@ -95,8 +95,8 @@ var fs = require('fs'),
 
                     //writefile call
                     case "writefile":
-                        writefile(data.path, data.data, data.otpions, function(response){
-                            callback(response);
+                        writefile(data.path, data.data, data.otpions, function(err, stats, created){
+                            callback(err, stats, created);
                         });
                     break;
 
@@ -137,15 +137,10 @@ var fs = require('fs'),
      * Return stats of a file
      */
     function stat(path, callback){
-        if(undefined === path){
-            //Return false because the path is not set
-            callback(Errors.EmptyPath);
-        } else {
-            //Get file stats
-            fs.stat(path, function(err, stats){
-                callback(err, stats)
-            });
-        }
+        //Get file stats
+        fs.stat(path, function(err, stats){
+            callback(err, stats)
+        });
     }
 
     /**
