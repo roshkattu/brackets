@@ -74,6 +74,7 @@ var fs = require('fs'),
                     //exists call
                     case "exists":
                         exists(data.path, function(response){
+                            console.log(response);
                             callback(response);
                         });
                     break;
@@ -122,16 +123,16 @@ var fs = require('fs'),
         //Check if path is undefined
         if(undefined === path){
             //Return false because the path is not set
-            callback(null, false);
+            callback(false);
         } else {
             //Check if the file exists
             fs.open(path, 'r', function(err, fd){
                 if(null === err){
                     //File can be oppened -> exists
-                    callback(null, true);
+                    callback(true);
                 } else {
                     //File cannot be oppened -> doesn't exist
-                    callback(null, false);
+                    callback(false);
                 }
             });
         }
