@@ -304,11 +304,13 @@ define(function (require, exports, module) {
             return a.getName().toLowerCase().localeCompare(b.getName().toLowerCase());
         });
 
+        /** HACK: Comment those lines as languageSelect is undefined in browser
         languageSelect.items = languages;
 
         // Add option to top of menu for persisting the override
         languageSelect.items.unshift("---");
         languageSelect.items.unshift(LANGUAGE_SET_AS_DEFAULT);
+        */
     }
 
     /**
