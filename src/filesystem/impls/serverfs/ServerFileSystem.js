@@ -68,7 +68,7 @@ define(function (require, exports, module) {
      */
     function showOpenDialog(allowMultipleSelection, chooseDirectories, title, initialPath, fileTypes, callback){
         //TODO
-        throw new Error();
+        alert('not implemented');
     }
 
     /**
@@ -81,7 +81,7 @@ define(function (require, exports, module) {
      */
     function showSaveDialog(title, initialPath, proposedNewFilename, callback){
         //TODO
-        throw new Error();
+        alert('not implemented');
     }
 
     /**
@@ -152,7 +152,6 @@ define(function (require, exports, module) {
         //Emit stat command to the nodejs server and wait for callback
         Log("Stat called: ["+path+"]");
         Socket.emit('execCommand', 'stat', {path: path}, function(data){
-            Log(data);
             callback(data);
         });
     }
@@ -167,8 +166,8 @@ define(function (require, exports, module) {
     function readFile(path, options, callback){
         //Emit readfile command to the nodejs server and wait for callback
         Log("Readfile called: ["+path+"]");
-        Socket.emit('execCommand', 'readfile', {path: path, options: options}, function(data){
-            callback(data);
+        Socket.emit('execCommand', 'readfile', {path: path, options: options}, function(data, stats){
+            callback(data, stats);
         });
     }
 
@@ -222,7 +221,7 @@ define(function (require, exports, module) {
      */
     function watchPath(path, callback){
         //not implemented
-        callback("NOT IMPLEMENTED");
+        callback(null);
     }
 
     /**
@@ -233,7 +232,7 @@ define(function (require, exports, module) {
      */
     function unwatchPath(path, callback){
         //not implemented
-        callback("NOT IMPLEMENTED");
+        callback(null);
     }
 
     /**
@@ -244,6 +243,29 @@ define(function (require, exports, module) {
     function unwatchAll(callback){
         //not implemented
         callback("NOT IMPLEMENTED");
+    }
+
+
+    /** Function count the occurrences of substring in a string;
+     * @private
+     *
+     * @param {String} string   Required. The string;
+     * @param {String} subString    Required. The string to search for;
+     * @param {Boolean} allowOverlapping    Optional. Default: false;
+     */
+    function occurrences(string, subString, allowOverlapping){
+
+        string+=""; subString+="";
+        if(subString.length<=0) return string.length+1;
+
+        var n=0, pos=0;
+        var step=(allowOverlapping)?(1):(subString.length);
+
+        while(true){
+            pos=string.indexOf(subString,pos);
+            if(pos>=0){ n++; pos+=step; } else break;
+        }
+        return(n);
     }
 
 

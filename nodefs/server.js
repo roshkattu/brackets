@@ -25,6 +25,7 @@ var fs = require('fs'),
 
     var _connections = []; //Keep track of nodejs connections
     var _socket = null; //Keep a copy of the current socket
+    var _basePath = "/var/www/";
 
 
 
@@ -74,7 +75,6 @@ var fs = require('fs'),
                     //exists call
                     case "exists":
                         exists(data.path, function(response){
-                            console.log(response);
                             callback(response);
                         });
                     break;
@@ -82,7 +82,7 @@ var fs = require('fs'),
                     //readdir call
                     case "readdir":
                         readdir(data.path, function(response, _files, _file_stats){
-                            callback(null, _files, _file_stats);
+                            callback(response, _files, _file_stats);
                         });
                     break;
 
@@ -185,10 +185,10 @@ var fs = require('fs'),
                         file = path + '/' + file;
                         var _stats = fs.statSync(file);
                         //Push the stats within the return object
-                        _files.push(file);
-                        _file_stats.push(_stats);
+                        _files[pos] = file;
+                        _file_stats[pos] = _stats;
                     });
-                    callback(null, _files, _file_stats);
+                    callback(err, _files, _file_stats);
                 } else {
                     //Return the error of reading the directory
                     callback(err); // Is this ok?
@@ -244,10 +244,11 @@ var fs = require('fs'),
             fs.readFile(path, function(err, data){
                 if(null === err){
                     //Return data
-                    callback(data);
+                    var _stats = fs.statSync(path);
+                    callback(data, _stats);
                 } else {
                     //Return error
-                    callback(err);
+                    callback(err, null);
                 }
             });
         }
@@ -261,6 +262,7 @@ var fs = require('fs'),
             if(null === exc){
                 //Console log
                 console.log("File moved; ["+oldPath+"] to ["+newPath+"]");
+                callack(null);
             } else {
                 //Return exception
                 callback(exc);
