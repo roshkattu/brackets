@@ -63,6 +63,48 @@ var fs = require('fs'),
                             callback(response);
                         });
                     break;
+
+                    //call stat
+                    case "stat":
+                        stat(data.path, function(response){
+                            callback(response);
+                        })
+                    break;
+
+                    //exists call
+                    case "exists":
+                        exists(data.path, function(response){
+                            callback(response);
+                        });
+                    break;
+
+                    //readdir call
+                    case "readdir":
+                        readdir(data.path, function(response){
+                            callback(response);
+                        });
+                    break;
+
+                    //rename call
+                    case "rename":
+                        rename(data.oldPath, data.newPath, function(response){
+                            callback(response);
+                        });
+                    break;
+
+                    //writefile call
+                    case "writefile":
+                        writefile(data.path, data.data, data.otpions, function(response){
+                            callback(response);
+                        });
+                    break;
+
+                    //unlink call
+                    case "unlink":
+                        unlink(data.path, function(response){
+                            callback(response);
+                        });
+                    break;
             }
         });
     });

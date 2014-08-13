@@ -42,9 +42,14 @@ define(function (require, exports, module) {
         Socket              = window.socket;
 
 
+
     /**
-     * Connect to the socket server
+     * Logging function
      */
+    var _ENABLE_LOGGING = true; //DEFINE LOGGING
+    function Log(variable){
+        if(_ENABLE_LOGGING) console.log(variable);
+    }
 
 
     /** ===========================
@@ -86,8 +91,11 @@ define(function (require, exports, module) {
      * Determine whether a file or directory exists at the given path by calling back asynchronously with either an error or a boolean, which is true if the file exists and false otherwise. The error will never be FileSystemError.NOT_FOUND; in that case, there will be no error and the boolean parameter will be false.
      */
     function exists(path, callback){
-        //TODO
-        return true;
+        //Emit exists command to the nodejs server and wait for callback
+        Log("Exists called: ["+path+"]");
+        Socket.emit('execCommand', 'exists', {path: path}, function(data){
+            callback(data);
+        });
     }
 
     /**
@@ -97,8 +105,11 @@ define(function (require, exports, module) {
      * Read the contents of the directory at the given path, calling back asynchronously either with an error or an array of FileSystemEntry objects along with another consistent array, each index of which either contains a FileSystemStats object for the corresponding FileSystemEntry object in the second parameter or a FileSystemErrors string describing a stat error.
      */
     function readdir(path, callback){
-        //TODO
-        return;
+        //Emit readdir command to the nodejs server and wait for callback
+        Log("Readdir called: ["+path+"]");
+        Socket.emit('execCommand', 'readdir', {path: path}, function(data){
+            callback(data);
+        });
     }
 
     /**
@@ -109,12 +120,11 @@ define(function (require, exports, module) {
      * Create a directory at the given path, and optionally call back asynchronously with either an error or a stats object for the newly created directory. The octal mode parameter is optional; if unspecified, the mode of the created directory is implementation dependent.
      */
     function mkdir(path, mode, callback){
-        //TODO
+        //Emit mkdir command to the nodejs server and wait for callback
+        Log("MKDir called: ["+path+"], ["+mode+"]");
         Socket.emit('execCommand', 'mkdir', {path: path, mode: mode}, function(data){
-            //callback(data);
-            console.log(data);
+            callback(data);
         });
-        return;
     }
 
     /**
@@ -125,8 +135,11 @@ define(function (require, exports, module) {
      * Rename the file or directory at oldPath to newPath, and optionally call back asynchronously with a possibly null error.
      */
     function rename(oldPath, newPath, callback){
-        //TODO
-        throw new Error();
+        //Emit rename command to the nodejs server and wait for callback
+        Log("Rename called: ["+oldpath+"], ["+newPath+"]");
+        Socket.emit('execCommand', 'rename', {oldPath: oldPath, newPath: newPath}, function(data){
+            callback(data);
+        });
     }
 
     /**
@@ -136,8 +149,11 @@ define(function (require, exports, module) {
      * Stat the file or directory at the given path, calling back asynchronously with either an error or the entry's associated FileSystemStats object.
      */
     function stat(path, callback){
-        //TODO
-        throw new Error();
+        //Emit stat command to the nodejs server and wait for callback
+        Log("Stat called: ["+path+"]");
+        Socket.emit('execCommand', 'stat', {path: path}, function(data){
+            callback(data);
+        });
     }
 
     /**
@@ -148,9 +164,11 @@ define(function (require, exports, module) {
      * Read the contents of the file at the given path, calling back asynchronously with either an error or the data and, optionally, the FileSystemStats object associated with the read file. The optional options parameter can be used to specify an encoding (default "utf8").
      */
     function readFile(path, options, callback){
-        //TODO
-        callback(null, ",");
-        //throw new Error();
+        //Emit readfile command to the nodejs server and wait for callback
+        Log("Readfile called: ["+path+"]");
+        Socket.emit('execCommand', 'readfile', {path: path, options: options}, function(data){
+            callback(data);
+        });
     }
 
     /**
@@ -162,8 +180,11 @@ define(function (require, exports, module) {
      * Write the given data to the file at the given path, calling back asynchronously with either an error or, optionally, the          * FileSystemStats object associated with the written file. The optional options parameter can be used to specify an encoding (default "utf8") and an octal mode (default unspecified and implementation dependent). If no file exists at the given path, a new file will be created.
      */
     function writeFile(path, data, options, callback){
-        //TODO
-        throw new Error();
+        //Emit writefile command to the nodejs server and wait for callback
+        Log("Writefile called: ["+path+"]");
+        Socket.emit('execCommand', 'writefile', {path: path, data: data, options: options}, function(data){
+            callback(data);
+        });
     }
 
     /**
@@ -173,8 +194,11 @@ define(function (require, exports, module) {
      * Unlink the file or directory at the given path, optionally calling back asynchronously with a possibly null error.
      */
     function unlink(path, callback){
-        //TODO
-        throw new Error();
+        //Emit unlink command to the nodejs server and wait for callback
+        Log("Unlink called: ["+path+"]");
+        Socket.emit('execCommand', 'unlink', {path: path}, function(data){
+            callback(data);
+        });
     }
 
     /**
