@@ -115,7 +115,8 @@ define(function (require, exports, module) {
             }
             
             // Always store the hash
-            this._hash = stat._hash;
+            if(undefined !==  stat)
+                this._hash = stat._hash;
             
             // Only cache data for watched files
             if (watched) {
@@ -169,7 +170,8 @@ define(function (require, exports, module) {
             }
             
             // Always store the hash
-            this._hash = stat._hash;
+            if(undefined !== stat)
+                this._hash = stat._hash;
             
             // Only cache data for watched files
             if (this._isWatched()) {
