@@ -81,8 +81,8 @@ var fs = require('fs'),
 
                     //readdir call
                     case "readdir":
-                        readdir(data.path, function(response){
-                            callback(response);
+                        readdir(data.path, function(response, _files, _file_stats){
+                            callback(null, _files, _file_stats);
                         });
                     break;
 

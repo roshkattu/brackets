@@ -94,7 +94,7 @@ define(function (require, exports, module) {
         //Emit exists command to the nodejs server and wait for callback
         Log("Exists called: ["+path+"]");
         Socket.emit('execCommand', 'exists', {path: path}, function(data){
-            callback(data);
+            callback(null, data);
         });
     }
 
@@ -107,8 +107,8 @@ define(function (require, exports, module) {
     function readdir(path, callback){
         //Emit readdir command to the nodejs server and wait for callback
         Log("Readdir called: ["+path+"]");
-        Socket.emit('execCommand', 'readdir', {path: path}, function(data){
-            callback(data);
+        Socket.emit('execCommand', 'readdir', {path: path}, function(data, _files, _stats){
+            callback(data, _files, _stats);
         });
     }
 
@@ -152,6 +152,7 @@ define(function (require, exports, module) {
         //Emit stat command to the nodejs server and wait for callback
         Log("Stat called: ["+path+"]");
         Socket.emit('execCommand', 'stat', {path: path}, function(data){
+            Log(data);
             callback(data);
         });
     }
